@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-sand: #F5F0E6;
+  --color-limestone: #E8DFD1;
+  --color-sage: #4A5D4E;
+  --color-sage-mist: #8FA392;
+  --color-terracotta: #C86D51;
+  --color-terracotta-hover: #B2593E;
+  --color-gold: #C5A059;
+  --color-ink: #1E201D;
+  --brand-color: #4A5D4E;
+  --cta-color: #C86D51;
+  color-scheme: light;
+}
+
+html {
+  background-color: var(--color-sand);
+  color: var(--color-ink);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--color-sand);
+  color: var(--color-ink);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  text-align: start;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  accent-color: var(--brand-color);
+  margin: 0;
+}
+
+/* Typography & Text Wrapping (Modern Web Guidance: improve-text-layout-and-legibility & typography) */
+h1, h2, h3, h4, .editorial-balance {
+  text-wrap: balance;
+}
+
+p, blockquote, li, .editorial-pretty {
+  text-wrap: pretty;
+}
+
+.editorial-prose {
+  max-width: 72ch;
+}
+
+/* Fluid Responsive Display Typography using clamp() with rem + vw */
+.hero-display-title {
+  font-size: clamp(2.25rem, 1.45rem + 3.8vw, 4.35rem);
+  line-height: 1.08;
+}
+
+.section-display-title {
+  font-size: clamp(1.85rem, 1.3rem + 2.4vw, 3.25rem);
+  line-height: 1.12;
+}
+
+/* Brand-Consistent Forms & Custom Progress Styling */
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"],
+progress {
+  accent-color: var(--brand-color);
+}
+
+.accent-terracotta {
+  --brand-color: #C86D51;
+  accent-color: #C86D51;
+}
+
+progress {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background-color: #D8CEBE;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #D8CEBE;
+  border-radius: 9999px;
+}
+
+progress::-webkit-progress-value {
+  background-color: var(--brand-color, #4A5D4E);
+  border-radius: 9999px;
+  transition: width 0.35s ease;
+}
+
+progress::-moz-progress-bar {
+  background-color: var(--brand-color, #4A5D4E);
+  border-radius: 9999px;
+}
+
+@supports not (accent-color: var(--brand-color)) {
+  input[type="checkbox"].visually-hidden-fallback {
+    position: absolute !important;
+    clip-path: inset(50%) !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right, var(--brand-color, #4A5D4E) var(--progress, 50%), #D5CBB8 var(--progress, 50%));
+    border-radius: 4px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: var(--brand-color, #4A5D4E);
+    cursor: pointer;
+    margin-top: -6px;
+  }
+
+  input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    background: #D5CBB8;
+    border-radius: 4px;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: var(--brand-color, #4A5D4E);
+    cursor: pointer;
+  }
+
+  input[type="range"]::-moz-range-progress {
+    background-color: var(--brand-color, #4A5D4E);
+    height: 8px;
+    border-radius: 4px;
+  }
+
+  progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    background: #D5CBB8;
+    height: 8px;
+    border-radius: 4px;
+  }
+
+  progress::-webkit-progress-bar {
+    background-color: #D5CBB8;
+    border-radius: 4px;
+  }
+
+  progress::-webkit-progress-value {
+    background-color: var(--brand-color, #4A5D4E);
+    border-radius: 4px;
+  }
+
+  progress::-moz-progress-bar {
+    background-color: var(--brand-color, #4A5D4E);
+    border-radius: 4px;
+  }
+}
+
+/* Motion & Reduced Motion Handling (Modern Web Guidance: motion) */
+@keyframes soundWave {
+  0%, 100% {
+    transform: scaleY(0.25);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.sound-bar-active {
+  transform-origin: bottom;
+  animation: soundWave 0.9s ease-in-out infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    transform: scaleY(0.65);
+  }
+}
+
+@keyframes pulseHalo {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.15;
+  }
+}
+
+.pulse-halo {
+  animation: pulseHalo 2.6s ease-in-out infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
+/* Custom subtle scrollbars for horizontal carousels on mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Native details summary reset for editorial FAQ accordion */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
