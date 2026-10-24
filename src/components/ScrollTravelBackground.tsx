@@ -43,7 +43,7 @@ const TELEMETRY_WAYPOINTS: TelemetryStop[] = [
     maxProgress: 0.32,
     phase: 'MEDINAS & DESIERTO',
     coords: '31.62°N 07.98°W',
-    destinationTag: 'MARRUECOS & MADEIRA',
+    destinationTag: 'MARRUECOS',
     lat: 31.62,
     lng: -7.98,
   },

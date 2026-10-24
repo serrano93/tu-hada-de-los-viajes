@@ -7,7 +7,7 @@ export interface OrientativeStage {
 export interface TravelDestination {
   id: string;
   name: string;
-  regionTag: 'Europa' | 'Asia' | 'América' | 'África & Atlántico';
+  regionTag: 'Europa' | 'Asia' | 'América' | 'Marruecos';
   durationBadge: string;
   coordinates: string;
   lat: number;
@@ -79,7 +79,7 @@ export const TRAVEL_DESTINATIONS: TravelDestination[] = [
   {
     id: 'marruecos',
     name: 'Marruecos',
-    regionTag: 'África & Atlántico',
+    regionTag: 'Marruecos',
     durationBadge: 'Escapada 3 días o Ruta 7+ días',
     coordinates: '31.62° N, 7.98° W',
     lat: 31.62,
@@ -369,7 +369,7 @@ export const TRAVEL_DESTINATIONS: TravelDestination[] = [
   {
     id: 'madeira',
     name: 'Madeira',
-    regionTag: 'África & Atlántico',
+    regionTag: 'Europa',
     durationBadge: '5 a 8 días orientativos',
     coordinates: '32.76° N, 16.95° W',
     lat: 32.76,

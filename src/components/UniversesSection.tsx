@@ -19,14 +19,14 @@ interface UniversesSectionProps {
   onStartWizardWithDestination: (destinationId: string) => void;
 }
 
-type RegionFilter = 'Todos' | 'Europa' | 'América' | 'Asia' | 'África & Atlántico';
+type RegionFilter = 'Todos' | 'Europa' | 'Marruecos' | 'América' | 'Asia';
 
 const REGION_FILTERS: { id: RegionFilter; label: string; count: number }[] = [
   { id: 'Todos', label: 'Todos los destinos', count: 13 },
-  { id: 'Europa', label: 'Europa', count: 6 },
+  { id: 'Europa', label: 'Europa', count: 7 },
+  { id: 'Marruecos', label: 'Marruecos', count: 1 },
   { id: 'América', label: 'América', count: 3 },
   { id: 'Asia', label: 'Asia', count: 2 },
-  { id: 'África & Atlántico', label: 'Marruecos & Madeira', count: 2 },
 ];
 
 export const UniversesSection: React.FC<UniversesSectionProps> = ({

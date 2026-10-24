@@ -32,7 +32,7 @@ const DESTINATION_OPTIONS = [
     tag: 'Escapada 3 días o Ruta 7+ días',
   },
   {
-    id: 'costa-rica',
+    id: 'costarica',
     label: 'Costa Rica',
     coords: '09.74°N, 83.75°W',
     tag: 'Biodiversidad & Volcanes (12-20d)',
@@ -56,7 +56,7 @@ const DESTINATION_OPTIONS = [
     tag: 'Bahía de Ha Long & Norte-Sur (12-18d)',
   },
   {
-    id: 'nueva-york',
+    id: 'nuevayork',
     label: 'Nueva York',
     coords: '40.71°N, 74.00°W',
     tag: 'Barrios, Miradores & Cultura (5-8d)',
@@ -112,12 +112,73 @@ const TRAVELER_TYPES = [
   'Amigos / Solo',
 ];
 
-const BUDGET_RANGES = [
-  'Ajustado / Con encanto (Optimizar calidad-precio)',
-  'Boutique & Experiencias Cuidada (Gama Media-Alta)',
-  'Superior & Estancias Especiales',
-  'Lujo Artesanal / Viaje Único',
-];
+const LONG_HAUL_DESTINATIONS = new Set([
+  'Costa Rica',
+  'Panamá',
+  'China',
+  'Vietnam',
+  'Nueva York',
+  'Aún no lo tengo claro / Combinado',
+]);
+
+/**
+ * Calcula rangos de presupuesto realistas (en € por persona)
+ * en función del destino seleccionado (corto/medio radio vs larga distancia)
+ * y de la duración elegida en el slider.
+ */
+function getDynamicBudgetRanges(destination: string, durationDays: number): string[] {
+  const isLongHaul = LONG_HAUL_DESTINATIONS.has(destination);
+
+  if (!isLongHaul) {
+    // Europa (Brujas, Madeira, Francia, Italia, España, Portugal, Alemania) y Marruecos
+    if (durationDays <= 4) {
+      return [
+        '350 € – 600 € / persona',
+        '600 € – 950 € / persona',
+        '950 € – 1.400 € / persona',
+        '+1.400 € / persona',
+      ];
+    }
+    if (durationDays <= 9) {
+      return [
+        '750 € – 1.200 € / persona',
+        '1.200 € – 1.800 € / persona',
+        '1.800 € – 2.500 € / persona',
+        '+2.500 € / persona',
+      ];
+    }
+    return [
+      '1.300 € – 1.900 € / persona',
+      '1.900 € – 2.700 € / persona',
+      '2.700 € – 3.800 € / persona',
+      '+3.800 € / persona',
+    ];
+  } else {
+    // Larga distancia (Costa Rica, Panamá, China, Vietnam, Nueva York, Combinados)
+    if (durationDays <= 6) {
+      return [
+        '1.200 € – 1.700 € / persona',
+        '1.700 € – 2.400 € / persona',
+        '2.400 € – 3.200 € / persona',
+        '+3.200 € / persona',
+      ];
+    }
+    if (durationDays <= 12) {
+      return [
+        '1.600 € – 2.200 € / persona',
+        '2.200 € – 3.000 € / persona',
+        '3.000 € – 4.000 € / persona',
+        '+4.000 € / persona',
+      ];
+    }
+    return [
+      '2.000 € – 2.800 € / persona',
+      '2.800 € – 3.800 € / persona',
+      '3.800 € – 5.000 € / persona',
+      '+5.000 € / persona',
+    ];
+  }
+}
 
 const SERVICE_OPTIONS = [
   {
@@ -160,7 +221,7 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
   const [paceValue, setPaceValue] = useState<number>(50);
   const [durationDays, setDurationDays] = useState<number>(10);
   const [approxDates, setApproxDates] = useState<string>('');
-  const [budgetRange, setBudgetRange] = useState<string>(BUDGET_RANGES[1]);
+  const [selectedBudgetIdx, setSelectedBudgetIdx] = useState<number>(1);
   const [serviceModality, setServiceModality] = useState<string>('Diseño a Medida');
   const [clientName, setClientName] = useState<string>('');
   const [clientContact, setClientContact] = useState<string>('');
@@ -195,26 +256,28 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
       : 'Equilibrio Armónico (Visitas con alma + tiempo libre)';
 
   const formattedDuration = formatDurationSliderValue(durationDays);
+  const dynamicBudgets = getDynamicBudgetRanges(destination, durationDays);
+  const budgetRange = dynamicBudgets[selectedBudgetIdx] || dynamicBudgets[1];
 
   const handleFinalSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
   };
 
-  // Build WhatsApp URL with pre-filled summary
+  // Build WhatsApp URL with pre-filled summary to Andrea's phone (+34 675 45 28 31)
   const whatsappText = encodeURIComponent(
     `¡Hola Andrea! ✨ Acabo de configurar mi boceto de ruta en *El Taller del Hada*:\n\n` +
       `🧭 *Destino:* ${destination}\n` +
       `👥 *Viajeros:* ${travelerType}\n` +
       `⏳ *Ritmo:* ${paceLabel} (${paceValue}%)\n` +
       `📅 *Duración y Fechas:* ${formattedDuration} (${approxDates || 'Fechas flexibles'})\n` +
-      `💎 *Estilo / Presupuesto:* ${budgetRange}\n` +
+      `💶 *Presupuesto estimado (por persona):* ${budgetRange}\n` +
       `🗝️ *Modalidad:* ${serviceModality}\n` +
       `👤 *Nombre:* ${clientName || 'Viajero'}\n` +
       `💬 *Lo que buscamos o nos preocupa:* ${mainConcern || 'Optimizar ruta y acertar con alojamientos'}\n\n` +
       `¿Cómo podemos dar el siguiente paso?`
   );
-  const whatsappUrl = `https://wa.me/34600000000?text=${whatsappText}`;
+  const whatsappUrl = `https://wa.me/34675452831?text=${whatsappText}`;
 
   return (
     <section
@@ -445,15 +508,15 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
               </div>
             )}
 
-            {/* STEP 3: INTERACTIVE DURATION RANGE SLIDER, DATES & BUDGET */}
+            {/* STEP 3: INTERACTIVE DURATION RANGE SLIDER, DATES & DYNAMIC BUDGET (€ / PERSONA) */}
             {step === 3 && (
               <div className="space-y-6">
                 <div>
                   <span className="font-mono text-xs uppercase tracking-wider text-terracotta font-semibold block mb-1">
-                    PASO 03 · DURACIÓN FLEXIBLE, FECHAS Y ESTILO DE INVERSIÓN
+                    PASO 03 · DURACIÓN FLEXIBLE, FECHAS Y PRESUPUESTO POR PERSONA
                   </span>
                   <h3 className="font-serif font-semibold text-2xl sm:text-3xl text-ink">
-                    Desliza para elegir la duración de tu viaje
+                    Duración del viaje y presupuesto estimado para {destination}
                   </h3>
                 </div>
 
@@ -529,22 +592,22 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                     </div>
                   </div>
 
-                  {/* Budget / Comfort Style Selector */}
+                  {/* Dynamic Budget Range Selector (€ / Persona calibrated by destination & duration) */}
                   <div className="p-5 rounded-2xl bg-sand border border-sage-mist/40 space-y-2.5">
                     <span className="font-mono text-xs uppercase tracking-wider text-sage font-semibold block">
-                      ESTILO DE ALOJAMIENTOS Y EXPERIENCIAS:
+                      PRESUPUESTO ESTIMADO (EN € POR PERSONA):
                     </span>
                     <p className="text-[11px] text-ink/70">
-                      Adaptamos al 100% los hoteles y servicios según vuestro presupuesto:
+                      Rangos orientativos para <strong>{destination}</strong> ({formattedDuration}):
                     </p>
                     <div className="space-y-2">
-                      {BUDGET_RANGES.map((b) => {
-                        const isSelected = budgetRange === b;
+                      {dynamicBudgets.map((b, idx) => {
+                        const isSelected = selectedBudgetIdx === idx;
                         return (
                           <button
                             key={b}
                             type="button"
-                            onClick={() => setBudgetRange(b)}
+                            onClick={() => setSelectedBudgetIdx(idx)}
                             aria-pressed={isSelected}
                             className={`w-full min-h-[44px] px-3.5 py-2 rounded-xl font-mono text-xs text-left border transition-colors ${
                               isSelected
@@ -753,7 +816,7 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                 </strong>
               </div>
               <div className="p-3.5 rounded-xl bg-limestone/70 border border-sage-mist/35">
-                <span className="text-[10px] text-sage block mb-0.5">04 · ESTILO DE VIAJE</span>
+                <span className="text-[10px] text-sage block mb-0.5">04 · PRESUPUESTO (POR PERSONA)</span>
                 <strong className="text-ink text-sm">{budgetRange}</strong>
               </div>
               <div className="p-3.5 rounded-xl bg-limestone/70 border border-sage-mist/35">
@@ -769,7 +832,7 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
             <div className="p-5 rounded-2xl bg-sage/10 border border-sage/40 flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="text-left space-y-1">
                 <span className="font-mono text-[10px] uppercase tracking-wider text-sage font-semibold">
-                  SIGUIENTE PASO INMEDIATO
+                  SIGUIENTE PASO INMEDIATO · WHATSAPP DIRECTO DE ANDREA (+34 675 45 28 31)
                 </span>
                 <p className="text-xs sm:text-sm text-ink/90">
                   Pulsa el botón para abrir nuestro chat directo de WhatsApp con tu resumen ya
