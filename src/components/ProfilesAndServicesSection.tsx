@@ -42,7 +42,7 @@ export const ProfilesAndServicesSection: React.FC<ProfilesAndServicesProps> = ({
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-limestone border border-sage-mist/40 mb-4">
             <Users className="w-3.5 h-3.5 text-sage" strokeWidth={1.5} />
             <span className="font-mono text-[11px] uppercase tracking-widest text-sage font-medium">
-              SECCIÓN 06 · ¿PARA QUIÉN DISEÑA EL HADA?
+              ¿PARA QUIÉN DISEÑA EL HADA?
             </span>
           </div>
           <h2 className="font-serif font-semibold text-ink section-display-title tracking-tight mb-3">
