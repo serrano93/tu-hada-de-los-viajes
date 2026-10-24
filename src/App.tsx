@@ -5,9 +5,8 @@ import {
 } from './components/ScrollTravelBackground';
 import { NavbarAndStickyBar } from './components/NavbarAndStickyBar';
 import { HeroSection } from './components/HeroSection';
-import { GuideSealSection } from './components/GuideSealSection';
 import { UniversesSection } from './components/UniversesSection';
-import { LookbookSection } from './components/LookbookSection';
+import { GuideSealSection } from './components/GuideSealSection';
 import { ProfilesAndServicesSection } from './components/ProfilesAndServicesSection';
 import { FairyWorkshopWizard } from './components/FairyWorkshopWizard';
 import { FaqAndFooterSection } from './components/FaqAndFooterSection';
@@ -25,8 +24,8 @@ export function App() {
     }
   };
 
-  const handleStartWizardWithDestination = (universeId: string) => {
-    setWizardDestination(universeId);
+  const handleStartWizardWithDestination = (destinationId: string) => {
+    setWizardDestination(destinationId);
     handleNavigate('taller-hada');
   };
 
@@ -40,51 +39,45 @@ export function App() {
       {/* Fixed 3D Editorial Globe + Scroll-Synchronized SVG Flight Path + Telemetry HUD */}
       <ScrollTravelBackground activeOverride={globeTargetOverride} />
 
-      {/* Section 1: Sticky Editorial Navbar & Mobile Floating CTA Bar */}
+      {/* 1. Sticky Editorial Navbar & Mobile Floating CTA Bar */}
       <NavbarAndStickyBar onNavigate={handleNavigate} />
 
-      {/* Main Content Flow */}
+      {/* Main Content Flow (Reordered for Clean Progressive Disclosure) */}
       <main className="relative z-10">
-        {/* Section 2: Hero Section + Interactive "Tu Ahorro Real" Micro-Widget */}
-        <HeroSection
-          onNavigate={handleNavigate}
-          onSelectGlobeTarget={setGlobeTargetOverride}
-        />
+        {/* 2. Clean Hero Section (Without Savings Calculator) */}
+        <HeroSection onNavigate={handleNavigate} />
 
         {/* Subtle Editorial Divider */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/45 to-transparent" />
         </div>
 
-        {/* Section 3: El Sello de Guía (Audio Pills Player + Honesty Filter + Survival Kit) */}
-        <GuideSealSection />
+        {/* 3. SECCIÓN DE LOS 13 DESTINOS (Immediately after Hero with Expandable Accordions) */}
+        <UniversesSection
+          onSelectGlobeTarget={setGlobeTargetOverride}
+          onStartWizardWithDestination={handleStartWizardWithDestination}
+        />
 
         {/* Subtle Editorial Divider */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-px w-full bg-gradient-to-r from-transparent via-sage-mist/45 to-transparent" />
         </div>
 
-        {/* Section 4: Los 5 Universos de Viaje (Connected to 3D Globe) */}
-        <UniversesSection
-          onSelectGlobeTarget={setGlobeTargetOverride}
-          onStartWizardWithDestination={handleStartWizardWithDestination}
-        />
+        {/* 4. La Esencia del Servicio (Simplified & Clean) */}
+        <GuideSealSection />
 
-        {/* Section 5: El "Entregable Estrella" (6-Module Interactive Lookbook Demo) */}
-        <LookbookSection onNavigate={handleNavigate} />
-
-        {/* Section 6 & 7: ¿Para Quién Diseña el Hada? & Escalera de Servicios (4 Tiers) */}
+        {/* 5 & 6. ¿Para Quién Diseña el Hada? (3 Traveler Profiles Intact) & Escalera de Servicios */}
         <ProfilesAndServicesSection
           onSelectServiceForWizard={handleSelectServiceForWizard}
         />
 
-        {/* Section 8: El Taller del Hada (4-Step Qualification Wizard) */}
+        {/* 7. El Taller del Hada (4-Step Wizard with 13 Destinations & Duration Range Slider) */}
         <FairyWorkshopWizard
           preselectedDestination={wizardDestination}
           preselectedService={wizardService}
         />
 
-        {/* Section 9: Preguntas Frecuentes (FAQ Honestos) + Editorial Footer */}
+        {/* 8. Preguntas Frecuentes (FAQ) + Editorial Footer */}
         <FaqAndFooterSection onNavigate={handleNavigate} />
       </main>
     </div>

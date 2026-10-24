@@ -22,7 +22,7 @@ export const ProfilesAndServicesSection: React.FC<ProfilesAndServicesProps> = ({
   const [waitlistOpen, setWaitlistOpen] = useState<boolean>(false);
   const [waitlistEmail, setWaitlistEmail] = useState<string>('');
   const [waitlistName, setWaitlistName] = useState<string>('');
-  const [waitlistEdition, setWaitlistEdition] = useState<string>('Brujas y Flandes Histórico');
+  const [waitlistEdition, setWaitlistEdition] = useState<string>('Brujas de Autor');
   const [waitlistSubmitted, setWaitlistSubmitted] = useState<boolean>(false);
 
   const handleWaitlistSubmit = (e: React.FormEvent) => {
@@ -33,7 +33,7 @@ export const ProfilesAndServicesSection: React.FC<ProfilesAndServicesProps> = ({
 
   return (
     <>
-      {/* SECTION 6: ¿PARA QUIÉN DISEÑA EL HADA? (3 TRAVELER PROFILES) */}
+      {/* SECTION 6: ¿PARA QUIÉN DISEÑA EL HADA? (3 TRAVELER PROFILES - KEPT EXACTLY INTACT) */}
       <section
         id="perfiles"
         className="relative z-10 py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
@@ -126,7 +126,7 @@ export const ProfilesAndServicesSection: React.FC<ProfilesAndServicesProps> = ({
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-limestone border border-gold/50 mb-4">
             <Sparkles className="w-3.5 h-3.5 text-gold" strokeWidth={1.5} />
             <span className="font-mono text-[11px] uppercase tracking-widest text-sage font-medium">
-              SECCIÓN 07 · ESCALERA DE SERVICIOS · 4 MODALIDADES CLARAS
+              ESCALERA DE SERVICIOS · 4 MODALIDADES CLARAS
             </span>
           </div>
           <h2 className="font-serif font-semibold text-ink section-display-title tracking-tight mb-3">
@@ -136,8 +136,8 @@ export const ProfilesAndServicesSection: React.FC<ProfilesAndServicesProps> = ({
             </em>
           </h2>
           <p className="text-base sm:text-lg text-ink/80 leading-relaxed">
-            Desde auditar en 60 minutos un borrador que ya has empezado hasta diseñar tu viaje de
-            autor desde cero o acompañarte presencialmente en una de mis dos expediciones anuales.
+            Desde auditar en 60 minutos un borrador que ya has empezado hasta diseñar tu viaje a
+            medida desde cero, reservarlo juntos en videollamada o acompañarte en grupo reducido.
           </p>
         </div>
 
@@ -280,14 +280,14 @@ export const ProfilesAndServicesSection: React.FC<ProfilesAndServicesProps> = ({
                           aria-label="Seleccionar expedición de interés"
                           className="w-full min-h-[44px] px-3.5 py-2 rounded-xl bg-limestone/60 border border-sage-mist/45 text-xs sm:text-sm text-ink focus:outline-none focus:border-sage"
                         >
-                          <option value="Brujas y Flandes Histórico">
-                            Próxima Edición: Brujas y Flandes Histórico (Grupos 8-12)
-                          </option>
-                          <option value="Lofoten y Auroras Boreales">
-                            Próxima Edición: Auroras en los Nórdicos (Grupos 8-10)
+                          <option value="Brujas de Autor">
+                            Próxima Edición: Escapada Brujas de Autor (Grupos 8-12)
                           </option>
                           <option value="Marruecos de Autor con Andrea">
                             Próxima Edición: Marruecos de Autor (Grupos 8-12)
+                          </option>
+                          <option value="Europa con Alma (Italia / Portugal / Madeira)">
+                            Próxima Edición: Europa con Alma (Grupos 8-12)
                           </option>
                         </select>
 

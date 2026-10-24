@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Compass, Menu, X, Sparkles, ArrowRight, Headphones, BookOpen } from 'lucide-react';
+import { Compass, Menu, X, Sparkles, ArrowRight, Globe } from 'lucide-react';
 
 interface NavbarProps {
   onNavigate: (sectionId: string) => void;
@@ -60,33 +60,32 @@ export const NavbarAndStickyBar: React.FC<NavbarProps> = ({ onNavigate }) => {
           <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-ink/85" aria-label="Navegación principal">
             <button
               type="button"
-              onClick={() => handleNavClick('sello-guia')}
+              onClick={() => handleNavClick('destinos')}
               className="hover:text-terracotta transition-colors py-2 flex items-center gap-1.5"
             >
-              <Headphones className="w-4 h-4 text-gold" strokeWidth={1.5} />
-              El Sello de Guía
+              <Globe className="w-4 h-4 text-sage" strokeWidth={1.5} />
+              Destinos (13)
             </button>
             <button
               type="button"
-              onClick={() => handleNavClick('universos')}
+              onClick={() => handleNavClick('esencia-servicio')}
               className="hover:text-terracotta transition-colors py-2"
             >
-              5 Universos
+              La Esencia
             </button>
             <button
               type="button"
-              onClick={() => handleNavClick('entregable-estrella')}
-              className="hover:text-terracotta transition-colors py-2 flex items-center gap-1.5"
+              onClick={() => handleNavClick('perfiles')}
+              className="hover:text-terracotta transition-colors py-2"
             >
-              <BookOpen className="w-4 h-4 text-sage" strokeWidth={1.5} />
-              Entregable Estrella (Demo)
+              Perfiles
             </button>
             <button
               type="button"
               onClick={() => handleNavClick('servicios')}
               className="hover:text-terracotta transition-colors py-2"
             >
-              Modalidades
+              Servicios
             </button>
             <button
               type="button"
@@ -130,42 +129,34 @@ export const NavbarAndStickyBar: React.FC<NavbarProps> = ({ onNavigate }) => {
             <div className="flex flex-col gap-1.5">
               <button
                 type="button"
-                onClick={() => handleNavClick('sello-guia')}
+                onClick={() => handleNavClick('destinos')}
                 className="w-full text-left px-4 min-h-[48px] rounded-xl hover:bg-limestone/70 font-medium text-ink flex items-center justify-between"
               >
-                <span>01 · El Sello de Guía &amp; Píldoras de Audio</span>
-                <Headphones className="w-4 h-4 text-gold" strokeWidth={1.5} />
-              </button>
-              <button
-                type="button"
-                onClick={() => handleNavClick('universos')}
-                className="w-full text-left px-4 min-h-[48px] rounded-xl hover:bg-limestone/70 font-medium text-ink flex items-center justify-between"
-              >
-                <span>02 · Los 5 Universos de Viaje</span>
+                <span>01 · Los 13 Destinos a Medida</span>
                 <Compass className="w-4 h-4 text-sage" strokeWidth={1.5} />
               </button>
               <button
                 type="button"
-                onClick={() => handleNavClick('entregable-estrella')}
+                onClick={() => handleNavClick('esencia-servicio')}
                 className="w-full text-left px-4 min-h-[48px] rounded-xl hover:bg-limestone/70 font-medium text-ink flex items-center justify-between"
               >
-                <span>03 · Demo Entregable Estrella (6 Módulos)</span>
-                <BookOpen className="w-4 h-4 text-terracotta" strokeWidth={1.5} />
+                <span>02 · La Esencia del Servicio</span>
+                <Sparkles className="w-4 h-4 text-gold" strokeWidth={1.5} />
               </button>
               <button
                 type="button"
                 onClick={() => handleNavClick('perfiles')}
                 className="w-full text-left px-4 min-h-[48px] rounded-xl hover:bg-limestone/70 font-medium text-ink flex items-center justify-between"
               >
-                <span>04 · ¿Para Quién Diseña el Hada?</span>
-                <Sparkles className="w-4 h-4 text-gold" strokeWidth={1.5} />
+                <span>03 · ¿Para Quién Diseña el Hada?</span>
+                <Sparkles className="w-4 h-4 text-terracotta" strokeWidth={1.5} />
               </button>
               <button
                 type="button"
                 onClick={() => handleNavClick('servicios')}
                 className="w-full text-left px-4 min-h-[48px] rounded-xl hover:bg-limestone/70 font-medium text-ink flex items-center justify-between"
               >
-                <span>05 · Escalera de Servicios (4 Niveles)</span>
+                <span>04 · Escalera de Servicios (4 Niveles)</span>
                 <ArrowRight className="w-4 h-4 text-sage" strokeWidth={1.5} />
               </button>
               <button
@@ -173,7 +164,7 @@ export const NavbarAndStickyBar: React.FC<NavbarProps> = ({ onNavigate }) => {
                 onClick={() => handleNavClick('faq')}
                 className="w-full text-left px-4 min-h-[48px] rounded-xl hover:bg-limestone/70 font-medium text-ink flex items-center justify-between"
               >
-                <span>06 · Preguntas Frecuentes (FAQ Honestos)</span>
+                <span>05 · Preguntas Frecuentes (FAQ)</span>
                 <ArrowRight className="w-4 h-4 text-sage" strokeWidth={1.5} />
               </button>
 
@@ -197,11 +188,11 @@ export const NavbarAndStickyBar: React.FC<NavbarProps> = ({ onNavigate }) => {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => onNavigate('entregable-estrella')}
+            onClick={() => onNavigate('destinos')}
             className="px-3.5 min-h-[48px] rounded-full bg-limestone border border-sage/40 text-ink font-medium text-xs shrink-0 flex items-center gap-1.5"
           >
-            <BookOpen className="w-3.5 h-3.5 text-sage" strokeWidth={1.5} />
-            <span>Ver Demo</span>
+            <Compass className="w-3.5 h-3.5 text-sage" strokeWidth={1.5} />
+            <span>13 Destinos</span>
           </button>
           <button
             type="button"

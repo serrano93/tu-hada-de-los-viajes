@@ -10,6 +10,7 @@ import {
   MessageCircle,
   RotateCcw,
   MapPin,
+  Clock,
 } from 'lucide-react';
 
 interface FairyWorkshopWizardProps {
@@ -19,40 +20,88 @@ interface FairyWorkshopWizardProps {
 
 const DESTINATION_OPTIONS = [
   {
-    id: 'europa',
-    label: 'Europa: Brujas / Nórdicos',
-    coords: '51.20°N · 68.23°N',
-    tag: 'Patrimonio & Auroras',
+    id: 'brujas',
+    label: 'Brujas',
+    coords: '51.20°N, 03.22°E',
+    tag: 'Canales & Medievo (~3 días)',
   },
   {
     id: 'marruecos',
-    label: 'Marruecos Auténtico',
+    label: 'Marruecos',
     coords: '31.62°N, 07.98°W',
-    tag: 'Riads & Desierto',
+    tag: 'Escapada 3 días o Ruta 7+ días',
   },
   {
-    id: 'costarica',
-    label: 'Costa Rica / Panamá',
+    id: 'costa-rica',
+    label: 'Costa Rica',
     coords: '09.74°N, 83.75°W',
-    tag: 'Selva & Ecolodges',
+    tag: 'Biodiversidad & Volcanes (12-20d)',
+  },
+  {
+    id: 'panama',
+    label: 'Panamá',
+    coords: '08.98°N, 79.51°W',
+    tag: 'Canal, Selva & Caribe (10-15d)',
   },
   {
     id: 'china',
-    label: 'China Sin Barreras',
+    label: 'China',
     coords: '39.90°N, 116.40°E',
-    tag: 'Imperio & Tren Bala',
+    tag: 'Cultura Milenaria (12-20d)',
   },
   {
     id: 'vietnam',
-    label: 'Vietnam de Norte a Sur',
+    label: 'Vietnam',
     coords: '21.02°N, 105.83°E',
-    tag: 'Bahía Lan Ha & Hoi An',
+    tag: 'Bahía de Ha Long & Norte-Sur (12-18d)',
+  },
+  {
+    id: 'nueva-york',
+    label: 'Nueva York',
+    coords: '40.71°N, 74.00°W',
+    tag: 'Barrios, Miradores & Cultura (5-8d)',
+  },
+  {
+    id: 'madeira',
+    label: 'Madeira',
+    coords: '32.66°N, 16.92°W',
+    tag: 'Acantilados, Levadas & Laurisilva (5-8d)',
+  },
+  {
+    id: 'francia',
+    label: 'Francia',
+    coords: '48.85°N, 02.35°E',
+    tag: 'París, Castillos & Regiones',
+  },
+  {
+    id: 'italia',
+    label: 'Italia',
+    coords: '41.90°N, 12.49°E',
+    tag: 'Arte, Pueblos & Gastronomía',
+  },
+  {
+    id: 'espana',
+    label: 'España',
+    coords: '40.41°N, 03.70°W',
+    tag: 'Norte a Sur, Islas & Patrimonio',
+  },
+  {
+    id: 'portugal',
+    label: 'Portugal',
+    coords: '38.72°N, 09.13°W',
+    tag: 'Lisboa, Oporto & Costa Atlántica',
+  },
+  {
+    id: 'alemania',
+    label: 'Alemania',
+    coords: '52.52°N, 13.40°E',
+    tag: 'Castillos, Bosques & Vanguardia',
   },
   {
     id: 'indeciso',
-    label: 'Indeciso: necesito consejo',
+    label: 'Aún no lo tengo claro / Combinado',
     coords: 'BRÚJULA ABIERTA',
-    tag: 'Asesoría de Destino',
+    tag: 'Asesoría o Ruta Multi-País',
   },
 ];
 
@@ -63,32 +112,40 @@ const TRAVELER_TYPES = [
   'Amigos / Solo',
 ];
 
-const DURATION_OPTIONS = ['7 días', '10 días', '15 días', '+20 días'];
-
 const BUDGET_RANGES = [
-  '1.500 € – 2.200 € / persona',
-  '2.200 € – 3.200 € / persona (Boutique & Experiencias)',
-  '3.200 € – 4.500 € / persona (Superior & Exclusivo)',
-  '+4.500 € / persona (Lujo Artesanal / Luna de Miel)',
+  'Ajustado / Con encanto (Optimizar calidad-precio)',
+  'Boutique & Experiencias Cuidada (Gama Media-Alta)',
+  'Superior & Estancias Especiales',
+  'Lujo Artesanal / Viaje Único',
 ];
 
 const SERVICE_OPTIONS = [
   {
     id: 'Auditoría Express',
     title: 'Auditoría Express (Nivel 1)',
-    desc: 'Ya tengo un borrador y quiero que lo revisemos en 60 min.',
+    desc: 'Ya tengo un borrador y quiero revisarlo en 60 min.',
   },
   {
     id: 'Diseño a Medida',
     title: 'Diseño a Medida (Nivel 2 · Estrella)',
-    desc: 'Diseña mi ruta desde cero con el Entregable de 6 Módulos.',
+    desc: 'Diseña mi itinerario completo desde cero con mapa interactivo.',
   },
   {
     id: 'Llave en Mano',
     title: 'Viaje Llave en Mano (Nivel 3)',
-    desc: 'Quiero delegar tanto el diseño como todas las reservas.',
+    desc: 'Diseño + videollamada extra de 15 min para dejarlo todo reservado juntos.',
   },
 ];
+
+function formatDurationSliderValue(days: number): string {
+  if (days <= 3) {
+    return days === 2 ? 'Fin de semana (2-3 días)' : 'Fin de semana (3 días)';
+  }
+  if (days >= 21) {
+    return '+21 días (Gran Viaje)';
+  }
+  return `${days} días`;
+}
 
 export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
   preselectedDestination,
@@ -98,11 +155,11 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   // Form State
-  const [destination, setDestination] = useState<string>('Vietnam de Norte a Sur');
+  const [destination, setDestination] = useState<string>('Vietnam');
   const [travelerType, setTravelerType] = useState<string>('En pareja');
   const [paceValue, setPaceValue] = useState<number>(50);
+  const [durationDays, setDurationDays] = useState<number>(10);
   const [approxDates, setApproxDates] = useState<string>('');
-  const [duration, setDuration] = useState<string>('15 días');
   const [budgetRange, setBudgetRange] = useState<string>(BUDGET_RANGES[1]);
   const [serviceModality, setServiceModality] = useState<string>('Diseño a Medida');
   const [clientName, setClientName] = useState<string>('');
@@ -132,10 +189,12 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
 
   const paceLabel =
     paceValue < 35
-      ? 'Slow & Relax Boutique (Pocas bases, mucha calma)'
+      ? 'Slow & Relax (Pocas bases, mucha calma)'
       : paceValue > 65
       ? 'Exploración Cultural y Naturaleza Activa'
-      : 'Equilibrio Armónico (Visitas con alma + tardes de descanso)';
+      : 'Equilibrio Armónico (Visitas con alma + tiempo libre)';
+
+  const formattedDuration = formatDurationSliderValue(durationDays);
 
   const handleFinalSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -148,11 +207,11 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
       `🧭 *Destino:* ${destination}\n` +
       `👥 *Viajeros:* ${travelerType}\n` +
       `⏳ *Ritmo:* ${paceLabel} (${paceValue}%)\n` +
-      `📅 *Duración y Fechas:* ${duration} (${approxDates || 'Fechas flexibles'})\n` +
-      `💎 *Presupuesto estimado:* ${budgetRange}\n` +
+      `📅 *Duración y Fechas:* ${formattedDuration} (${approxDates || 'Fechas flexibles'})\n` +
+      `💎 *Estilo / Presupuesto:* ${budgetRange}\n` +
       `🗝️ *Modalidad:* ${serviceModality}\n` +
       `👤 *Nombre:* ${clientName || 'Viajero'}\n` +
-      `💬 *Lo que más respeto/pereza nos da:* ${mainConcern || 'Optimizar tiempos y acertar con los alojamientos'}\n\n` +
+      `💬 *Lo que buscamos o nos preocupa:* ${mainConcern || 'Optimizar ruta y acertar con alojamientos'}\n\n` +
       `¿Cómo podemos dar el siguiente paso?`
   );
   const whatsappUrl = `https://wa.me/34600000000?text=${whatsappText}`;
@@ -167,7 +226,7 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-limestone border border-gold/50 mb-4">
           <Sparkles className="w-3.5 h-3.5 text-gold" strokeWidth={1.5} />
           <span className="font-mono text-[11px] uppercase tracking-widest text-sage font-medium">
-            SECCIÓN 08 · EL TALLER DEL HADA · DIAGNÓSTICO EN 4 PASOS
+            EL TALLER DEL HADA · CONFIGURADOR EN 4 PASOS
           </span>
         </div>
         <h2 className="font-serif font-semibold text-ink section-display-title tracking-tight mb-3">
@@ -175,8 +234,8 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
           <em className="italic font-normal text-sage">en menos de 90 segundos.</em>
         </h2>
         <p className="text-sm sm:text-base text-ink/80">
-          Sin formularios fríos ni compromisos. Configura los 4 parámetros de tu ruta para que
-          pueda darte una respuesta honesta y artesanal.
+          Elige entre los 13 destinos (o un combinado), desliza la duración ideal y configura tu
+          boceto para hablar directamente conmigo.
         </p>
       </div>
 
@@ -198,7 +257,7 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                 {[
                   { s: 1, label: '01 · Destino' },
                   { s: 2, label: '02 · Estilo' },
-                  { s: 3, label: '03 · Fechas' },
+                  { s: 3, label: '03 · Duración' },
                   { s: 4, label: '04 · Tu Ruta' },
                 ].map((item) => (
                   <button
@@ -219,19 +278,19 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
               </div>
             </div>
 
-            {/* STEP 1: DESTINATION SELECTION */}
+            {/* STEP 1: DESTINATION SELECTION (13 DESTINATIONS + COMBINADO/INDECISO) */}
             {step === 1 && (
               <div className="space-y-6">
                 <div>
                   <span className="font-mono text-xs uppercase tracking-wider text-terracotta font-semibold block mb-1">
-                    PASO 01 · LA LLAMADA DEL MAPA
+                    PASO 01 · LA LLAMADA DEL MAPA (13 DESTINOS + COMBINADOS)
                   </span>
                   <h3 className="font-serif font-semibold text-2xl sm:text-3xl text-ink">
                     ¿Qué destino te llama para este viaje?
                   </h3>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {DESTINATION_OPTIONS.map((opt) => {
                     const isSelected = destination === opt.label;
                     return (
@@ -240,7 +299,7 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                         type="button"
                         onClick={() => setDestination(opt.label)}
                         aria-pressed={isSelected}
-                        className={`min-h-[88px] p-4 rounded-2xl text-left transition-all border flex flex-col justify-between ${
+                        className={`min-h-[78px] p-3.5 rounded-2xl text-left transition-all border flex flex-col justify-between ${
                           isSelected
                             ? 'bg-sage text-sand border-sage shadow-editorial'
                             : 'bg-sand hover:bg-sand/90 text-ink border-sage-mist/40'
@@ -255,18 +314,18 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                             {opt.coords}
                           </span>
                           <Compass
-                            className={`w-4 h-4 ${
+                            className={`w-3.5 h-3.5 shrink-0 ${
                               isSelected ? 'text-gold-light' : 'text-terracotta'
                             }`}
                             strokeWidth={1.5}
                           />
                         </div>
-                        <div className="mt-2">
-                          <div className="font-serif font-semibold text-lg leading-snug">
+                        <div className="mt-1.5">
+                          <div className="font-serif font-semibold text-base sm:text-lg leading-snug">
                             {opt.label}
                           </div>
                           <div
-                            className={`text-xs ${
+                            className={`text-[11px] ${
                               isSelected ? 'text-sand/80' : 'text-ink/65'
                             }`}
                           >
@@ -346,19 +405,22 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                     min={10}
                     max={90}
                     value={paceValue}
+                    aria-valuetext={paceLabel}
                     onChange={(e) => setPaceValue(Number(e.target.value))}
                     style={
                       {
-                        '--progress': `${((paceValue - 10) / 80) * 100}%`,
+                        '--control-value': paceValue,
+                        '--attr-min': 10,
+                        '--attr-max': 90,
                       } as React.CSSProperties
                     }
-                    className="w-full cursor-pointer"
+                    className="editorial-range-slider"
                   />
 
                   <div className="flex justify-between font-mono text-[10px] sm:text-[11px] text-ink/70">
-                    <span>← Slow &amp; Relax Boutique</span>
+                    <span>← Slow &amp; Relax</span>
                     <span>Equilibrio Autor</span>
-                    <span>Exploración &amp; Naturaleza Activa →</span>
+                    <span>Exploración Activa →</span>
                   </div>
                 </div>
 
@@ -376,64 +438,85 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                     onClick={() => setStep(3)}
                     className="min-h-[50px] px-7 py-3 rounded-full bg-terracotta hover:bg-terracotta-hover text-sand font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-editorial"
                   >
-                    <span>Siguiente: Fechas y Presupuesto</span>
+                    <span>Siguiente: Duración y Presupuesto</span>
                     <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
                   </button>
                 </div>
               </div>
             )}
 
-            {/* STEP 3: DATES, DURATION & BUDGET */}
+            {/* STEP 3: INTERACTIVE DURATION RANGE SLIDER, DATES & BUDGET */}
             {step === 3 && (
               <div className="space-y-6">
                 <div>
                   <span className="font-mono text-xs uppercase tracking-wider text-terracotta font-semibold block mb-1">
-                    PASO 03 · CALENDARIO Y CALIBRACIÓN DE CONFORT
+                    PASO 03 · DURACIÓN FLEXIBLE, FECHAS Y ESTILO DE INVERSIÓN
                   </span>
                   <h3 className="font-serif font-semibold text-2xl sm:text-3xl text-ink">
-                    Duración, fechas aproximadas y presupuesto estimado
+                    Desliza para elegir la duración de tu viaje
                   </h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  {/* Duration Selector */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-sand border border-sage-mist/40 space-y-3">
-                    <span className="font-mono text-xs uppercase tracking-wider text-sage font-semibold block">
-                      DURACIÓN APROXIMADA:
-                    </span>
-                    <div className="grid grid-cols-2 gap-2.5">
-                      {DURATION_OPTIONS.map((d) => {
-                        const isSelected = duration === d;
-                        return (
-                          <button
-                            key={d}
-                            type="button"
-                            onClick={() => setDuration(d)}
-                            aria-pressed={isSelected}
-                            className={`min-h-[46px] px-3 py-2 rounded-xl font-mono text-xs font-medium border transition-colors ${
-                              isSelected
-                                ? 'bg-sage text-sand border-sage'
-                                : 'bg-limestone/65 text-ink border-sage-mist/35 hover:bg-limestone'
-                            }`}
-                          >
-                            {d}
-                          </button>
-                        );
-                      })}
+                  {/* Interactive Duration Range Slider Card */}
+                  <div className="p-5 rounded-2xl bg-sand border border-sage-mist/40 flex flex-col justify-between space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <label
+                          htmlFor="duration-range-slider"
+                          className="font-mono text-xs uppercase tracking-wider text-sage font-semibold flex items-center gap-1.5"
+                        >
+                          <Clock className="w-3.5 h-3.5 text-terracotta" strokeWidth={1.5} />
+                          <span>DURACIÓN APROXIMADA:</span>
+                        </label>
+                        <output
+                          htmlFor="duration-range-slider"
+                          className="px-3 py-1 rounded-full bg-terracotta text-sand font-mono text-xs font-semibold shadow-sm"
+                        >
+                          {formattedDuration}
+                        </output>
+                      </div>
+
+                      <div className="pt-2 pb-1">
+                        <input
+                          id="duration-range-slider"
+                          type="range"
+                          min={2}
+                          max={21}
+                          step={1}
+                          value={durationDays}
+                          aria-valuetext={formattedDuration}
+                          onChange={(e) => setDurationDays(Number(e.target.value))}
+                          style={
+                            {
+                              '--control-value': durationDays,
+                              '--attr-min': 2,
+                              '--attr-max': 21,
+                            } as React.CSSProperties
+                          }
+                          className="editorial-range-slider"
+                        />
+                      </div>
+
+                      <div className="flex items-center justify-between gap-2 font-mono text-[10px] sm:text-[11px] text-ink/70">
+                        <span>Fin de semana (2-3d)</span>
+                        <span>7 – 14 días</span>
+                        <span>+21 días</span>
+                      </div>
                     </div>
 
-                    <div className="pt-2">
+                    <div className="pt-3 border-t border-sage-mist/30">
                       <label
                         htmlFor="approx-dates-input"
                         className="font-mono text-[11px] uppercase text-ink/75 block mb-1.5"
                       >
-                        ¿En qué mes o época os gustaría volar?
+                        ¿En qué mes o época os gustaría viajar?
                       </label>
                       <div className="relative">
                         <input
                           id="approx-dates-input"
                           type="text"
-                          placeholder="Ej: Octubre 2026 / Primavera / Semana Santa"
+                          placeholder="Ej: Octubre / Primavera / Puente de Diciembre"
                           value={approxDates}
                           onChange={(e) => setApproxDates(e.target.value)}
                           className="w-full min-h-[46px] px-3.5 py-2 rounded-xl bg-limestone/50 border border-sage-mist/45 text-xs sm:text-sm text-ink focus:outline-none focus:border-sage"
@@ -446,13 +529,13 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                     </div>
                   </div>
 
-                  {/* Budget Range Selector */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-sand border border-sage-mist/40 space-y-2.5">
+                  {/* Budget / Comfort Style Selector */}
+                  <div className="p-5 rounded-2xl bg-sand border border-sage-mist/40 space-y-2.5">
                     <span className="font-mono text-xs uppercase tracking-wider text-sage font-semibold block">
-                      RANGO DE INVERSIÓN ESTIMADA EN EL VIAJE (POR PERSONA):
+                      ESTILO DE ALOJAMIENTOS Y EXPERIENCIAS:
                     </span>
                     <p className="text-[11px] text-ink/70">
-                      Incluyendo vuelos, hoteles boutique y experiencias para calibrar la categoría:
+                      Adaptamos al 100% los hoteles y servicios según vuestro presupuesto:
                     </p>
                     <div className="space-y-2">
                       {BUDGET_RANGES.map((b) => {
@@ -584,12 +667,12 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                     htmlFor="wizard-concern"
                     className="font-mono text-xs uppercase text-ink/80 block mb-1.5"
                   >
-                    ¿Qué es lo que más respeto o pereza os da de organizar este viaje?
+                    ¿Qué os gustaría incluir o qué es lo que más pereza os da organizar?
                   </label>
                   <textarea
                     id="wizard-concern"
                     rows={2}
-                    placeholder="Ej: No sabemos cómo conectar las ciudades sin perder días enteros ni qué hoteles elegir..."
+                    placeholder="Ej: Queremos combinar varios lugares sin ir con prisas y elegir hoteles con encanto..."
                     value={mainConcern}
                     onChange={(e) => setMainConcern(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl bg-sand border border-sage-mist/50 text-sm text-ink focus:outline-none focus:border-sage"
@@ -666,11 +749,11 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
               <div className="p-3.5 rounded-xl bg-limestone/70 border border-sage-mist/35">
                 <span className="text-[10px] text-sage block mb-0.5">03 · DURACIÓN &amp; FECHAS</span>
                 <strong className="text-ink text-sm">
-                  {duration} ({approxDates || 'Fechas flexibles'})
+                  {formattedDuration} ({approxDates || 'Fechas flexibles'})
                 </strong>
               </div>
               <div className="p-3.5 rounded-xl bg-limestone/70 border border-sage-mist/35">
-                <span className="text-[10px] text-sage block mb-0.5">04 · RANGO ESTIMADO</span>
+                <span className="text-[10px] text-sage block mb-0.5">04 · ESTILO DE VIAJE</span>
                 <strong className="text-ink text-sm">{budgetRange}</strong>
               </div>
               <div className="p-3.5 rounded-xl bg-limestone/70 border border-sage-mist/35">

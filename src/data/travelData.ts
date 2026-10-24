@@ -1,1009 +1,661 @@
-export interface HeroSavingsDestination {
+export interface OrientativeStage {
+  stageLabel: string;
+  title: string;
+  highlights: string;
+}
+
+export interface TravelDestination {
   id: string;
   name: string;
-  regionCode: string;
-  coordinates: string;
-  lat: number;
-  lng: number;
-  hoursSaved: number;
-  tabsClosed: number;
-  mainObstacle: string;
-  andreaSolution: string;
-  microMetric: string;
-}
-
-export interface AudioPill {
-  id: string;
-  code: string;
-  location: string;
-  coordinates: string;
-  duration: string;
-  durationSeconds: number;
-  title: string;
-  contextBadge: string;
-  transcript: string[];
-  secretReveal: string;
-}
-
-export interface ComparisonRow {
-  aspect: string;
-  agency: {
-    verdict: string;
-    detail: string;
-  };
-  influencer: {
-    verdict: string;
-    detail: string;
-  };
-  andrea: {
-    verdict: string;
-    detail: string;
-  };
-}
-
-export interface SurvivalKitCard {
-  id: string;
-  region: string;
-  code: string;
-  badge: string;
-  title: string;
-  frictionPoint: string;
-  solutions: string[];
-  planBHighlight: string;
-}
-
-export interface TravelUniverse {
-  id: string;
-  shortTitle: string;
-  title: string;
-  subtitle: string;
+  regionTag: 'Europa' | 'Asia' | 'América' | 'África & Atlántico';
+  durationBadge: string;
   coordinates: string;
   lat: number;
   lng: number;
   bestSeason: string;
-  recommendedDays: string;
   avgTemp: string;
   imageUrl: string;
   imageAlt: string;
   atmosphereTags: string[];
-  fatalMistake: string;
-  andreaMagicTouch: string;
-  signatureMoment: string;
-  hoursSaved: string;
+  summary: string;
+  expandedDescription: string;
+  modalities?: {
+    title: string;
+    duration: string;
+    detail: string;
+  }[];
+  whatWeInclude: string[];
+  orientativeRoute: OrientativeStage[];
+  flexibilityNote: string;
 }
 
-export interface LookbookItineraryDemo {
-  id: 'vietnam' | 'china';
-  countryName: string;
-  routeTitle: string;
-  routeCode: string;
-  duration: string;
-  season: string;
-  coordinates: string;
-  compass: {
-    summary: string;
-    stops: { dayRange: string; city: string; vibe: string; coords: string }[];
-    energyCurve: { day: string; label: string; energy: number; note: string }[];
-    discarded: { place: string; reason: string }[];
-  };
-  vaultChecklist: {
-    id: string;
-    window: '60 DÍAS ANTES' | '30 DÍAS ANTES' | '48H ANTES DE VOLAR';
-    task: string;
-    andreaNote: string;
-    defaultChecked: boolean;
-  }[];
-  dailyLog: {
-    dayNumber: number;
-    dayTitle: string;
-    location: string;
-    coordinates: string;
-    temp: string;
-    audioPillCode: string;
-    planA: {
-      time: string;
-      period: 'MAÑANA' | 'MEDIODÍA' | 'TARDE' | 'NOCHE';
-      title: string;
-      description: string;
-      logisticsCode: string;
-    }[];
-    planB: {
-      weatherTrigger: string;
-      andreaMessage: string;
-      schedule: {
-        time: string;
-        period: 'MAÑANA' | 'MEDIODÍA' | 'TARDE' | 'NOCHE';
-        title: string;
-        description: string;
-        logisticsCode: string;
-      }[];
-    };
-  }[];
-  stays: {
-    id: string;
-    name: string;
-    location: string;
-    category: string;
-    pricePerNight: string;
-    whyChosen: string;
-    exactRoomToAsk: string;
-    directBookingUrl: string;
-    coordinates: string;
-  }[];
-  radarPins: {
-    id: string;
-    category: 'cafe' | 'food' | 'viewpoint' | 'utility';
-    categoryLabel: string;
-    name: string;
-    city: string;
-    coordinates: string;
-    xPercent: number;
-    yPercent: number;
-    whySpecial: string;
-    whatToOrderOrDo: string;
-  }[];
-  budget: {
-    currency: string;
-    perPersonDirectTotal: number;
-    traditionalAgencyTotal: number;
-    designFeeNote: string;
-    items: {
-      category: string;
-      code: string;
-      directCost: number;
-      agencyCost: number;
-      detail: string;
-    }[];
-  };
-}
-
-export const HERO_SAVINGS_DESTINATIONS: HeroSavingsDestination[] = [
+export const TRAVEL_DESTINATIONS: TravelDestination[] = [
   {
-    id: 'china',
-    name: 'China',
-    regionCode: 'PEK · XIA · SHA',
-    coordinates: '39.90° N, 116.40° E',
-    lat: 39.9,
-    lng: 116.4,
-    hoursSaved: 48,
-    tabsClosed: 140,
-    mainObstacle: 'Gran Cortafuegos digital, pagos exclusivamente por QR (Alipay/WeChat) y apertura de billetes de tren bala a 14 días vista.',
-    andreaSolution: 'Sales de España con Alipay y WeChat verificados con tu tarjeta europea, eSIM con túnel VPN activo y tus trenes de alta velocidad emitidos sin colas en estación.',
-    microMetric: '0% bloqueo digital · 100% pagos QR operativos',
-  },
-  {
-    id: 'vietnam',
-    name: 'Vietnam',
-    regionCode: 'HAN · LHA · DAD',
-    coordinates: '21.02° N, 105.83° E',
-    lat: 21.02,
-    lng: 105.83,
-    hoursSaved: 42,
-    tabsClosed: 115,
-    mainObstacle: 'Cruceros masificados en Ha Long, distancias engañosas en carretera y sobrecargos en traslados internos.',
-    andreaSolution: 'Navegamos por los canales silenciosos de Lan Ha en junco boutique de 10 camarotes, conectamos norte y centro con vuelos y trenes precisos, y llevas mi mapa de mesas locales impecables.',
-    microMetric: 'Lan Ha vs Ha Long: -85% barcos alrededor',
-  },
-  {
-    id: 'nordicos',
-    name: 'Nórdicos',
-    regionCode: 'LOF · TOS · BGO',
-    coordinates: '68.23° N, 14.56° E',
-    lat: 68.23,
-    lng: 14.56,
-    hoursSaved: 36,
-    tabsClosed: 92,
-    mainObstacle: 'Meteorología cambiante en el Ártico, ferris con horarios estacionales y rutas de fiordos imposibles de cubrir en un día.',
-    andreaSolution: 'Rorbuer tradicionales sobre el agua orientados al arco auroral, matriz de ferris sincronizada y un Plan B meteorológico diario listo en tu móvil.',
-    microMetric: '2 planes diarios (Cielo despejado / Ventisca)',
-  },
-  {
-    id: 'costarica',
-    name: 'Costa Rica & Panamá',
-    regionCode: 'SJO · MVV · BOC',
-    coordinates: '9.74° N, 83.75° W',
-    lat: 9.74,
-    lng: -83.75,
-    hoursSaved: 38,
-    tabsClosed: 98,
-    mainObstacle: 'Microclimas tropicales opuestos entre Caribe y Pacífico, pistas 4x4 y ecolodges que se agotan meses antes.',
-    andreaSolution: 'Ruta calibrada según el régimen real de lluvias de tu mes, ecolodges inmersos en reserva privada (donde ves fauna desde tu terraza al amanecer) y cruce fluido al Caribe panameño.',
-    microMetric: 'Ahorro de 9h en traslados de tierra innecesarios',
+    id: 'brujas',
+    name: 'Brujas',
+    regionTag: 'Europa',
+    durationBadge: '3 días orientativos (ampliable)',
+    coordinates: '51.20° N, 3.22° E',
+    lat: 51.2,
+    lng: 3.22,
+    bestSeason: 'Todo el año (Primavera, Otoño y época navideña especiales)',
+    avgTemp: '6°C — 21°C',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Rozenhoedkaai_%28canal%29_and_Belfry_of_Bruges%2C_Bruges%2C_Belgium_%28Ank_Kumar%2C_Infosys_Limited%29_01.jpg/1280px-Rozenhoedkaai_%28canal%29_and_Belfry_of_Bruges%2C_Bruges%2C_Belgium_%28Ank_Kumar%2C_Infosys_Limited%29_01.jpg',
+    imageAlt: 'Canales de Brujas reflejando las casas medievales de ladrillo escalonado y el campanario',
+    atmosphereTags: ['Lago del Amor', 'Canales & Puentes', 'Cerveza Artesanal', 'Chocolate Belga'],
+    summary:
+      'La magia intacta de una joya medieval: canales serenos, fachadas de ladrillo escalonado, tabernas históricas y maestros chocolateros.',
+    expandedDescription:
+      'Brujas es una ciudad para recorrer sin prisas y dejarse envolver por su atmósfera de cuento. El viaje permite pasear junto al famoso Lago del Amor (Minnewater) y su tranquilo beguinaje, cruzar decenas de puentes de piedra centenarios sobre los canales, admirar la arquitectura gótica y medieval de sus plazas históricas, degustar algunas de las mejores cervezas artesanales del mundo en tabernas con siglos de tradición y probar el auténtico chocolate y los bombones belgas en obradores seleccionados.',
+    whatWeInclude: [
+      'Ruta a pie estructurada por barrios históricos, canales tranquilos y miradores fotográficos.',
+      'Selección de tabernas históricas de cerveza belga, chocolaterías artesanales y restaurantes con encanto.',
+      'Propuesta de alojamientos boutique dentro del casco histórico según vuestro presupuesto.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Etapa 01 · Corazón Medieval y Canales',
+        title: 'Plazas históricas, campanario Belfort y paseo navegando por los canales',
+        highlights:
+          'Toma de contacto con la arquitectura flamenca del centro histórico, los muelles más fotogénicos como Rozenhoedkaai y primeras degustaciones gastronómicas.',
+      },
+      {
+        stageLabel: 'Etapa 02 · El Lago del Amor y Tradición Artesana',
+        title: 'Minnewater, Beguinaje, molinos históricos y cultura cervecera',
+        highlights:
+          'Recorrido por los jardines del Lago del Amor, el barrio de Santa Ana, visita a una fábrica de cerveza tradicional y ruta de obradores de bombones.',
+      },
+      {
+        stageLabel: 'Etapa 03 · Rincones Secretos o Extensión a Medida',
+        title: 'Museos de pintura primitiva, mercados locales o ampliación de días',
+        highlights:
+          'Jornada adaptable a vuestros gustos culturales o ampliable con más días si deseáis combinar Brujas con otras ciudades cercanas.',
+      },
+    ],
+    flexibilityNote:
+      'Ejemplo orientativo de 3 días. Se adapta por completo si queréis una escapada más corta o ampliar la ruta a más días.',
   },
   {
     id: 'marruecos',
     name: 'Marruecos',
-    regionCode: 'RAK · DADES · ERG',
+    regionTag: 'África & Atlántico',
+    durationBadge: 'Escapada 3 días o Ruta 7+ días',
     coordinates: '31.62° N, 7.98° W',
     lat: 31.62,
     lng: -7.98,
-    hoursSaved: 34,
-    tabsClosed: 85,
-    mainObstacle: 'Falsos guías en las medinas, riads que en fotos parecen palacios pero están en callejones ruidosos, y jornadas eternas de coche.',
-    andreaSolution: 'Riads verificados personalmente por mí, conductor privado de mi absoluta confianza durante toda la ruta al Atlas y desierto, y códigos culturales para pasear por la medina con serenidad.',
-    microMetric: 'Conductor privado verificado + Riads con patio silencioso',
-  },
-  {
-    id: 'brujas',
-    name: 'Brujas & Flandes',
-    regionCode: 'BRU · GENT · ANT',
-    coordinates: '51.20° N, 3.22° E',
-    lat: 51.2,
-    lng: 3.22,
-    hoursSaved: 28,
-    tabsClosed: 64,
-    mainObstacle: 'El efecto "parque temático" entre las 10:30h y las 16:30h cuando desembarcan los cruceros y excursiones de autobús.',
-    andreaSolution: 'Cronograma inverso de guía oficial: canales ocultos de Santa Ana, beguinajes en hora dorada y mis píldoras de audio narrándote la historia del Siglo de Oro flamenco mientras paseas.',
-    microMetric: 'Cero colas · Narrativa histórica en tu oído',
-  },
-];
-
-export const AUDIO_PILLS: AudioPill[] = [
-  {
-    id: 'brujas-01',
-    code: 'PISTA 01 · BRUJAS [51.20°N, 3.22°E]',
-    location: 'Brujas · Canal Dijver & Barrio de Santa Ana',
-    coordinates: '51.2089° N, 3.2242° E',
-    duration: '02:15',
-    durationSeconds: 135,
-    title: 'Por qué no debes entrar al Markt a las 11:00h y el callejón secreto detrás del canal Dijver',
-    contextBadge: 'SE ACTIVA POR GPS A LAS 09:45H JUNTO AL PUENTE BONIFACIUS',
-    transcript: [
-      '«Buenos días, viajeros. Si miráis vuestro reloj son las diez menos cuarto: justo ahora están aparcando cuarenta autobuses junto a la estación. Por eso nosotros no vamos hacia el Markt todavía.»',
-      '«Girad a vuestra derecha por la pequeña arcada de piedra de Groeninge. Fijaos en el escudo tallado sobre el dintel: era el antiguo gremio de los curtidores del siglo XV. Aquí apenas oiréis vuestros pasos sobre el adoquín.»',
-      '«Seguid mi voz hacia el barrio de Sint-Anna. Os he reservado mesa a las 12:30h en una taberna histórica de tres mesas donde no admiten grupos; volveremos al Markt a las 18:15h, cuando las fachadas escalonadas se tiñen de ámbar y la plaza vuelve a pertenecer a quienes duermen en Brujas.»',
+    bestSeason: 'Todo el año (Primavera y Otoño especialmente agradables)',
+    avgTemp: '16°C — 29°C',
+    imageUrl:
+      'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=1200&q=85',
+    imageAlt: 'Arquitectura tradicional marroquí con mosaicos, arcos y tonos cálidos',
+    atmosphereTags: ['Marrakech', 'Desierto bajo Estrellas', 'Pueblos Pesqueros', 'Riads con Encanto'],
+    summary:
+      'Dos formas de vivirlo a tu medida: una escapada intensa a Marrakech o una gran ruta combinando desierto, costa atlántica y medinas.',
+    expandedDescription:
+      'Marruecos ofrece un contraste sensorial único a muy pocas horas de vuelo. Diseñamos el viaje según el tiempo y el estilo que busquéis: desde una escapada vibrante centrada en Marrakech hasta un recorrido completo que atraviesa el país para dormir bajo el cielo estrellado del desierto, pasear por pueblos pesqueros bañados por el Atlántico y descubrir la hospitalidad marroquí en riads llenos de encanto.',
+    modalities: [
+      {
+        title: 'Opción 1 · Escapada a Marrakech',
+        duration: '~3 días (Fin de semana / Escapada)',
+        detail:
+          'Centrada en vivir la intensidad de Marrakech: su medina histórica, palacios, jardines botánicos, zocos de artesanía, gastronomía en azoteas y hammams tradicionales.',
+      },
+      {
+        title: 'Opción 2 · Ruta Completa por Marruecos',
+        duration: '7 días o más (según quiera el viajero)',
+        detail:
+          'Una inmersión total que combina Marrakech, dormir bajo las estrellas en el desierto, recorrer pueblos pesqueros junto al Atlántico como Essaouira, kasbahs históricas y medinas llenas de vida.',
+      },
     ],
-    secretReveal: 'Coordenada desbloqueada en tu mapa privado: Pasaje Huidenvettersplein → Hof Arents → Iglesia de Jerusalén.',
-  },
-  {
-    id: 'vietnam-02',
-    code: 'PISTA 02 · BAHÍA DE LAN HA [20.72°N, 107.04°E]',
-    location: 'Vietnam · Archipiélago de Cat Ba & Lan Ha',
-    coordinates: '20.7251° N, 107.0485° E',
-    duration: '01:50',
-    durationSeconds: 110,
-    title: 'La verdad sobre los cruceros de Ha Long y cómo despertar en silencio entre montañas kársticas',
-    contextBadge: 'PARA ESCUCHAR EN EL TRASLADO PRIVADO HANOI → ISLA DE CAT BA',
-    transcript: [
-      '«Seguro que habéis visto fotos idílicas de la Bahía de Ha Long... lo que el encuadre recorta son los trescientos barcos en fila india siguiendo la misma concesión marítima de dos horas.»',
-      '«Hoy embarcamos desde el extremo sur de Cat Ba hacia la Bahía de Lan Ha. Geológicamente es exactamente la misma formación kárstica milenaria, pero administrativamente pertenece a Hai Phong y el 90% de los operadores masivos no tienen licencia aquí.»',
-      '«Mañana a las 06:30h, subid a cubierta con una taza de café vietnamita antes del desayuno. Cuando el junco apague motores frente a la laguna de Ba Trai Dao, solo escucharéis el eco de las águilas pescadoras sobre el agua esmeralda.»',
+    whatWeInclude: [
+      'Selección de riads auténticos y bien ubicados, calibrados según el presupuesto y estilo que queráis.',
+      'Planificación clara de etapas, traslados y tiempos reales en carretera.',
+      'Recomendaciones gastronómicas, terrazas, zocos por gremios y opciones de experiencias en destino.',
     ],
-    secretReveal: 'Camarote asignado en proa superior (Cubierta 2, babor) para evitar el ruido del generador nocturno.',
-  },
-  {
-    id: 'china-03',
-    code: 'PISTA 03 · PEKÍN [39.91°N, 116.39°E]',
-    location: 'Pekín · Ciudad Prohibida & Pabellones del Oeste',
-    coordinates: '39.9163° N, 116.3972° E',
-    duration: '02:30',
-    durationSeconds: 150,
-    title: 'Cómo cruzar los patios laterales de la Ciudad Prohibida donde nunca llegan los grupos con bandera',
-    contextBadge: 'SE ESCUCHA TRAS PASAR EL CONTROL DE PASAPORTE EN PUERTA MERIDIANA (WU MEN)',
-    transcript: [
-      '«Acabáis de cruzar la Puerta Meridiana. El 95% de los visitantes va a caminar en línea recta por el eje central imperial norte-sur y saldrá agotado en noventa minutos pensando que todo el palacio está lleno de gente.»',
-      '«Nosotros vamos a hacer exactamente lo que hacían los eruditos de la corte Ming: en cuanto veáis los leones de bronce del Salón de la Suprema Armonía, tomad la puerta lateral izquierda hacia el Palacio de la Compasión Tranquila (Cining Gong).»',
-      '«Aquí los muros bermellón están completamente en calma, los cipreses tienen quinientos años y podréis observar la cerámica vidriada imperial a un metro de distancia sin un solo megáfono alrededor.»',
+    orientativeRoute: [
+      {
+        stageLabel: 'Bloque 01 · Marrakech y su Medina',
+        title: 'Palacios históricos, jardines, zocos artesanos y plazas llenas de vida',
+        highlights:
+          'Descubrimiento pausado de la Ciudad Roja combinando cultura, arquitectura andalusí-bereber y gastronomía local.',
+      },
+      {
+        stageLabel: 'Bloque 02 · Rumbo al Desierto (En rutas de 7+ días)',
+        title: 'Paso por el Atlas, kasbahs de adobe y noche bajo las estrellas en las dunas',
+        highlights:
+          'Paisajes de valles, gargantas naturales y la experiencia inolvidable de contemplar el atardecer y el cielo nocturno en el desierto.',
+      },
+      {
+        stageLabel: 'Bloque 03 · Brisa Atlántica o Ciudades Imperiales',
+        title: 'Pueblos pesqueros costeros o extensión hacia el norte',
+        highlights:
+          'Cierre relajado junto al océano disfrutando de pescado fresco y medinas blancas junto al mar, o ampliación hacia otras regiones.',
+      },
     ],
-    secretReveal: 'Salida estratégica por Puerta Shenwu + ruta a pie hacia el hutong de Wudaoying en lugar de esperar 45 min un taxi.',
-  },
-];
-
-export const HONESTY_COMPARISON: ComparisonRow[] = [
-  {
-    aspect: 'Cómo se diseña cada día de ruta',
-    agency: {
-      verdict: 'Plantilla Copiar-Pegar de Mayorista',
-      detail: 'El mismo PDF que venden a 400 clientes al año. Visitas en las horas punta de más calor y masificación porque dependen de autobuses compartidos.',
-    },
-    influencer: {
-      verdict: 'Recopilación de "Spots de Foto" inconexos',
-      detail: 'Listas de "10 sitios imprescindibles" que en el mapa real están a 3 horas de atasco entre sí. Cero criterio logístico ni contexto histórico.',
-    },
-    andrea: {
-      verdict: 'Ingeniería de Tiempos + Mirada de Guía Oficial',
-      detail: 'Diseño tu jornada según la luz, la apertura real de monumentos, los flujos de cruceros y vuestra curva de energía, con Plan B si llueve.',
-    },
-  },
-  {
-    aspect: 'Transparencia en Hoteles y Presupuesto',
-    agency: {
-      verdict: 'Sobreprecio Oculto del 20% al 35%',
-      detail: 'El presupuesto "gratis" se cobra inflando el paquete cerrado. Te alojan en hoteles grandes de las afueras porque les dan mayor margen comercial.',
-    },
-    influencer: {
-      verdict: 'Enlaces de Afiliado Masivos o Canjes',
-      detail: 'Recomiendan donde les han invitado gratis o lo primero que sale en buscadores genéricos, sin avisar de habitaciones interiores o ruidos.',
-    },
-    andrea: {
-      verdict: 'Precio Real Directo · Cero Comisiones Ocultas',
-      detail: 'Cobro únicamente mis honorarios de diseño. Tú reservas directamente cada riad, ecolodge o junco a su tarifa oficial y te indico qué habitación exacta pedir.',
-    },
-  },
-  {
-    aspect: 'Qué ocurre cuando estás en destino',
-    agency: {
-      verdict: 'Rigidez Total y Paradas Comerciales',
-      detail: 'Te llevan a fábricas de alfombras, jade o perlas "oficiales" para cobrar comisión mientras pierdes dos horas de tu tarde libre.',
-    },
-    influencer: {
-      verdict: 'Soledad ante las Barreras Reales',
-      detail: 'Cuando llegas a Pekín y tu tarjeta no pasa, o cae un diluvio en Costa Rica, el post del blog no te explica cómo resolverlo en 5 minutos.',
-    },
-    andrea: {
-      verdict: 'Tu Hada en el Bolsillo (Audio + Bóveda + Plan B)',
-      detail: 'Llevas mis píldoras de audio para entender lo que ves, Alipay/eSIM configurados antes de despegar, mapa gastronómico seguro y alternativa climática lista.',
-    },
-  },
-];
-
-export const SURVIVAL_KIT_CARDS: SurvivalKitCard[] = [
-  {
-    id: 'kit-china',
-    region: 'CHINA SIN BARRERAS',
-    code: 'PROTOCOLO DIGITAL · ALIPAY / WECHAT / 12306',
-    badge: 'Fricción Digital = 0%',
-    title: 'Configuración paso a paso antes de subir al avión',
-    frictionPoint: 'En China el efectivo casi no tiene cambio y las tarjetas Visa/Mastercard físicas no pasan en comercios ni taxis.',
-    solutions: [
-      'Tutorial guiado 30 días antes para vincular tus tarjetas europeas a Alipay y WeChat Pay superando el límite de 200 RMB.',
-      'eSIM con enrutamiento en Hong Kong/Singapur (VPN transparente integrada): WhatsApp, Google Maps e Instagram funcionan desde el minuto 1 al aterrizar.',
-      'Emisión anticipada de tus billetes de tren bala (G-Trains) en el sistema oficial ferroviario con pasaporte vinculado (sin canjear papel en taquilla).',
-      'Tarjetas bilingües en caracteres mandarines para alergias alimentarias, direcciones de hoteles y estaciones.',
-    ],
-    planBHighlight: 'Plan B incluido: Alternativas cubiertas en hutongs y museos imperiales ante días de lluvia o calima en Pekín y Shanghái.',
-  },
-  {
-    id: 'kit-marruecos-vietnam',
-    region: 'MARRUECOS & VIETNAM',
-    code: 'LOGÍSTICA VERIFICADA · CERO TRAMPAS TURÍSTICAS',
-    badge: 'Seguridad & Calma',
-    title: 'Conductores privados de confianza, riads reales y finanzas claras',
-    frictionPoint: 'En Marruecos y Vietnam la diferencia entre un viaje mágico y uno agotador está en quién te espera al salir de la estación o dónde duermes.',
-    solutions: [
-      'Marruecos: Conductores privados oficiales con los que trabajo personalmente desde hace años y riads dentro de la medina a menos de 3 minutos a pie de un punto de acceso en taxi.',
-      'Vietnam: Listado exacto de cajeros sin comisión local (TPBank / VPBank) que ahorran entre 80€ y 140€ por viaje en tasas bancarias.',
-      'Filtro gastronómico de higiene verificada: dónde comer el mejor Bun Cha de Hanoi o un tajín casero en el Atlas con total tranquilidad estomacal.',
-      'Sastrerías éticas en Hoi An y cooperativas bereberes reales (nunca bazares de autobús con comisión).',
-    ],
-    planBHighlight: 'Plan B incluido: Cambio automático de ruta si hay viento en la bahía o tormenta monzónica en el centro de Vietnam.',
-  },
-  {
-    id: 'kit-clima',
-    region: 'NÓRDICOS, BRUJAS & COSTA RICA',
-    code: 'INGENIERÍA METEOROLÓGICA · PLAN B DIARIO',
-    badge: 'Clima Inteligente',
-    title: 'Doble escenario diario para que la lluvia o la nieve sumen magia',
-    frictionPoint: 'Un itinerario rígido se desmorona el primer día que llueve en el bosque nuboso de Monteverde o se cierra un puerto en Lofoten.',
-    solutions: [
-      'En Países Nórdicos: Radar de nubosidad en vivo para cazar auroras boreales + rutas escénicas alternativas por túneles subacuáticos si un ferri cancela por oleaje.',
-      'En Costa Rica y Panamá: Secuencia geográfica Pacífico → Tierras Altas → Caribe diseñada según la ventana seca de tu quincena exacta y cruces 4x4 verificados.',
-      'En Brujas y Flandes: Refugios históricos, salones de té medievales, microcervecerías trapenses y museos flamencos íntimos listos para activar con un toque si llueve.',
-    ],
-    planBHighlight: 'En tu Entregable Estrella tienes un interruptor literal: "¿Llueve o estamos cansados?" que reconfigura tu día al instante.',
-  },
-];
-
-export const TRAVEL_UNIVERSES: TravelUniverse[] = [
-  {
-    id: 'europa',
-    shortTitle: 'Brujas & Nórdicos',
-    title: 'Europa con Alma: Brujas, Flandes y Países Nórdicos',
-    subtitle: 'Canales medievales al amanecer, fiordos en silencio y auroras boreales desde cabañas sobre el mar.',
-    coordinates: '51.20° N, 3.22° E · 68.23° N, 14.56° E',
-    lat: 59.7,
-    lng: 8.9,
-    bestSeason: 'Abr-Oct (Flandes) · Sep-Mar (Auroras) · Jun-Ago (Sol Medianoche)',
-    recommendedDays: '5 a 12 días',
-    avgTemp: '2°C — 19°C',
-    imageUrl: 'https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?auto=format&fit=crop&w=1200&q=85',
-    imageAlt: 'Fiordos escénicos y cabañas tradicionales sobre el agua en el norte de Europa',
-    atmosphereTags: ['Patrimonio Vivo', 'Auroras sin Autobuses', 'Rutas Escénicas', 'Audio-Guía de Autor'],
-    fatalMistake: 'Visitar Brujas en excursión de 4 horas al mediodía rodeado de masas, o intentar recorrer Noruega cambiando de hotel cada noche sin calcular los horarios reales de los ferris árticos.',
-    andreaMagicTouch: 'Dormir en el corazón silencioso de Brujas para recorrer sus beguinajes a las 08:30h con mis píldoras de audio en el oído, o instalar tu base en un rorbu histórico de Lofoten con sauna privada sobre el fiordo.',
-    signatureMoment: 'Cruzar el puente de San Bonifacio al anochecer con la neblina subiendo del canal mientras te cuento la historia secreta de los mercaderes de Brujas.',
-    hoursSaved: '+36H AHORRADAS',
-  },
-  {
-    id: 'marruecos',
-    shortTitle: 'Marruecos',
-    title: 'Marruecos Auténtico y Seguro: De las Medinas al Erg',
-    subtitle: 'Patios de azahar en calma, kasbahs de adobe en el Alto Atlas y campamentos íntimos bajo las estrellas del Sáhara.',
-    coordinates: '31.62° N, 7.98° W',
-    lat: 31.62,
-    lng: -7.98,
-    bestSeason: 'Octubre a Mayo (Primavera y Otoño ideales)',
-    recommendedDays: '7 a 12 días',
-    avgTemp: '18°C — 28°C',
-    imageUrl: 'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=1200&q=85',
-    imageAlt: 'Patio arquitectónico marroquí de tonos tierra y luz cálida',
-    atmosphereTags: ['Riads con Alma', 'Conductor Privado', 'Desierto sin Masas', 'Artesanía Real'],
-    fatalMistake: 'Reservar un riad precioso en fotos pero ubicado en un callejón oscuro a 20 minutos de la parada de coche, o hacer el trayecto Marrakech-Merzouga del tirón pasando 11 horas encerrado en una furgoneta.',
-    andreaMagicTouch: 'Conductor privado de mi total confianza que os acompaña a vuestro ritmo, paradas en valles bereberes fuera de ruta como Skoura o Tamnougalt, y campamento en dunas donde las jaimas están separadas para garantizar silencio absoluto.',
-    signatureMoment: 'Cenar en la azotea privada de vuestro riad escuchando la llamada al rezo al atardecer tras una tarde en un hammam tradicional de barrio.',
-    hoursSaved: '+34H AHORRADAS',
+    flexibilityNote:
+      'Los servicios concretos en destino (tipo de transporte, alojamientos y actividades) se configuran 100% a medida según vuestro presupuesto al hablar con nosotros.',
   },
   {
     id: 'costarica',
-    shortTitle: 'Costa Rica & Panamá',
-    title: 'Naturaleza Salvaje: Costa Rica y el Caribe de Panamá',
-    subtitle: 'Bosques nubosos donde despiertas entre tucanes, volcanes activos, aguas termales en la selva y cayos cristalinos.',
-    coordinates: '9.74° N, 83.75° W',
-    lat: 9.74,
-    lng: -83.75,
-    bestSeason: 'Diciembre a Abril (Pacífico) · Septiembre y Octubre (Caribe)',
-    recommendedDays: '12 a 18 días',
-    avgTemp: '24°C — 30°C',
-    imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85',
-    imageAlt: 'Bosque nuboso tropical y naturaleza exuberante en Costa Rica',
-    atmosphereTags: ['Ecolodges Boutique', 'Logística 4x4 Precisa', 'Fauna en Libertad', 'Combinado Panamá'],
-    fatalMistake: 'Alquilar el coche equivocado, conducir de noche con niebla tropical por carreteras de montaña o reservar resorts grandes de cemento donde tienes que hacer cola para ver un perezoso.',
-    andreaMagicTouch: 'Selecciono ecolodges con reserva biológica propia (donde los monos y quetzales están en tu propio jardín al amanecer), guías naturalistas privados con telescopio Swarovski y cierre en un bungalow sobre el agua en Bocas del Toro.',
-    signatureMoment: 'Bañarte en un río termal volcánico rodeado de selva primaria a las cinco de la tarde cuando ya se han marchado todas las excursiones.',
-    hoursSaved: '+38H AHORRADAS',
+    name: 'Costa Rica',
+    regionTag: 'América',
+    durationBadge: '12 a 20 días orientativos',
+    coordinates: '10.46° N, 84.70° W',
+    lat: 10.46,
+    lng: -84.7,
+    bestSeason: 'Todo el año (combinando vertiente Pacífico y Caribe según el mes)',
+    avgTemp: '22°C — 30°C',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Arenal_volcano_%2870785p%29.jpg/1280px-Arenal_volcano_%2870785p%29.jpg',
+    imageAlt: 'Volcán Arenal y selva tropical exuberante en Costa Rica',
+    atmosphereTags: ['Parques Nacionales', 'Volcanes & Cascadas', 'Fauna en Libertad', 'Caribe & Pacífico'],
+    summary:
+      'Pura Vida en estado puro: parques nacionales, volcanes imponentes, cascadas en la selva, playas vírgenes y fauna exótica en libertad.',
+    expandedDescription:
+      'Costa Rica es un santuario natural incomparable para quienes buscan naturaleza en mayúsculas. El viaje recorre sus impresionantes parques nacionales, su biodiversidad única en el planeta, cascadas escondidas entre la vegetación tropical, volcanes imponentes con aguas termales, playas de ensueño bañadas tanto por el mar Caribe como por el océano Pacífico, y la emoción constante de observar en libertad perezosos, tucanes, monos, ranas tropicales y animales exóticos que no se pueden ver en ningún otro lugar del mundo.',
+    whatWeInclude: [
+      'Diseño de ruta optimizado según la época del año para aprovechar el mejor clima entre el Pacífico, las tierras altas y el Caribe.',
+      'Selección de alojamientos integrados en la naturaleza y hoteles de playa adaptados a vuestro presupuesto.',
+      'Planificación de etapas, parques nacionales imprescindibles y alternativas según el ritmo que busquéis.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Etapa 01 · Volcanes, Aguas Termales y Cataratas',
+        title: 'Región volcánica, senderos de lava, puentes colgantes y cascadas',
+        highlights:
+          'Inmersión en paisajes volcánicos rodeados de selva primaria, pozas naturales y aguas termales.',
+      },
+      {
+        stageLabel: 'Etapa 02 · Bosques Nubosos y Biodiversidad',
+        title: 'Reservas biológicas y observación de fauna salvaje en su hábitat',
+        highlights:
+          'Recorridos entre vegetación exuberante donde habitan perezosos, tucanes, colibríes y cientos de especies tropicales.',
+      },
+      {
+        stageLabel: 'Etapa 03 · Costas del Pacífico o del Caribe',
+        title: 'Parques nacionales costeros donde la selva se funde con el mar',
+        highlights:
+          'Días de desconexión, playas de arena blanca o volcánica, arrecifes de coral y atardeceres frente al océano.',
+      },
+    ],
+    flexibilityNote:
+      'Duración orientativa de 12 a 20 días. También se puede combinar fácilmente con Panamá.',
   },
   {
     id: 'china',
-    shortTitle: 'China',
-    title: 'China Sin Barreras Digitales: Imperio, Karst y Futuro',
-    subtitle: 'De la Gran Muralla en tramos solitarios y los guerreros de Xi’an a los ríos de bambú de Yangshuo y el skyline de Shanghái.',
+    name: 'China',
+    regionTag: 'Asia',
+    durationBadge: '12 a 20 días orientativos',
     coordinates: '39.90° N, 116.40° E',
     lat: 39.9,
     lng: 116.4,
-    bestSeason: 'Abril-Mayo y Septiembre-Noviembre',
-    recommendedDays: '13 a 20 días',
-    avgTemp: '14°C — 25°C',
-    imageUrl: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1200&q=85',
-    imageAlt: 'Gran Muralla China serpenteando entre montañas al amanecer',
-    atmosphereTags: ['Bóveda Digital Alipay', 'Trenes Bala 350km/h', 'Cultura Milenaria', 'Cero Estrés Idioma'],
-    fatalMistake: 'Ir a China sin haber configurado la identidad digital antes de volar, coincidir con festivos nacionales chinos o visitar el tramo masificado de Badaling en la Gran Muralla.',
-    andreaMagicTouch: 'Llegas con tu ecosistema digital 100% operativo, tus entradas nominativas a la Ciudad Prohibida reservadas al segundo exacto en que se abren en Pekín, y caminamos por un tramo restaurado de la Muralla donde estaréis prácticamente solos.',
-    signatureMoment: 'Descender en balsa de bambú tradicional por el río Yulong al amanecer mientras los picos kársticos de Yangshuo se reflejan como un grabado en tinta.',
-    hoursSaved: '+48H AHORRADAS',
+    bestSeason: 'Primavera (Marzo-Mayo) y Otoño (Septiembre-Noviembre)',
+    avgTemp: '14°C — 26°C',
+    imageUrl:
+      'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1200&q=85',
+    imageAlt: 'La Gran Muralla China recorriendo las cumbres montañosas',
+    atmosphereTags: ['China Milenaria', 'Gran Muralla', 'Paisajes de ensueño', 'Metrópolis Futuristas'],
+    summary:
+      'El contraste fascinante entre miles de años de historia imperial, templos ancestrales, naturaleza sobrecogedora y ciudades del futuro.',
+    expandedDescription:
+      'Descubrir la China milenaria es adentrarse en una de las civilizaciones más ricas y sorprendentes de la Tierra. Un viaje donde conviven palacios imperiales, templos ancestrales, maravillas del mundo como la Gran Muralla o el Ejército de Terracota, paisajes naturales de montañas kársticas y arrozales que parecen de otro planeta, y metrópolis futuristas vibrantes. Todo ello organizado con claridad para que disfrutéis de su inmensa cultura y gastronomía con total tranquilidad.',
+    whatWeInclude: [
+      'Asesoramiento práctico sobre pagos digitales, conectividad y logística ferroviaria de alta velocidad.',
+      'Ruta equilibrada combinando capitales históricas, paisajes naturales y grandes ciudades modernas.',
+      'Recomendaciones de alojamientos, gastronomía regional y gestión de accesos a los monumentos clave.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Etapa 01 · El Legado Imperial del Norte',
+        title: 'Pekín, la Ciudad Prohibida, templos históricos y la Gran Muralla',
+        highlights:
+          'Recorrido por los grandes símbolos de las dinastías imperiales, barrios tradicionales de hutongs y la majestuosidad de la Muralla.',
+      },
+      {
+        stageLabel: 'Etapa 02 · Corazón Histórico y Paisajes Naturales',
+        title: 'Xi’an, guerreros milenarios y montañas kársticas o parques naturales',
+        highlights:
+          'Conexión en tren de alta velocidad hacia el origen de la Ruta de la Seda y los paisajes de ríos y cumbres de película en el sur.',
+      },
+      {
+        stageLabel: 'Etapa 03 · Pueblos de Agua y Vanguardia en Shanghái',
+        title: 'Jardines clásicos, canales tradicionales y el skyline más moderno de Asia',
+        highlights:
+          'Contraste final entre la serenidad de las antiguas villas de agua y la energía cosmopolita de Shanghái.',
+      },
+    ],
+    flexibilityNote:
+      'Ruta orientativa de 12 a 20 días. Adaptamos las regiones (Yunnan, Zhangjiajie, Chengdu o Hong Kong) según vuestras preferencias.',
   },
   {
     id: 'vietnam',
-    shortTitle: 'Vietnam',
-    title: 'Vietnam de Norte a Sur: Montañas de Arroz y Farolillos',
-    subtitle: 'El caos poético de Hanoi, valles étnicos en Pu Luong o Ha Giang, navegación íntima en Lan Ha y la elegancia de Hoi An.',
-    coordinates: '21.02° N, 105.83° E',
-    lat: 21.02,
-    lng: 105.83,
-    bestSeason: 'Febrero a Mayo y Octubre a Diciembre (Ruta adaptada por latitud)',
-    recommendedDays: '14 a 18 días',
+    name: 'Vietnam',
+    regionTag: 'Asia',
+    durationBadge: '12 a 18 días orientativos',
+    coordinates: '20.91° N, 107.18° E',
+    lat: 20.91,
+    lng: 107.18,
+    bestSeason: 'Todo el año adaptando las zonas de norte, centro y sur',
     avgTemp: '22°C — 31°C',
-    imageUrl: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=85',
-    imageAlt: 'Bahía kárstica y embarcación tradicional en Vietnam al amanecer',
-    atmosphereTags: ['Junco Boutique Lan Ha', 'Gastronomía Segura', 'Arrozales sin Masas', 'Ideal Luna de Miel'],
-    fatalMistake: 'Querer abarcar 9 ciudades en 12 días pasando el viaje en autobuses cama incómodos, caer en los cruceros fiesta de Ha Long o ir a Sapa en fin de semana.',
-    andreaMagicTouch: 'Sustituimos las zonas saturadas por lodges con piscina infinita frente a las terrazas de arroz de Pu Luong, navegamos por Lan Ha en barco boutique y te doy mi mapa curado de cafés de especialidad y restaurantes familiares.',
-    signatureMoment: 'Despertar frente a las terrazas de arroz envueltas en bruma matinal y recorrer en bicicleta los puentes de bambú del valle con un guía local.',
-    hoursSaved: '+42H AHORRADAS',
+    imageUrl:
+      'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=85',
+    imageAlt: 'Embarcación tradicional entre las formaciones kársticas de la Bahía de Ha Long en Vietnam',
+    atmosphereTags: ['Bahía de Ha Long', 'Para Todo Viajero', 'Arrozales & Templos', 'Hoi An & Gastronomía'],
+    summary:
+      'Un destino extraordinario para todo tipo de viajeros: crucero por la emblemática Bahía de Ha Long, arrozales, ciudades de farolillos y una gastronomía inolvidable.',
+    expandedDescription:
+      'Vietnam es un destino fascinante e ideal para todo tipo de viajeros —ya viajéis en pareja, con amigos, en familia o en un gran viaje personal—. Nuestra propuesta combina la experiencia imprescindible de navegar en crucero por la emblemática Bahía de Ha Long, el gran clásico que conocemos de primera mano y donde apostamos sobre seguro, con la energía de Hanoi, los paisajes de valles y arrozales del norte, la historia imperial de Hue, el encanto de las calles iluminadas por farolillos en Hoi An y el dinamismo del sur.',
+    whatWeInclude: [
+      'Selección cuidada del crucero en la Bahía de Ha Long y alojamientos con encanto en cada etapa según vuestro presupuesto.',
+      'Coordinación fluida de conexiones internas de norte a sur para aprovechar al máximo vuestros días.',
+      'Recomendaciones de gastronomía vietnamita, mercados, sastrerías en Hoi An y visitas culturales.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Etapa 01 · El Norte: Hanoi, Paisajes Rurales y Bahía de Ha Long',
+        title: 'Casco histórico de Hanoi, valles de arrozales, Ninh Binh y crucero en Ha Long',
+        highlights:
+          'Templos milenarios, cultura del café vietnamita, paisajes kársticos entre arrozales y noche a bordo navegando por la Bahía de Ha Long.',
+      },
+      {
+        stageLabel: 'Etapa 02 · El Centro: Ciudad Imperial de Hue y Hoi An',
+        title: 'Ciudadelas históricas, farolillos de seda, playas y alta gastronomía local',
+        highlights:
+          'Paseos por el casco antiguo de Hoi An, talleres artesanales, gastronomía regional y días de relax junto al mar.',
+      },
+      {
+        stageLabel: 'Etapa 03 · El Sur Vibrante y el Delta del Mekong (Opcional)',
+        title: 'Ho Chi Minh y la vida fluvial de los canales del Mekong',
+        highlights:
+          'Cierre descubriendo el contraste urbano del sur y la riqueza tropical de las islas y mercados del Delta.',
+      },
+    ],
+    flexibilityNote:
+      'Ejemplo orientativo de 12 a 18 días. Configurable tanto para rutas de norte a centro como para recorrer el país completo de norte a sur.',
+  },
+  {
+    id: 'panama',
+    name: 'Panamá',
+    regionTag: 'América',
+    durationBadge: '10 a 15 días (o combinado)',
+    coordinates: '8.98° N, 79.51° W',
+    lat: 8.98,
+    lng: -79.51,
+    bestSeason: 'Diciembre a Abril (época seca) y excelente todo el año en combinación',
+    avgTemp: '24°C — 31°C',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Skyline_of_Panama_City_01.jpg/1280px-Skyline_of_Panama_City_01.jpg',
+    imageAlt: 'Skyline frente al océano y costa de Ciudad de Panamá',
+    atmosphereTags: ['Casco Antiguo', 'Canal de Panamá', 'Bocas del Toro', 'Islas San Blas'],
+    summary:
+      'El punto de encuentro entre dos océanos: historia colonial en el Casco Antiguo, la maravilla del Canal, selvas tropicales y archipiélagos cristalinos.',
+    expandedDescription:
+      'Panamá sorprende por su contraste fascinante entre la vanguardia de su capital frente al océano y el encanto colonial del Casco Antiguo, la impresionante obra de ingeniería del Canal de Panamá, tierras altas cafetaleras rodeadas de selva tropical y archipiélagos paradisíacos de aguas turquesas como Bocas del Toro o las islas vírgenes de San Blas (Guna Yala). Es maravilloso tanto como destino único como combinado con Costa Rica.',
+    whatWeInclude: [
+      'Ruta equilibrada entre cultura urbana, naturaleza tropical y descanso en islas del Caribe o del Pacífico.',
+      'Selección de hoteles con encanto en el Casco Antiguo y alojamientos junto al mar según vuestro presupuesto.',
+      'Planificación de conexiones internas y recomendaciones gastronómicas.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Etapa 01 · Ciudad de Panamá y el Canal',
+        title: 'Casco Antiguo colonial, esclusas del Canal y biodiversidad metropolitana',
+        highlights:
+          'Plazas coloniales restauradas, terrazas frente al Pacífico y visita a la historia y funcionamiento del Canal de Panamá.',
+      },
+      {
+        stageLabel: 'Etapa 02 · Tierras Altas y Naturaleza Tropical',
+        title: 'Bosques nubosos, volcanes y plantaciones de café de especialidad',
+        highlights:
+          'Clima primaveral de montaña en zonas como Boquete o el Valle de Antón, senderos naturales y cascadas.',
+      },
+      {
+        stageLabel: 'Etapa 03 · Paraísos Insulares del Caribe',
+        title: 'Archipiélago de Bocas del Toro o las islas coralinas de San Blas',
+        highlights:
+          'Días de desconexión entre playas de arena blanca, estrellas de mar, arrecifes y aguas cristalinas.',
+      },
+    ],
+    flexibilityNote:
+      'Orientativo de 10 a 15 días en exclusiva, o de 4 a 7 días si lo combináis como cierre de una ruta por Costa Rica.',
+  },
+  {
+    id: 'nuevayork',
+    name: 'Nueva York',
+    regionTag: 'América',
+    durationBadge: '5 a 8 días orientativos',
+    coordinates: '40.71° N, 74.00° W',
+    lat: 40.71,
+    lng: -74.0,
+    bestSeason: 'Primavera, Otoño, Navidad y escapadas urbanas todo el año',
+    avgTemp: '4°C — 27°C',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Lower_Manhattan_from_BBP_%2802018p%29.jpg/1280px-Lower_Manhattan_from_BBP_%2802018p%29.jpg',
+    imageAlt: 'Skyline de Manhattan al atardecer visto desde Brooklyn',
+    atmosphereTags: ['Manhattan & Brooklyn', 'Miradores & Central Park', 'Broadway & Museos', 'Ruta por Barrios'],
+    summary:
+      'La energía inigualable de la ciudad que nunca duerme: barrios icónicos, miradores de vértigo, musicales en Broadway y rincones de película a tu ritmo.',
+    expandedDescription:
+      'Nueva York es un viaje que se vive como una película en cada esquina. Diseñamos vuestra estancia agrupando inteligentemente las zonas para que disfrutéis sin agotaros: desde pasear por Central Park, cruzar el puente de Brooklyn y subir a sus miradores más espectaculares, hasta recorrer barrios con personalidad propia como SoHo, Greenwich Village, DUMBO o Harlem, disfrutar de un gran musical en Broadway, visitar museos de talla mundial y saborear su inabarcable escena gastronómica.',
+    whatWeInclude: [
+      'Itinerario organizado por barrios contiguos para aprovechar cada jornada sin perder tiempo en el metro.',
+      'Asesoramiento sobre pases turísticos (solo si realmente compensan para lo que queréis ver) y reserva de miradores.',
+      'Selección de hoteles bien comunicados y mapa de cafeterías, rooftops, mercados y restaurantes.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Bloque 01 · El Corazón de Manhattan y Grandes Iconos',
+        title: 'Midtown, Quinta Avenida, Central Park, miradores y luces de Broadway',
+        highlights:
+          'Arquitectura art déco, pulmón verde de Manhattan, bibliotecas históricas y la magia de los teatros.',
+      },
+      {
+        stageLabel: 'Bloque 02 · Barrios con Alma y Sur de la Isla',
+        title: 'SoHo, West Village, High Line, Chelsea Market y Distrito Financiero',
+        highlights:
+          'Calles arboladas de brownstones, galerías, parques elevados y vistas a la Estatua de la Libertad.',
+      },
+      {
+        stageLabel: 'Bloque 03 · Brooklyn, Puentes y Contraste Cultural',
+        title: 'DUMBO, Brooklyn Heights, Williamsburg y miradores frente al skyline',
+        highlights:
+          'Mercados gastronómicos, arte urbano, parques junto al East River y las mejores panorámicas de Manhattan.',
+      },
+    ],
+    flexibilityNote:
+      'Ejemplo orientativo de 5 a 8 días. Adaptable tanto si es vuestra primera vez en Nueva York como si ya la conocéis y buscáis nuevos barrios.',
+  },
+  {
+    id: 'madeira',
+    name: 'Madeira',
+    regionTag: 'África & Atlántico',
+    durationBadge: '5 a 8 días orientativos',
+    coordinates: '32.76° N, 16.95° W',
+    lat: 32.76,
+    lng: -16.95,
+    bestSeason: 'Todo el año (conocida como la isla de la eterna primavera)',
+    avgTemp: '17°C — 25°C',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/CGI_-_Cliff_and_Atlantic_Ocean_from_Miradouro_do_Cabo_Gir%C3%A3o%2C_Madeira%2C_2023.jpg/1280px-CGI_-_Cliff_and_Atlantic_Ocean_from_Miradouro_do_Cabo_Gir%C3%A3o%2C_Madeira%2C_2023.jpg',
+    imageAlt: 'Acantilados verdes sobre el océano Atlántico en la isla de Madeira',
+    atmosphereTags: ['Eterna Primavera', 'Levadas & Laurisilva', 'Piscinas Volcánicas', 'Miradores sobre Nubes'],
+    summary:
+      'Un jardín flotante en el Atlántico: acantilados dramáticos, senderos de levadas entre bosques milenarios, piscinas volcánicas y gastronomía atlántica.',
+    expandedDescription:
+      'Madeira enamora por su naturaleza desbordante y su clima suave durante todo el año. Un destino perfecto para combinar carreteras panorámicas entre acantilados vertiginosos sobre el océano, rutas accesibles o activas por sus famosas levadas entre bosques de laurisilva declarados Patrimonio de la Humanidad, baños en piscinas naturales de roca volcánica, cumbres por encima de un mar de nubes, jardines botánicos en Funchal y una gastronomía marinera excelente.',
+    whatWeInclude: [
+      'Planificación de rutas diarias por sectores de la isla (Norte, Este, Oeste y Cumbres) según vuestro ritmo.',
+      'Selección de quintas tradicionales, hoteles con vistas al Atlántico o alojamientos en Funchal.',
+      'Recomendaciones de miradores, piscinas naturales, mercados de frutas exóticas y restaurantes locales.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Etapa 01 · Funchal, Jardines Históricos y Costa Sur',
+        title: 'Casco antiguo, mercado dos Lavradores, Monte y acantilados de Cabo Girão',
+        highlights:
+          'Arquitectura tradicional portuguesa, jardines subtropicales, bodegas históricas y atardeceres sobre el mar.',
+      },
+      {
+        stageLabel: 'Etapa 02 · Cumbres por Encima de las Nubes y Bosques de Laurisilva',
+        title: 'Picos centrales, senderos de levadas, cascadas y bosque milenario de Fanal',
+        highlights:
+          'Paisajes de montaña inolvidables y paseos suaves junto a los canales de agua tradicionales.',
+      },
+      {
+        stageLabel: 'Etapa 03 · Costa Norte Salvaje y Piscinas Volcánicas',
+        title: 'Porto Moniz, Seixal, Santana y la península volcánica de São Lourenço',
+        highlights:
+          'Pueblos costeros entre montañas verdes, playas de arena negra y piscinas naturales de agua cristalina.',
+      },
+    ],
+    flexibilityNote:
+      'Duración orientativa de 5 a 8 días. Adaptamos el nivel de los paseos y miradores para que disfrutéis tanto si buscáis relax escénico como senderismo.',
+  },
+  {
+    id: 'francia',
+    name: 'Francia',
+    regionTag: 'Europa',
+    durationBadge: 'Escapadas 3-4 días o Rutas 7-14 días',
+    coordinates: '48.85° N, 2.35° E',
+    lat: 48.85,
+    lng: 2.35,
+    bestSeason: 'Todo el año según la región elegida',
+    avgTemp: '8°C — 25°C',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Eiffel_Tower_as_seen_from_the_Pont_Mirabeau%2C_22_April_2014.jpg/1280px-Eiffel_Tower_as_seen_from_the_Pont_Mirabeau%2C_22_April_2014.jpg',
+    imageAlt: 'Vista del río Sena y la Torre Eiffel en París, Francia',
+    atmosphereTags: ['París & Bistrós', 'Castillos & Pueblos', 'Viñedos & Gastronomía', 'Costa & Alpes'],
+    summary:
+      'Del arte y los bistrós de París a rutas por castillos históricos, pueblos medievales, viñedos legendarios y paisajes de ensueño.',
+    expandedDescription:
+      'Francia ofrece infinitos viajes dentro de un mismo país. Podemos diseñar desde una escapada inolvidable a París descubriendo sus barrios bohemios, museos, pasajes cubiertos y bistrós clásicos, hasta rutas a medida por el Valle del Loira y sus castillos renacentistas, los pueblos de cuento de Alsacia, los campos y mercados de la Provenza, la elegancia de la Costa Azul, los acantilados de Normandía y el Mont-Saint-Michel o la ruta del vino en Burdeos.',
+    whatWeInclude: [
+      'Diseño de escapadas urbanas o rutas regionales en tren o coche totalmente adaptadas a vuestros días.',
+      'Selección de hoteles boutique, châteaux o casas con encanto y recomendaciones de bistrós y pastelerías.',
+      'Itinerario cultural y gastronómico equilibrado según vuestros intereses.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Opción Escapada (3–4 Días) · París con Encanto',
+        title: 'Barrios históricos, grandes museos, paseos junto al Sena y gastronomía francesa',
+        highlights:
+          'Le Marais, Saint-Germain-des-Prés, Montmartre, iconos monumentales y mesas seleccionadas lejos de las zonas masificadas.',
+      },
+      {
+        stageLabel: 'Opción Ruta Regional (7–14 Días) · Castillos, Pueblos y Viñedos',
+        title: 'Recorrido por Alsacia, Valle del Loira, Provenza, Normandía o Bretaña',
+        highlights:
+          'Pueblos históricos, mercados gastronómicos, bodegas tradicionales y patrimonio monumental.',
+      },
+    ],
+    flexibilityNote:
+      'Totalmente adaptable: desde un fin de semana largo en París o Alsacia hasta una gran ruta de una o dos semanas.',
+  },
+  {
+    id: 'italia',
+    name: 'Italia',
+    regionTag: 'Europa',
+    durationBadge: 'Escapadas 3-4 días o Rutas 7-15 días',
+    coordinates: '41.90° N, 12.49° E',
+    lat: 41.9,
+    lng: 12.49,
+    bestSeason: 'Todo el año (Primavera y Otoño ideales para arte y costa)',
+    avgTemp: '11°C — 28°C',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Sunset_trough_the_arches_of_the_Colosseum%2C_Rome.jpg/1280px-Sunset_trough_the_arches_of_the_Colosseum%2C_Rome.jpg',
+    imageAlt: 'El Coliseo de Roma iluminado por la luz cálida del atardecer en Italia',
+    atmosphereTags: ['Roma, Florencia & Venecia', 'Toscana & Pueblos', 'Costa Italiana', 'Trattorias Auténticas'],
+    summary:
+      'Un museo al aire libre donde historia, arte y gastronomía se celebran en cada plaza: ciudades eternas, colinas toscanas y costas mediterráneas.',
+    expandedDescription:
+      'Viajar a Italia es enamorarse del arte de vivir. Diseñamos tanto escapadas de pocos días a ciudades eternas como Roma, Florencia, Venecia, Milán o Nápoles, como grandes rutas recorriendo los cipreses y pueblos medievales de la Toscana, los acantilados de la Costa Amalfitana o Cinque Terre, los lagos del norte, los trulli de Puglia o la riqueza histórica y volcánica de Sicilia, priorizando siempre trattorias auténticas y alojamientos con carácter.',
+    whatWeInclude: [
+      'Organización inteligente de visitas culturales, entradas a monumentos clave y conexiones en tren o ruta en coche.',
+      'Selección de hoteles con encanto, agriturismos en el campo o alojamientos históricos en el centro.',
+      'Mapa gastronómico de trattorias tradicionales, heladerías artesanales y enotecas.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Opción Escapada (3–4 Días) · Ciudades de Arte Eterno',
+        title: 'Roma, Florencia o Venecia disfrutadas con calma y buena mesa',
+        highlights:
+          'Plazas monumentales, barrios como Trastevere o Oltrarno, obras maestras del Renacimiento y aperitivos italianos.',
+      },
+      {
+        stageLabel: 'Opción Ruta Completa (7–15 Días) · Toscana, Costa o Sur de Italia',
+        title: 'Combinado de grandes joyas culturales, pueblos medievales y paisaje mediterráneo',
+        highlights:
+          'Rutas escénicas entre colinas de viñedos, pueblos colgados frente al mar y gastronomía regional.',
+      },
+    ],
+    flexibilityNote:
+      'Cada región italiana es un universo propio; adaptamos los días y paradas exactamente a vuestro ritmo.',
+  },
+  {
+    id: 'espana',
+    name: 'España',
+    regionTag: 'Europa',
+    durationBadge: 'Fin de semana 3 días o Rutas 7-14 días',
+    coordinates: '37.38° N, 5.98° W',
+    lat: 37.38,
+    lng: -5.98,
+    bestSeason: 'Todo el año gracias a su diversidad climática',
+    avgTemp: '12°C — 28°C',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Seville%2C_Plaza_de_Espa%C3%B1a_%2838625005691%29_%28edited%29.jpg/1280px-Seville%2C_Plaza_de_Espa%C3%B1a_%2838625005691%29_%28edited%29.jpg',
+    imageAlt: 'Arquitectura monumental de la Plaza de España en Sevilla',
+    atmosphereTags: ['Patrimonio Histórico', 'Rutas Gastronómicas', 'Pueblos con Encanto', 'Costas & Islas'],
+    summary:
+      'Redescubrir nuestra tierra con mirada de autor: ciudades patrimoniales, rutas gastronómicas de norte a sur, pueblos blancos y costas turquesas.',
+    expandedDescription:
+      'No hace falta cruzar medio mundo para vivir un viaje extraordinario cuando la ruta está cuidada al detalle. Diseñamos desde escapadas de fin de semana hasta rutas de una o dos semanas por España: el legado monumental de Andalucía y sus pueblos blancos, la España Verde de costa, acantilados y alta gastronomía en el norte (Galicia, Asturias, Cantabria y País Vasco), rutas de vino y arquitectura en el interior, o calas y caminos históricos en Baleares y Canarias.',
+    whatWeInclude: [
+      'Itinerarios pensados al detalle descubriendo rincones auténticos más allá de lo evidente.',
+      'Selección de hoteles boutique, paradores históricos, casas rurales con encanto y mesas gastronómicas.',
+      'Rutas adaptadas tanto para escapadas cortas de desconexión como para vacaciones completas.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Opción Escapada (2–4 Días) · Ciudad, Cultura y Gastronomía',
+        title: 'Fines de semana con encanto cultural, bodegas o desconexión en la naturaleza',
+        highlights:
+          'Recorridos patrimoniales, mercados de abastos, barras de tapeo selectas y descanso en hoteles especiales.',
+      },
+      {
+        stageLabel: 'Opción Ruta (7–14 Días) · Norte Verde, Sur Monumental o Islas',
+        title: 'Recorrido por etapas combinando costa, pueblos históricos y parques naturales',
+        highlights:
+          'Carreteras escénicas, playas salvajes o calas mediterráneas y la mejor gastronomía local en cada parada.',
+      },
+    ],
+    flexibilityNote:
+      'Ideal tanto para regalar una escapada especial de 3 días como para organizar vuestras vacaciones de verano o puentes.',
+  },
+  {
+    id: 'portugal',
+    name: 'Portugal',
+    regionTag: 'Europa',
+    durationBadge: 'Escapadas 3-4 días o Rutas 7-12 días',
+    coordinates: '41.14° N, 8.61° W',
+    lat: 41.14,
+    lng: -8.61,
+    bestSeason: 'Todo el año (Primavera, Verano y Otoño magníficos)',
+    avgTemp: '12°C — 26°C',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Douro_river_in_Porto_%286%29.jpg/1280px-Douro_river_in_Porto_%286%29.jpg',
+    imageAlt: 'Ribera del río Duero y puente histórico en Oporto, Portugal',
+    atmosphereTags: ['Lisboa & Oporto', 'Palacios de Sintra', 'Valle del Duero', 'Costa Atlántica'],
+    summary:
+      'La luz atlántica de Lisboa y el encanto ribereño de Oporto, palacios entre bosques, pueblos amurallados y una gastronomía inolvidable.',
+    expandedDescription:
+      'Portugal conquista por su cercanía, su luz melancólica y su autenticidad. Diseñamos escapadas a medida a Lisboa y los palacios románticos de Sintra, o a Oporto y los viñedos en terrazas del Valle del Duero, así como rutas completas de norte a sur descubriendo pueblos históricos como Óbidos, Coimbra o Évora, la tranquilidad del Alentejo y los acantilados dorados y playas del Algarve.',
+    whatWeInclude: [
+      'Rutas a pie por miradores, barrios históricos de azulejos y tranvías en Lisboa y Oporto.',
+      'Selección de alojamientos con encanto, quintas en el Duero o refugios junto al Atlántico.',
+      'Recomendaciones de tascas tradicionales, casas de fado auténticas, bodegas y pastelerías históricas.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Etapa 01 · Oporto y el Valle del Duero',
+        title: 'Ribeira del Duero, puentes históricos, bodegas y paisajes de viñedos',
+        highlights:
+          'Paseos junto al río, librerías y fachadas de azulejos, catas de vino y miradores inolvidables.',
+      },
+      {
+        stageLabel: 'Etapa 02 · Centro Histórico, Sintra y Lisboa',
+        title: 'Pueblos medievales, bosques y palacios de Sintra y las siete colinas de Lisboa',
+        highlights:
+          'Barrios de Alfama, Chiado y Belém, pasteles de nata recién horneados y atardeceres sobre el Tajo.',
+      },
+      {
+        stageLabel: 'Etapa 03 · Alentejo o Costa del Algarve (En rutas de 7+ días)',
+        title: 'Pueblos blancos del interior y acantilados sobre el océano',
+        highlights:
+          'Playas atlánticas, gastronomía marinera y ritmo pausado en el sur de Portugal.',
+      },
+    ],
+    flexibilityNote:
+      'Perfecto tanto para una escapada de 3 o 4 días a Lisboa u Oporto como para una ruta en coche o tren de 7 a 12 días.',
+  },
+  {
+    id: 'alemania',
+    name: 'Alemania',
+    regionTag: 'Europa',
+    durationBadge: 'Escapadas 3-4 días o Rutas 7-12 días',
+    coordinates: '47.55° N, 10.74° E',
+    lat: 47.55,
+    lng: 10.74,
+    bestSeason: 'Primavera a Otoño y época de Mercados de Adviento en Diciembre',
+    avgTemp: '5°C — 23°C',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Neuschwanstein_Castle_2024.jpg/1280px-Neuschwanstein_Castle_2024.jpg',
+    imageAlt: 'Castillo de Neuschwanstein rodeado de bosques y montañas en Baviera, Alemania',
+    atmosphereTags: ['Castillos de Cuento', 'Selva Negra & Baviera', 'Pueblos con Entramado', 'Cultura & Mercados'],
+    summary:
+      'Castillos de cuento de hadas, bosques profundos en la Selva Negra, pueblos medievales de entramado de madera y ciudades llenas de historia.',
+    expandedDescription:
+      'Alemania combina como pocos destinos la naturaleza de bosques y lagos alpinos con un patrimonio histórico y cultural fascinante. Podemos organizar desde escapadas urbanas a Berlín o Múnich hasta rutas inolvidables por la Ruta Romántica y los castillos de Baviera (como Neuschwanstein), los pueblos de entramado de madera de cuento como Rothenburg ob der Tauber, los paisajes y relojes tradicionales de la Selva Negra, el Valle del Rin o rutas especiales por sus mercados tradicionales en invierno.',
+    whatWeInclude: [
+      'Planificación de etapas muy cómoda tanto en tren como en ruta por carretera (Autobahn y carreteras escénicas).',
+      'Selección de hoteles con encanto bávaro, alojamientos en pueblos históricos o en capitales culturales.',
+      'Guía de castillos, miradores naturales, cervecerías históricas (Biergärten) y gastronomía regional.',
+    ],
+    orientativeRoute: [
+      {
+        stageLabel: 'Etapa 01 · Múnich y los Castillos de Baviera',
+        title: 'Patrimonio bávaro, lagos prealpinos y el castillo de Neuschwanstein',
+        highlights:
+          'Plazas históricas, jardines ingleses, palacios reales y paisajes alpinos de postal.',
+      },
+      {
+        stageLabel: 'Etapa 02 · La Ruta Romántica y Pueblos Medievales',
+        title: 'Villas amuralladas y casas de entramado de madera llenas de encanto',
+        highlights:
+          'Paseos por cascos históricos medievales intactos como Rothenburg ob der Tauber o Dinkelsbühl.',
+      },
+      {
+        stageLabel: 'Etapa 03 · Selva Negra o Berlín Vanguardista',
+        title: 'Bosques de abetos, cascadas y pueblos termales o la gran historia del siglo XX',
+        highlights:
+          'Extensión adaptable hacia la naturaleza de la Selva Negra o hacia la intensidad cultural de Berlín.',
+      },
+    ],
+    flexibilityNote:
+      'Adaptable a escapadas de 3-4 días o rutas completas de 7 a 12 días por Baviera, Selva Negra o ciudades imperiales.',
   },
 ];
 
-export const LOOKBOOK_DEMOS: Record<'vietnam' | 'china', LookbookItineraryDemo> = {
-  vietnam: {
-    id: 'vietnam',
-    countryName: 'Vietnam de Autor',
-    routeTitle: 'Ruta 15 Días · El Hilo de Seda y Esmeralda',
-    routeCode: 'EXP-VNM-15D · NORTE & CENTRO',
-    duration: '15 Días / 14 Noches',
-    season: 'Primavera / Otoño · Clima Calibrado',
-    coordinates: '21.02° N, 105.83° E → 15.88° N, 108.33° E',
-    compass: {
-      summary: 'Un trazado orgánico pensado para saborear Vietnam sin hacer las maletas cada 24 horas: 4 bases con encanto, traslados privados puerta a puerta y equilibrio perfecto entre cultura viva, naturaleza kárstica y descanso boutique.',
-      stops: [
-        { dayRange: 'Días 01–04', city: 'Hanoi (Barrio Francés & Lagos)', vibe: 'Cultura & Café de Especialidad', coords: '21.02°N 105.85°E' },
-        { dayRange: 'Días 05–07', city: 'Reserva Natural de Pu Luong', vibe: 'Terrazas de Arroz & Ecolodge', coords: '20.45°N 105.18°E' },
-        { dayRange: 'Días 08–10', city: 'Tam Coc (Ninh Binh) & Bahía de Lan Ha', vibe: 'Ríos Kársticos & Junco Boutique', coords: '20.72°N 107.04°E' },
-        { dayRange: 'Días 11–15', city: 'Hue Imperial & Hoi An (Playa An Bang)', vibe: 'Farolillos, Sastrería & Relax Mar', coords: '15.88°N 108.33°E' },
-      ],
-      energyCurve: [
-        { day: 'D1-D2', label: 'Aterrizaje Suave', energy: 45, note: 'Ritmo lento para absorber el jet-lag con masaje tradicional vietnamita.' },
-        { day: 'D3-D4', label: 'Inmersión Hanoi', energy: 70, note: 'Callejones secretos al amanecer + gastronomía guiada.' },
-        { day: 'D5-D7', label: 'Trekking Suave Pu Luong', energy: 80, note: 'Caminatas por aldeas Thai y tardes de piscina frente al valle.' },
-        { day: 'D8-D10', label: 'Crucero Silencioso', energy: 55, note: 'Kayak en lagunas ocultas de Lan Ha y lectura en cubierta.' },
-        { day: 'D11-D15', label: 'Calma en Hoi An', energy: 40, note: 'Bicicleta entre arrozales, sastrería a medida y mar.' },
-      ],
-      discarded: [
-        {
-          place: 'Bahía de Ha Long (Ruta Turística Estándar)',
-          reason: 'Descartada por saturación de hasta 400 barcos diarios en el mismo canal. La sustituimos por la concesión sur de Lan Ha desde Cat Ba.',
-        },
-        {
-          place: 'Sapa en tren nocturno de fin de semana',
-          reason: 'El centro urbano de Sapa sufre un exceso de construcción de hormigón. Elegimos Pu Luong: a solo 4h en coche privado, 100% auténtico y sin aglomeraciones.',
-        },
-      ],
-    },
-    vaultChecklist: [
-      {
-        id: 'vnm-c1',
-        window: '60 DÍAS ANTES',
-        task: 'Tramitar e-Visa oficial de Vietnam (Portal gubernamental único)',
-        andreaNote: 'Incluyo mi guía visual con capturas para rellenar el formulario oficial (25 USD) evitando webs intermediarias que cobran 95€.',
-        defaultChecked: true,
-      },
-      {
-        id: 'vnm-c2',
-        window: '60 DÍAS ANTES',
-        task: 'Bloquear el camarote de proa en el junco boutique de 10 suites en Lan Ha',
-        andreaNote: 'Enlace directo con tarifa preferencial sin prepago total hasta 14 días antes.',
-        defaultChecked: true,
-      },
-      {
-        id: 'vnm-c3',
-        window: '30 DÍAS ANTES',
-        task: 'Instalar app Grab y vincular tarjeta sin comisiones de divisa (Revolut / N26)',
-        andreaNote: 'Así conocéis el precio exacto de cada trayecto urbano en Hanoi y Da Nang sin negociar nunca con taxistas.',
-        defaultChecked: false,
-      },
-      {
-        id: 'vnm-c4',
-        window: '48H ANTES DE VOLAR',
-        task: 'Descargar mapa offline de Andrea + Píldoras de Audio y activar eSIM Viettel',
-        andreaNote: 'Cobertura 4G/5G real incluso en los valles de montaña de Pu Luong y en mitad de la bahía.',
-        defaultChecked: false,
-      },
-    ],
-    dailyLog: [
-      {
-        dayNumber: 4,
-        dayTitle: 'Día 04 · El Hanoi que despierta a las 06:30h y los patios coloniales',
-        location: 'Hanoi · Distrito Hoan Kiem & Truc Bach',
-        coordinates: '21.0285° N, 105.8542° E',
-        temp: '25°C · Brisa matinal',
-        audioPillCode: 'AUDIO #04 · HANOI SECRETO (03:10)',
-        planA: [
-          {
-            time: '07:30h',
-            period: 'MAÑANA',
-            title: 'Templo de la Literatura en apertura + Callejón de los Calígrafos',
-            description: 'Entramos justo cuando abren los portones de madera antes de que lleguen los grupos escolares. Os guío con mi audio por los cinco patios confucianos.',
-            logisticsCode: 'GRAB 8 MIN · ENTRADA 30.000 VND',
-          },
-          {
-            time: '12:15h',
-            period: 'MEDIODÍA',
-            title: 'Almuerzo de Bun Cha en casa familiar del Barrio Francés',
-            description: 'Nada de franquicias turísticas: una terraza interior de arquitectura art déco donde preparan el cerdo caramelizado al carbón con hierbas frescas impecables.',
-            logisticsCode: 'RESERVA CONFIRMADA · MESA EN PATIO',
-          },
-          {
-            time: '16:00h',
-            period: 'TARDE',
-            title: 'Paseo por la isla de Truc Bach y taller de café de huevo (Ca Phe Trung)',
-            description: 'Caminamos junto al lago donde apenas hay turistas y subimos por una librería escondida a probar el café de huevo original de la familia Nguyen.',
-            logisticsCode: 'A PIE 14 MIN · PIN #12 DEL MAPA',
-          },
-          {
-            time: '20:00h',
-            period: 'NOCHE',
-            title: 'Cena vietnamita contemporánea en villa restaurada de 1920',
-            description: 'Velada tranquila a la luz de las velas con cocina de mercado del norte de Vietnam.',
-            logisticsCode: 'A 6 MIN A PIE DE VUESTRO HOTEL',
-          },
-        ],
-        planB: {
-          weatherTrigger: '🌧️ PLAN B ACTIVADO: Aguacero tropical en Hanoi o mañana de descanso lento',
-          andreaMessage: '«Si hoy amanece diluviando en Hanoi o preferís dormir hasta tarde, no caminamos bajo el agua: activamos la ruta de salones históricos, cerámica y bienestar.»',
-          schedule: [
-            {
-              time: '09:30h',
-              period: 'MAÑANA',
-              title: 'Desayuno largo + Museo de Bellas Artes en edificio colonial cubierto',
-              description: 'Salas de laca vietnamita y pintura en seda con vistas a los jardines bajo la lluvia, completamente resguardados y sin aglomeraciones.',
-              logisticsCode: 'TRASLADO PUERTA A PUERTA EN GRAB CUBIERTO',
-            },
-            {
-              time: '12:45h',
-              period: 'MEDIODÍA',
-              title: 'Pho Bo reconfortante en salón interior del Barrio Francés',
-              description: 'Caldo aromático de 12 horas con canela y anís estrellado en una casa colonial climatizada.',
-              logisticsCode: 'MESA INTERIOR RESERVADA · PIN #18',
-            },
-            {
-              time: '15:30h',
-              period: 'TARDE',
-              title: 'Ritual de Spa Herbal de 120 minutos + Ceremonia de Té de Loto de West Lake',
-              description: 'Tarde en un santuario silencioso de medicina tradicional vietnamita (con descuento directo para mis viajeros) seguida de cata privada de té.',
-              logisticsCode: 'RESERVA FLEXIBLE POR WHATSAPP · CÓDIGO HADA',
-            },
-            {
-              time: '20:00h',
-              period: 'NOCHE',
-              title: 'Jazz en vivo en club íntimo fundado por el saxofonista Quyen Van Minh',
-              description: 'Cerramos el día de lluvia en butacas de terciopelo escuchando jazz fusión con instrumentos tradicionales vietnamitas.',
-              logisticsCode: 'A 400M DEL HOTEL · ENTRADA INCLUIDA',
-            },
-          ],
-        },
-      },
-    ],
-    stays: [
-      {
-        id: 'stay-vnm-1',
-        name: 'Capella / Boutique Opera Quarter Residence',
-        location: 'Hanoi · Barrio Francés (Hoan Kiem Sur)',
-        category: 'Boutique Heritage · 4★ Sup / 5★',
-        pricePerNight: '165 € / noche (Desayuno a la carta incl.)',
-        whyChosen: 'Ubicado en una calle arbolada junto a la Ópera: a 6 minutos a pie del casco antiguo pero aislado del ruido de cláxones nocturnos.',
-        exactRoomToAsk: 'Pedir planta 4 o 5 con balcón hacia el patio interior de frangipanis (Habitaciones 402 a 406).',
-        directBookingUrl: 'Reserva directa a tarifa oficial del hotel (0% recargo)',
-        coordinates: '21.0245° N, 105.8576° E',
-      },
-      {
-        id: 'stay-vnm-2',
-        name: 'Retreat en las Nubes de Pu Luong',
-        location: 'Reserva Natural de Pu Luong',
-        category: 'Ecolodge de Autor · Bungalows sobre el Valle',
-        pricePerNight: '140 € / noche (Media pensión gourmet)',
-        whyChosen: 'Dos piscinas infinitas colgadas sobre el anfiteatro de arrozales y caminos directos desde la puerta hacia las aldeas con ruedas hidráulicas de bambú.',
-        exactRoomToAsk: 'Valley View Deluxe Bungalow #03 o #04 (los más privados en el extremo oriental).',
-        directBookingUrl: 'Enlace directo con upgrade prioritario para clientes de Andrea',
-        coordinates: '20.4512° N, 105.1840° E',
-      },
-      {
-        id: 'stay-vnm-3',
-        name: 'Junco Tradicional de Madera (10 Camarotes)',
-        location: 'Bahía de Lan Ha & Archipiélago Cat Ba',
-        category: 'Crucero Boutique Íntimo',
-        pricePerNight: '320 € / suite (Pensión completa + Kayak + Ruta ciclista en Viet Hai)',
-        whyChosen: 'Barco de madera noble con velas color ocre y solo 20 pasajeros máximo, que se adentra en calas donde los megacruceros de acero no pueden entrar.',
-        exactRoomToAsk: 'Suite Orchid en cubierta superior (evita vibración de motor y tiene terraza privada).',
-        directBookingUrl: 'Tarifa directa armador verificada',
-        coordinates: '20.7251° N, 107.0485° E',
-      },
-    ],
-    radarPins: [
-      {
-        id: 'pin-v1',
-        category: 'cafe',
-        categoryLabel: 'Café de Especialidad',
-        name: 'Tranquil Books & Coffee (Patio Oculto)',
-        city: 'Hanoi',
-        coordinates: '21.0268° N, 105.8459° E',
-        xPercent: 28,
-        yPercent: 32,
-        whySpecial: 'Escondido al final de un pasaje residencial: paredes de libros, piano antiguo y granos Arábica de Da Lat tostados en micro-lotes.',
-        whatToOrderOrDo: 'Pide el Cold Brew con infusión de cáscara de naranja o su Egg Coffee cremoso sin exceso de azúcar.',
-      },
-      {
-        id: 'pin-v2',
-        category: 'food',
-        categoryLabel: 'Comida Local Segura',
-        name: 'Tam Vi (Casa de Madera Michelin Bib Gourmand)',
-        city: 'Hanoi',
-        coordinates: '21.0312° N, 105.8410° E',
-        xPercent: 52,
-        yPercent: 24,
-        whySpecial: 'Recetas caseras del norte de Vietnam servidas en vajilla antigua en una casa de té de dos plantas con estándares de higiene impecables.',
-        whatToOrderOrDo: 'Rollitos de caracol con hierbas imperiales, cerdo braseado con huevos de codorniz y sopa de cangrejo con espinaca de agua.',
-      },
-      {
-        id: 'pin-v3',
-        category: 'viewpoint',
-        categoryLabel: 'Mirador sin Autobuses',
-        name: 'Pico Nguom Ngao / Terraza Alta de Don Village',
-        city: 'Pu Luong / Ninh Binh',
-        coordinates: '20.4590° N, 105.1920° E',
-        xPercent: 68,
-        yPercent: 58,
-        whySpecial: 'Mientras 500 personas hacen cola en la cueva Mua a las 11:00h, este sendero lateral regala una panorámica de 360º sobre el río serpenteante en soledad.',
-        whatToOrderOrDo: 'Llegar a las 16:45h para ver cómo los rayos de sol atraviesan los mogotes de piedra caliza.',
-      },
-      {
-        id: 'pin-v4',
-        category: 'utility',
-        categoryLabel: 'Cajero 0% Comisión & Sastrería',
-        name: 'Cajero TPBank Hoan Kiem + Sastrería Yaly Couture Privada',
-        city: 'Hanoi / Hoi An',
-        coordinates: '15.8794° N, 108.3280° E',
-        xPercent: 42,
-        yPercent: 74,
-        whySpecial: 'Cajero verificado que permite retirar hasta 5.000.000 VND con 0 VND de comisión local + contacto de mi maestra sastre en Hoi An (lino y seda natural).',
-        whatToOrderOrDo: 'Hacer la primera toma de medidas la primera mañana en Hoi An para tener dos pruebas tranquilas.',
-      },
-    ],
-    budget: {
-      currency: '€',
-      perPersonDirectTotal: 2490,
-      traditionalAgencyTotal: 3480,
-      designFeeNote: 'Ahorro medio de 990 € por persona frente a un paquete equivalente en agencia tradicional (incluso sumando los honorarios de diseño de Andrea).',
-      items: [
-        {
-          category: 'Vuelos Internacionales + 2 Vuelos Internos (Vietnam Airlines)',
-          code: 'PARTIDA 01 · AÉREO',
-          directCost: 920,
-          agencyCost: 1210,
-          detail: 'Tarifa directa aerolínea con maleta facturada y horarios óptimos (sin escalas de 9h).',
-        },
-        {
-          category: '14 Noches en Hoteles Boutique, Ecolodge y Junco en Lan Ha',
-          code: 'PARTIDA 02 · REFUGIOS',
-          directCost: 980,
-          agencyCost: 1490,
-          detail: 'Coste por persona en habitación doble superior reservando directo al alojamiento.',
-        },
-        {
-          category: 'Coches Privados Puerta a Puerta, Tren Expreso y Experiencias',
-          code: 'PARTIDA 03 · LOGÍSTICA',
-          directCost: 380,
-          agencyCost: 560,
-          detail: 'Conductores privados verificados Hanoi-Pu Luong-Ninh Binh-Lan Ha y entradas.',
-        },
-        {
-          category: 'Gastronomía Local Curada y Cafés de Especialidad (15 días)',
-          code: 'PARTIDA 04 · MESA',
-          directCost: 210,
-          agencyCost: 220,
-          detail: 'Estimación real comiendo de maravilla en los restaurantes de mi mapa privado.',
-        },
-      ],
-    },
+export const SERVICE_ESSENCE_PILLARS = [
+  {
+    step: '01',
+    tag: 'FLEXIBILIDAD TOTAL',
+    title: 'Escucha y Diseño 100% a Tu Medida',
+    description:
+      'No vendemos paquetes cerrados ni imponemos servicios rígidos. Hablamos directamente contigo para entender vuestros días, gustos y presupuesto, decidiendo juntos qué ritmo y qué nivel de servicios queréis incluir en cada etapa.',
   },
-  china: {
-    id: 'china',
-    countryName: 'China Desbloqueada',
-    routeTitle: 'Ruta 15 Días · Dinastías, Montañas de Tinta y Vanguardia',
-    routeCode: 'EXP-CHN-15D · PEK · XIA · YSH · SHA',
-    duration: '15 Días / 14 Noches',
-    season: 'Primavera / Otoño · Alta Velocidad',
-    coordinates: '39.90° N, 116.40° E → 31.23° N, 121.47° E',
-    compass: {
-      summary: 'La ruta definitiva para descubrir China por libre con la seguridad de quien domina sus códigos digitales: trenes bala a 350 km/h, la Gran Muralla sin multitudes, casas patio históricas y paisajes kársticos de ensueño.',
-      stops: [
-        { dayRange: 'Días 01–04', city: 'Pekín (Hutongs & Gran Muralla)', vibe: 'Historia Imperial & Tramo Secreto', coords: '39.90°N 116.40°E' },
-        { dayRange: 'Días 05–07', city: 'Xi’an & Pingyao Medieval', vibe: 'Ruta de la Seda & Murallas Ming', coords: '34.34°N 108.94°E' },
-        { dayRange: 'Días 08–11', city: 'Yangshuo (Río Yulong) & Guilin', vibe: 'Montañas Kársticos & Bambú', coords: '24.77°N 110.49°E' },
-        { dayRange: 'Días 12–15', city: 'Shanghái & Pueblos de Agua (Tongli)', vibe: 'Concesión Francesa & Futuro', coords: '31.23°N 121.47°E' },
-      ],
-      energyCurve: [
-        { day: 'D1-D2', label: 'Pekín Imperial', energy: 65, note: 'Ciudad Prohibida por patios laterales y paseo suave por hutongs.' },
-        { day: 'D3-D4', label: 'Gran Muralla en Calma', energy: 85, note: 'Tramo escénico de Mutianyu/Jinshanling con subida en telesilla y bajada a pie.' },
-        { day: 'D5-D7', label: 'Tren Bala a Xi’an', energy: 60, note: 'Viaje comodísimo en primera clase (4h15) y muralla en bici al atardecer.' },
-        { day: 'D8-D11', label: 'Paz en el Río Yulong', energy: 45, note: 'Desconexión en hotel boutique entre picos de piedra caliza y campos de té.' },
-        { day: 'D12-D15', label: 'Shanghái Cosmopolita', energy: 70, note: 'Arquitectura Art Déco, jardines clásicos de Suzhou/Tongli y terrazas frente al Bund.' },
-      ],
-      discarded: [
-        {
-          place: 'Tramo de Badaling en la Gran Muralla',
-          reason: 'Es el punto al que van todos los tours masivos: colas de 2 horas y sensación de atasco humano. Vamos a un sector rodeado de bosque con 90% menos visitantes.',
-        },
-        {
-          place: 'Crucero turístico grande por el Río Li',
-          reason: 'Barcos ruidosos en caravana. Lo sustituimos por una balsa de bambú impulsada a pértiga (sin motor) en su afluente virgen, el río Yulong.',
-        },
-      ],
-    },
-    vaultChecklist: [
-      {
-        id: 'chn-c1',
-        window: '60 DÍAS ANTES',
-        task: 'Verificar exención de visado (30 días para pasaporte español) y validez > 6 meses',
-        andreaNote: 'Revisamos juntos vuestros pasaportes y preparamos las cartas de invitación de hoteles en caracteres chinos.',
-        defaultChecked: true,
-      },
-      {
-        id: 'chn-c2',
-        window: '30 DÍAS ANTES',
-        task: 'Configurar y verificar pasaporte en Alipay + WeChat Pay con tarjeta europea',
-        andreaNote: 'Hacemos una prueba real de pago de 1 yuan conmigo antes de volar para confirmar que vuestro banco no bloquea la pasarela.',
-        defaultChecked: true,
-      },
-      {
-        id: 'chn-c3',
-        window: '30 DÍAS ANTES',
-        task: 'Programar pre-reserva automática de Trenes Bala y entrada nominal a Ciudad Prohibida',
-        andreaNote: 'Las entradas a la Ciudad Prohibida se agotan en minutos a los 7 días de abrirse; mi sistema las deja bloqueadas con vuestros pasaportes.',
-        defaultChecked: false,
-      },
-      {
-        id: 'chn-c4',
-        window: '48H ANTES DE VOLAR',
-        task: 'Activar eSIM con VPN transparente + App Amap/ Apple Maps en China y DiDi integrado',
-        andreaNote: 'En China Google Maps tiene desfase de coordenadas (GCJ-02); lleváis mi cartografía calibrada al metro exacto.',
-        defaultChecked: false,
-      },
-    ],
-    dailyLog: [
-      {
-        dayNumber: 2,
-        dayTitle: 'Día 02 · Los Patios Ocultos de la Ciudad Prohibida y Hutongs al Atardecer',
-        location: 'Pekín · Eje Imperial & Colina del Carbón (Jingshan)',
-        coordinates: '39.9163° N, 116.3972° E',
-        temp: '21°C · Cielo despejado de otoño',
-        audioPillCode: 'AUDIO #03 · CIUDAD PROHIBIDA (02:30)',
-        planA: [
-          {
-            time: '08:15h',
-            period: 'MAÑANA',
-            title: 'Acceso prioritario por Puerta Donghuamen y Galería del Tesoro',
-            description: 'Evitamos la cola kilométrica de la plaza de Tiananmen entrando por el paseo arbolado lateral del foso oriental hasta la Puerta Meridiana.',
-            logisticsCode: 'PASAPORTE FÍSICO · SIN ENTRADA EN PAPEL',
-          },
-          {
-            time: '13:00h',
-            period: 'MEDIODÍA',
-            title: 'Pato Laqueado de Pekín en horno de madera de azufaifo',
-            description: 'Mesa reservada en un restaurante histórico donde el chef trincha el pato crujiente frente a vosotros, lejos de los comedores turísticos.',
-            logisticsCode: 'RESERVA WECHAT CONFIRMADA · PIN #04',
-          },
-          {
-            time: '16:15h',
-            period: 'TARDE',
-            title: 'Mirador de Jingshan en hora dorada + Ruta a pie por los Hutongs de Shichahai',
-            description: 'Subimos al pabellón imperial justo cuando el sol ilumina los 9.999 tejados dorados de la Ciudad Prohibida y bajamos hacia los callejones tradicionales.',
-            logisticsCode: 'ENTRADA QR ALIPAY · PÍLDORA DE AUDIO #05',
-          },
-          {
-            time: '19:45h',
-            period: 'NOCHE',
-            title: 'Cena en casa-patio (Siheyuan) con farolillos rojos en Wudaoying',
-            description: 'Cocina imperial contemporánea en un patio silencioso frecuentado por artistas y arquitectos locales.',
-            logisticsCode: 'DIDI INTEGRADO EN ALIPAY · 12 MIN',
-          },
-        ],
-        planB: {
-          weatherTrigger: '🌧️ PLAN B ACTIVADO: Lluvia o viento frío en Pekín / Día de ritmo pausado',
-          andreaMessage: '«Si hoy el cielo de Pekín está cubierto o preferís evitar grandes caminatas al aire libre, cambiamos la colina y los largos recorridos exteriores por joyas imperiales bajo techo.»',
-          schedule: [
-            {
-              time: '09:15h',
-              period: 'MAÑANA',
-              title: 'Pabellones interiores de Relojes Imperiales y Cerámica Ming',
-              description: 'Recorrido concentrado por las galerías climatizadas del palacio donde se guarda la colección de autómatas del emperador Qianlong.',
-              logisticsCode: 'RUTA CUBIERTA · CERO EXPOSICIÓN A LA LLUVIA',
-            },
-            {
-              time: '12:45h',
-              period: 'MEDIODÍA',
-              title: 'Hot Pot tradicional pekinés en caldero de bronce (Donglaishun)',
-              description: 'El mejor antídoto para un día fresco: caldo aromático hirviendo en mesa privada con cortes finísimos y salsa de sésamo.',
-              logisticsCode: 'A 5 MIN EN COCHE PRIVADO DIDI PREMIER',
-            },
-            {
-              time: '15:30h',
-              period: 'TARDE',
-              title: 'Ceremonia privada de Té Oolong y Pu’er en Casa de Té de Qianmen',
-              description: 'Una maestra del té os enseña el ritual Gongfu Cha mientras escucháis el sonido del guzheng tradicional en un salón de madera.',
-              logisticsCode: 'RESERVA DIRECTA · PIN #09 DEL MAPA',
-            },
-            {
-              time: '19:30h',
-              period: 'NOCHE',
-              title: 'Acrobacia clásica o coctelería de autor con vistas a la Ciudad Prohibida',
-              description: 'Velada resguardada viendo el palacio iluminado desde una terraza acristalada junto al foso imperial.',
-              logisticsCode: 'MESA JUNTO A VENTANAL RESERVADA',
-            },
-          ],
-        },
-      },
-    ],
-    stays: [
-      {
-        id: 'stay-chn-1',
-        name: 'Siheyuan Boutique Courtyard Hotel',
-        location: 'Pekín · Hutong Histórico de Dongcheng',
-        category: 'Casa Patio Imperial Restaurada · 4★ Sup',
-        pricePerNight: '185 € / noche (Desayuno oriental y occidental)',
-        whyChosen: 'Dormir en una auténtica residencia de dinastía Qing con suelo radiante, vigas pintadas a mano y jardín de bambú en absoluto silencio.',
-        exactRoomToAsk: 'Courtyard Suite Sur (orientación tradicional Feng Shui con luz toda la mañana).',
-        directBookingUrl: 'Reserva directa garantizada para extranjeros',
-        coordinates: '39.9342° N, 116.4120° E',
-      },
-      {
-        id: 'stay-chn-2',
-        name: 'Yulong River Karst Mountain Retreat',
-        location: 'Yangshuo · Valle del Río Yulong',
-        category: 'Boutique Design Lodge · 5★',
-        pricePerNight: '170 € / noche (Desayuno + Bicicletas incluidas)',
-        whyChosen: 'Rodeado por completo de montañas kársticas lejos del bullicio de West Street; sales caminando del jardín directamente al embarcadero de bambú.',
-        exactRoomToAsk: 'Panoramic Karst Room en planta 3 (ventanal de suelo a techo hacia los picos).',
-        directBookingUrl: 'Tarifa directa sin intermediarios',
-        coordinates: '24.7821° N, 110.4512° E',
-      },
-      {
-        id: 'stay-chn-3',
-        name: 'Villa Art Déco en la Antigua Concesión Francesa',
-        location: 'Shanghái · Xuhui / Jing’an',
-        category: 'Heritage Boutique · 5★',
-        pricePerNight: '210 € / noche',
-        whyChosen: 'Calles tranquilas cubiertas de plátanos de sombra, cafés de autor y boutiques de diseño, a solo 3 paradas de metro del Bund.',
-        exactRoomToAsk: 'Heritage King con terraza hacia el jardín histórico.',
-        directBookingUrl: 'Enlace directo verificado',
-        coordinates: '31.2185° N, 121.4510° E',
-      },
-    ],
-    radarPins: [
-      {
-        id: 'pin-c1',
-        category: 'cafe',
-        categoryLabel: 'Café & Té en Hutong',
-        name: 'Metal Hands Coffee (Hutong Wudaoying)',
-        city: 'Pekín',
-        coordinates: '39.9462° N, 116.4138° E',
-        xPercent: 32,
-        yPercent: 28,
-        whySpecial: 'Arquitectura minimalista integrada bajo los tejados grises tradicionales junto al Templo de los Lamas.',
-        whatToOrderOrDo: 'Su Dirty Coffee con leche fría artesanal o el latte con toque de flor de osmanto.',
-      },
-      {
-        id: 'pin-c2',
-        category: 'food',
-        categoryLabel: 'Comida Local Segura',
-        name: 'Siji Minfu (Vista al Foso de la Ciudad Prohibida)',
-        city: 'Pekín',
-        coordinates: '39.9158° N, 116.4041° E',
-        xPercent: 58,
-        yPercent: 38,
-        whySpecial: 'El pato laqueado favorito de los locales en Pekín. Te enseño cómo sacar el turno digital por WeChat 90 minutos antes mientras terminas tu visita para no hacer ni 5 minutos de cola.',
-        whatToOrderOrDo: 'Medio pato laqueado imperial + berenjenas crujientes al estilo pekinés.',
-      },
-      {
-        id: 'pin-c3',
-        category: 'viewpoint',
-        categoryLabel: 'Mirador sin Autobuses',
-        name: 'Puente Fuli (Siglo XV) sobre el Río Yulong',
-        city: 'Yangshuo',
-        coordinates: '24.8120° N, 110.4230° E',
-        xPercent: 45,
-        yPercent: 68,
-        whySpecial: 'Un arco perfecto de piedra cubierto de hiedra que forma un círculo exacto con su reflejo en el agua esmeralda, fuera de la ruta de los grupos.',
-        whatToOrderOrDo: 'Llegar en bici eléctrica a las 08:00h cuando la niebla matinal acaricia el río.',
-      },
-      {
-        id: 'pin-c4',
-        category: 'utility',
-        categoryLabel: 'Acceso Tren Bala & Farmacia',
-        name: 'Acceso VIP Estación Beijing South + Glosario Médico Mandarín',
-        city: 'Pekín / Shanghái',
-        coordinates: '39.8651° N, 116.3789° E',
-        xPercent: 72,
-        yPercent: 62,
-        whySpecial: 'Indicación exacta de qué control de seguridad usar con pasaporte extranjero (carril manual con lector óptico) y tarjetas médicas en chino.',
-        whatToOrderOrDo: 'Llegar 40 minutos antes de la salida del tren G (no hace falta más con mi guía de puertas).',
-      },
-    ],
-    budget: {
-      currency: '€',
-      perPersonDirectTotal: 2740,
-      traditionalAgencyTotal: 3950,
-      designFeeNote: 'Ahorro medio de 1.210 € por persona frente a circuitos organizados de categoría equivalente, viajando en privado y sin paradas comerciales obligatorias.',
-      items: [
-        {
-          category: 'Vuelos Directos Madrid/Barcelona — Pekín y Regreso desde Shanghái',
-          code: 'PARTIDA 01 · AÉREO MULTIDESTINO',
-          directCost: 890,
-          agencyCost: 1240,
-          detail: 'Billetes open-jaw (entras por Pekín y sales por Shanghái sin perder un día volviendo atrás).',
-        },
-        {
-          category: '14 Noches en Casas Patio, Lodge Kárstico y Boutique en Shanghái',
-          code: 'PARTIDA 02 · REFUGIOS',
-          directCost: 1120,
-          agencyCost: 1750,
-          detail: 'Tarifa real directa en hoteles boutique con encanto (no torres de negocios en el quinto anillo).',
-        },
-        {
-          category: '4 Trenes Bala de Alta Velocidad + Traslados Privados y Entradas',
-          code: 'PARTIDA 03 · ALTA VELOCIDAD',
-          directCost: 470,
-          agencyCost: 680,
-          detail: 'Incluye coche privado a la Gran Muralla, balsas en Yangshuo y todas las entradas imperiales.',
-        },
-        {
-          category: 'Gastronomía Imperial, Dim Sum y Cafés (15 días)',
-          code: 'PARTIDA 04 · MESA',
-          directCost: 260,
-          agencyCost: 280,
-          detail: 'Comer en China en restaurantes excelentes pagando con Alipay tiene una relación calidad-precio extraordinaria.',
-        },
-      ],
-    },
+  {
+    step: '02',
+    tag: 'CURADURÍA ARTESANAL',
+    title: 'Alojamientos con Encanto y Logística Clara',
+    description:
+      'Seleccionamos hoteles boutique, riads, cabañas o alojamientos especiales acordes a vuestro presupuesto, y trazamos todas las conexiones de vuelos, trenes o rutas para que no perdáis horas en traslados mal calculados.',
   },
-};
+  {
+    step: '03',
+    tag: 'HOJA DE RUTA INTERACTIVA',
+    title: 'Tu Itinerario Día a Día, Mapa y Alternativas',
+    description:
+      'Recibes tu ruta detallada con visitas recomendadas, mapa gastronómico y de rincones especiales, consejos prácticos para el destino y alternativas flexibles por si un día cambia el clima o preferís tomarlo con más calma.',
+  },
+  {
+    step: '04',
+    tag: 'ACOMPAÑAMIENTO REAL',
+    title: 'Tú Eliges Hasta Dónde Delegar',
+    description:
+      'Desde revisar un itinerario que ya tenéis empezado hasta diseñar el viaje completo con enlaces listos para reservar o acompañaros en una videollamada extra para dejar todas las reservas cerradas juntos.',
+  },
+];
 
 export const TRAVELER_PROFILES = [
   {
@@ -1011,39 +663,42 @@ export const TRAVELER_PROFILES = [
     badge: 'PERFIL 01 · TIEMPO DE CALIDAD',
     title: 'La Pareja Profesional Consolidada',
     subtitle: 'Sin tiempo que perder frente a 40 pestañas abiertas',
-    quote: '«Tenéis 15 días de vacaciones al año y cero ganas de pasar el domingo discutiendo frente a un Excel de horarios de trenes y reseñas contradictorias.»',
+    quote:
+      '«Tenéis 15 días de vacaciones al año y cero ganas de pasar el domingo discutiendo frente a un Excel de horarios de trenes y reseñas contradictorias.»',
     painPoints: [
-      'Sabéis viajar por libre, pero vuestro trabajo no os deja 45 horas libres para investigar visados, ferris o qué barrio es realmente tranquilo.',
+      'Sabéis viajar por libre, pero vuestro trabajo no os deja 45 horas libres para investigar visados, conexiones o qué barrio es realmente tranquilo.',
       'No queréis meter vuestras vacaciones en un autobús con 40 desconocidos siguiendo un banderín.',
       'Buscáis hoteles con alma, buena gastronomía local y la tranquilidad de que cada enlace logístico encaja al milímetro.',
     ],
-    idealDestinations: 'China, Vietnam, Países Nórdicos o Brujas & Flandes',
+    idealDestinations: 'China, Vietnam, Nueva York, Italia, Madeira o Brujas',
   },
   {
     id: 'luna-de-miel',
     badge: 'PERFIL 02 · VIAJE DE NOVIOS DE AUTOR',
     title: 'Lunas de Miel "Anti-Catálogo"',
     subtitle: 'Románticas, irrepetibles y 100% vuestras',
-    quote: '«Queréis un viaje de novios irrepetible a Vietnam, Costa Rica o combinados de autor, huyendo de los paquetes clónicos de agencia y los hoteles impersonales.»',
+    quote:
+      '«Queréis un viaje de novios irrepetible a Vietnam, Costa Rica o combinados de autor, huyendo de los paquetes clónicos de agencia y los hoteles impersonales.»',
     painPoints: [
       'Organizar una boda ya consume bastante energía como para jugársela con la logística de vuestro gran viaje.',
-      'Queréis combinar aventura auténtica por la mañana y un refugio boutique extraordinario con piscina frente a los arrozales o la selva por la tarde.',
-      'Valoráis la transparencia: que vuestro presupuesto vaya íntegro a experiencias memorables y suites con encanto, no a comisiones de intermediarios.',
+      'Queréis combinar aventura auténtica por la mañana y un refugio boutique extraordinario con vistas a los arrozales, el mar o la selva por la tarde.',
+      'Valoráis la transparencia: que vuestro presupuesto se adapte exactamente a las experiencias y alojamientos con encanto que vosotros elijáis.',
     ],
-    idealDestinations: 'Vietnam + Playa, Costa Rica & Bocas del Toro (Panamá), China Imperial',
+    idealDestinations: 'Costa Rica & Panamá, Vietnam, China, Italia o Francia',
   },
   {
     id: 'familia-exploradora',
     badge: 'PERFIL 03 · AVENTURA CON RED DE SEGURIDAD',
     title: 'La Familia Activa Exploradora',
-    subtitle: 'El mundo real explicado a vuestro ritmo',
-    quote: '«Queréis enseñar el mundo a vuestros hijos en Marruecos, Asia o los Nórdicos con toda la emoción de ir a vuestro aire, pero con cada traslado y detalle médico/logístico atado.»',
+    subtitle: 'El mundo real organizado a vuestro ritmo',
+    quote:
+      '«Queréis enseñar el mundo a vuestros hijos en Marruecos, Asia, América o Europa con toda la emoción de ir a vuestro aire, pero con cada traslado y detalle logístico bien atado.»',
     painPoints: [
-      'Viajar en familia exige calcular muy bien las horas de coche, elegir restaurantes de higiene impecable y tener siempre un Plan B si un día hay cansancio.',
-      'Mis píldoras de audio convierten templos, castillos y medinas en historias apasionantes que enganchan tanto a adultos como a adolescentes.',
-      'Conductores privados de total confianza y habitaciones familiares o conectadas verificadas una a una.',
+      'Viajar en familia exige calcular muy bien las distancias, elegir restaurantes de total confianza y tener siempre alternativas si un día hay cansancio.',
+      'Adaptamos las visitas y actividades para que tanto adultos como niños o adolescentes disfruten de cada etapa sin agobios.',
+      'Alojamientos familiares o habitaciones amplias seleccionadas según vuestro presupuesto y necesidades.',
     ],
-    idealDestinations: 'Marruecos Privado, Costa Rica Natural, Brujas & Flandes, Vietnam',
+    idealDestinations: 'Costa Rica, Marruecos, Nueva York, Alemania, Portugal o España',
   },
 ];
 
@@ -1053,14 +708,15 @@ export const SERVICE_LADDER = [
     level: 'NIVEL 01',
     tag: 'REVISIÓN ESTRATÉGICA',
     title: 'Auditoría Express de Ruta',
-    subtitle: 'Tu borrador a examen con una guía profesional',
-    priceReference: 'Sesión 60 min + Informe de Correcciones',
-    description: 'Para quienes ya han montado su propio itinerario pero sienten la duda de si los tiempos son realistas, si se están dejando lo mejor o si algún hotel/crucero es una trampa turística.',
+    subtitle: 'Tu borrador a examen con una organizadora profesional',
+    priceReference: 'Sesión 60 min + Informe de Optimización',
+    description:
+      'Para quienes ya han empezado a montar su propio itinerario pero quieren asegurarse de que los tiempos son realistas, optimizar el orden de las etapas y resolver todas sus dudas sobre el destino.',
     deliverables: [
       'Análisis previo de tu ruta actual antes de conectarnos.',
       'Videollamada intensiva de 60 minutos uno a uno con Andrea.',
-      'Detección de cuellos de botella logísticos, etapas imposibles y optimización del orden de visitas.',
-      'Documento resumen con mis recomendaciones directas y correcciones clave.',
+      'Detección de cuellos de botella logísticos, ajuste de tiempos de traslado y optimización del orden de visitas.',
+      'Documento resumen con mis recomendaciones directas y sugerencias de mejora.',
     ],
     ctaLabel: 'Solicitar Auditoría Express',
     highlighted: false,
@@ -1070,15 +726,15 @@ export const SERVICE_LADDER = [
     level: 'NIVEL 02 · EL SERVICIO ESTRELLA',
     tag: 'MÁS SOLICITADO · 100% A MEDIDA',
     title: 'Diseño de Ruta Artesanal (Travel Planner)',
-    subtitle: 'Tu viaje diseñado desde cero + Entregable Estrella de 6 Módulos',
-    priceReference: 'Presupuesto cerrado según duración (Sin sobreprecios en reservas)',
-    description: 'Transformo vuestras ideas en una obra de relojería viajera. Yo diseño toda la estrategia, selecciono los mejores vuelos, refugios con alma y experiencias, y vosotros reserváis en 15 minutos con enlaces directos a precio real de proveedor.',
+    subtitle: 'Tu viaje diseñado desde cero a tu medida',
+    priceReference: 'Presupuesto cerrado según duración y destino',
+    description:
+      'Transformo vuestras ideas en un itinerario personalizado al detalle. Diseño toda la ruta según vuestros días y presupuesto, selecciono las mejores opciones de vuelos, alojamientos con encanto y actividades, y os entrego todos los enlaces directos listos para reservar.',
     deliverables: [
-      'Videollamada inicial de diagnóstico y calibración de estilo.',
-      'Entregable Estrella Interactivo completo (los 6 Módulos en tu móvil y en PDF editorial).',
-      'Selección curada de vuelos, trenes, coches privados y alojamientos boutique con enlaces directos de reserva en 1 clic.',
-      'Bóveda de Fricción Cero (Alipay, WeChat, eSIM, visados) + Plan B meteorológico diario.',
-      'Mapa privado geolocalizado + Píldoras de Audio exclusivas de Andrea para escuchar en destino.',
+      'Videollamada inicial para conocer vuestros gustos, ritmo de viaje y presupuesto.',
+      'Diseño completo de vuestro itinerario día a día con alternativas flexibles según el clima o vuestra energía.',
+      'Selección curada de vuelos, transportes, alojamientos y experiencias con enlaces directos para reservar fácilmente.',
+      'Mapa interactivo personalizado con restaurantes recomendados, miradores y consejos prácticos de destino.',
     ],
     ctaLabel: 'Diseñar mi Ruta a Medida',
     highlighted: true,
@@ -1086,16 +742,17 @@ export const SERVICE_LADDER = [
   {
     id: 'nivel-3',
     level: 'NIVEL 03',
-    tag: 'DELEGACIÓN ABSOLUTA',
+    tag: 'ACOMPAÑAMIENTO EN RESERVAS & GESTIÓN',
     title: 'Viaje Llave en Mano & Concierge VIP',
-    subtitle: 'Solo tenéis que hacer la maleta; yo me ocupo de cada reserva',
-    priceReference: 'Gestión Integral + Soporte en Vivo en Destino',
-    description: 'Diseñado para parejas y familias sin un minuto libre que desean toda la autenticidad del diseño de autor de Andrea, delegando absolutamente la ejecución de reservas, pagos a receptivos locales y coordinación en ruta.',
+    subtitle: 'Videollamada extra para dejar todo reservado juntos o gestión vía agencia colaboradora',
+    priceReference: 'Diseño Completo + Acompañamiento de Reservas',
+    description:
+      'Para quienes quieren la máxima comodidad al cerrar su viaje. Incluye todo el diseño a medida y añade una videollamada extra de 15 minutos donde dejamos todas las reservas listas junto a ti (o gestión integral a través de agencia paraguas colaboradora en caso de que requieras factura única de paquete cerrado).',
     deliverables: [
-      'Todo lo incluido en el Nivel 2 (Diseño Artesanal + Entregable de 6 Módulos + Audios).',
-      'Gestión integral de todas las reservas de alojamientos, transporte privado, guías locales y restaurantes.',
-      'Coordinación directa con mis receptivos de confianza en Marruecos, Asia, América o Europa.',
-      'Línea directa de WhatsApp con Andrea durante los días del viaje para reajustes en tiempo real.',
+      'Todo lo incluido en el Nivel 2 (Diseño de Ruta Artesanal a medida y Mapa interactivo).',
+      'Videollamada extra de 15 minutos dedicada exclusivamente a realizar y dejar listas todas las reservas junto al cliente paso a paso.',
+      'Opción de emisión y gestión integral a través de agencia paraguas colaboradora si el viajero necesita factura única de paquete cerrado.',
+      'Soporte directo por WhatsApp con Andrea durante el viaje para resolver dudas o reajustes en ruta.',
     ],
     ctaLabel: 'Consultar Modalidad Llave en Mano',
     highlighted: false,
@@ -1103,16 +760,17 @@ export const SERVICE_LADDER = [
   {
     id: 'nivel-4',
     level: 'NIVEL 04 · EDICIÓN LIMITADA',
-    tag: '1 O 2 VECES AL AÑO · 8 A 12 VIAJEROS',
-    title: 'Expediciones de Autor Guiadas por Andrea',
-    subtitle: 'Viaja presencialmente conmigo en grupos ultra-reducidos',
+    tag: '1 O 2 VECES AL AÑO · GRUPOS REDUCIDOS',
+    title: 'Expediciones de Autor con Andrea',
+    subtitle: 'Viaja presencialmente conmigo en grupos reducidos (8-12 viajeros)',
     priceReference: 'Plazas por Lista de Espera Prioritaria',
-    description: 'Dos veces al año cierro mi estudio para guiar personalmente en destino a un grupo íntimo de entre 8 y 12 viajeros afines. Sin prisas, durmiendo en hoteles boutique seleccionados y viviendo la historia y la naturaleza en primera persona.',
+    description:
+      'Una o dos veces al año organizo y acompaño presencialmente en destino a un grupo reducido de entre 8 y 12 viajeros afines. Sin prisas, alojándonos en hoteles con encanto seleccionados y compartiendo la experiencia de principio a fin.',
     deliverables: [
-      'Próximas ediciones previstas: "Brujas y el Siglo de Oro de Flandes en Otoño" y "Lofoten: Auroras Boreales y Fiordos Árticos".',
-      'Acompañamiento presencial 24/7 por Andrea como guía oficial y directora de expedición.',
-      'Acceso exclusivo a talleres privados, cenas históricas y rutas fuera de catálogo.',
-      'Prioridad de reserva por estricto orden en la Lista de Espera.',
+      'Próximas ediciones previstas en destinos seleccionados como Brujas, Marruecos o rutas europeas con encanto.',
+      'Acompañamiento presencial de Andrea durante todo el recorrido.',
+      'Itinerario de autor diseñado para disfrutar en grupo reducido con total comodidad.',
+      'Prioridad de plaza por orden de inscripción en la Lista de Espera.',
     ],
     ctaLabel: 'Unirme a la Lista de Espera',
     highlighted: false,
@@ -1123,26 +781,30 @@ export const SERVICE_LADDER = [
 export const FAQ_ITEMS = [
   {
     id: 'faq-1',
-    question: '¿Por qué pagar por el diseño de ruta si hay agencias que hacen presupuestos "gratis"?',
-    answer: 'Porque en el sector turístico tradicional ningún presupuesto es gratis: su coste está camuflado dentro de un sobreprecio de entre el 20% y el 35% sobre el valor real de tus vuelos, hoteles y traslados. Además, una agencia tradicional solo te recomendará aquellos hoteles grandes con los que su mayorista tiene cupo y comisión. Al trabajar conmigo mediante honorarios de diseño claros y separados, mi lealtad es 100% hacia ti: te recomiendo el riad familiar de 6 habitaciones, el ecolodge en mitad del bosque nuboso o el junco boutique más especial, y tú lo reservas directamente a su tarifa oficial sin intermediarios. En un viaje de 15 días, mis viajeros suelen ahorrar entre 800 € y 1.200 € por persona respecto a un paquete equivalente.',
-    codeNote: 'TRANSPARENCIA: 0% COMISIONES OCULTAS · AHORRO MEDIO 990€/PAX',
+    question: '¿Los itinerarios y días que aparecen en la web son cerrados?',
+    answer:
+      'En absoluto. Todos los destinos y duraciones que ves en la web son ejemplos orientativos para inspirarte. Cada viaje parte de una hoja en blanco y se adapta al 100% a los días que tengáis disponibles, a vuestros gustos personales y al presupuesto que queráis destinar.',
+    codeNote: '100% FLEXIBLE · DISEÑADO A MEDIDA PARA CADA VIAJERO',
   },
   {
     id: 'faq-2',
-    question: '¿Quién paga y reserva finalmente los vuelos, trenes y hoteles?',
-    answer: 'Tú eliges el grado de autonomía que prefieres. En mi modalidad más solicitada (Nivel 2 · Diseño de Ruta a Medida), te entrego tu Bóveda de Reservas con los enlaces exactos y verificados de cada vuelo, tren y habitación recomendada: en una tarde y en 15 minutos haces clic y pagas directamente con tu tarjeta a cada proveedor, manteniendo todas las garantías y el precio real sin recargos. Si prefieres no gestionar ni una sola reserva, en la modalidad Nivel 3 (Llave en Mano) nos encargamos de dejarlo todo emitido y coordinado por ti.',
-    codeNote: 'MODALIDAD FLEXIBLE · RESERVA EN 1 CLIC O LLAVE EN MANO',
+    question: '¿Cómo se deciden los hoteles, transportes y actividades en destino?',
+    answer:
+      'En nuestra conversación inicial definimos qué estilo de viaje buscáis y cuál es vuestro presupuesto. En función de lo que queráis, selecciono los alojamientos, el tipo de transporte y las experiencias que mejor encajan con vosotros. Nunca imponemos proveedores ni servicios rígidos: el viaje se construye a vuestra medida.',
+    codeNote: 'PERSONALIZACIÓN REAL SEGÚN TU PRESUPUESTO Y ESTILO',
   },
   {
     id: 'faq-3',
-    question: '¿Qué pasa si surge un imprevisto meteorológico o un día estamos cansados en destino?',
-    answer: 'Como guía turística profesional sé que los itinerarios de papel fracasan cuando aparece la lluvia o el cansancio acumulado. Por eso cada día de tu Bitácora incluye el "Plan B de Andrea": una ruta alternativa ya diseñada para ese mismo lugar en caso de lluvia tropical en Costa Rica o Vietnam, viento en los fiordos nórdicos o simplemente ganas de bajar el ritmo, con salones de té históricos, spas locales, museos íntimos y logística de transporte puerta a puerta.',
-    codeNote: 'DOBLE ESCENARIO DIARIO: PLAN A (ÓPTIMO) + PLAN B (CLIMA / RELAX)',
+    question: '¿Cómo funcionan las reservas en el Nivel 2 y en el Nivel 3?',
+    answer:
+      'En el Nivel 2 (Diseño de Ruta a Medida) te entrego toda la ruta junto con los enlaces directos de cada vuelo, alojamiento y actividad para que puedas reservarlos cómodamente a tu ritmo. Si eliges el Nivel 3 (Llave en Mano), incluimos una videollamada extra de 15 minutos en la que dejamos todas las reservas hechas juntos, o bien lo gestionamos a través de nuestra agencia paraguas colaboradora si necesitas factura única de paquete cerrado.',
+    codeNote: 'ENLACES DIRECTOS O ACOMPAÑAMIENTO PASO A PASO',
   },
   {
     id: 'faq-4',
-    question: '¿Con cuánta antelación debo contactarte para diseñar mi viaje?',
-    answer: 'Para grandes viajes internacionales (China, Vietnam, Costa Rica, Panamá, Países Nórdicos o Lunas de Miel), te recomiendo escribirme entre 3 y 8 meses antes de la salida. Los alojamientos con alma que selecciono suelen tener entre 6 y 15 habitaciones en total y son los primeros en agotarse. Para escapadas por Europa (Brujas, Flandes) o Marruecos, entre 1 y 3 meses de antelación es ideal. Y si ya tienes los vuelos comprados para dentro de pocas semanas, siempre podemos hacer una Auditoría Express (Nivel 1) para blindar tu ruta.',
-    codeNote: 'CUPO MENSUAL LIMITADO A 6 RUTAS ARTESANALES PARA GARANTIZAR EXCELENCIA',
+    question: '¿Con cuánta antelación es recomendable empezar a organizar el viaje?',
+    answer:
+      'Para grandes viajes de larga distancia como China, Vietnam, Costa Rica, Panamá o Nueva York, lo ideal es contactarme entre 3 y 8 meses antes para tener mayor disponibilidad en alojamientos con encanto y mejores tarifas aéreas. Para escapadas y rutas por Brujas, Marruecos, Madeira, Francia, Italia, España, Portugal o Alemania, entre 1 y 3 meses antes es perfecto. Y si viajas muy pronto, siempre podemos verlo con una Auditoría Express.',
+    codeNote: 'ATENCIÓN PERSONALIZADA · CONSULTA DISPONIBILIDAD',
   },
 ];

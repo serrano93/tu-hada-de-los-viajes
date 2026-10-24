@@ -14,6 +14,8 @@
   --brand-color: #4A5D4E;
   --cta-color: #C86D51;
   color-scheme: light;
+  /* Modern Web Guidance: animate-to-intrinsic-sizes */
+  interpolate-size: allow-keywords;
 }
 
 html {
@@ -65,17 +67,119 @@ p, blockquote, li, .editorial-pretty {
   line-height: 1.12;
 }
 
-/* Brand-Consistent Forms & Custom Progress Styling */
+/* Progressive Disclosure / Expandable Drawer (Modern Web Guidance: animate-to-intrinsic-sizes) */
+.expandable-drawer {
+  overflow: clip;
+  block-size: 0;
+  opacity: 0;
+}
+
+.expandable-drawer[data-open="true"] {
+  block-size: auto;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .expandable-drawer {
+    transition:
+      block-size 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.25s ease,
+      content-visibility 0.35s allow-discrete;
+  }
+}
+
+/* Brand-Consistent Forms & Custom Range Slider (Modern Web Guidance: slider & brand-consistent-forms) */
 input[type="checkbox"],
 input[type="radio"],
-input[type="range"],
 progress {
   accent-color: var(--brand-color);
 }
 
-.accent-terracotta {
-  --brand-color: #C86D51;
-  accent-color: #C86D51;
+.editorial-range-slider {
+  --slider-track-size: 0.5rem;
+  --slider-thumb-size: 1.35rem;
+  --attr-min: attr(min type(<number>), 0);
+  --attr-max: attr(max type(<number>), 100);
+  --slider-progress: progress(var(--control-value), var(--attr-min), var(--attr-max));
+
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+@supports not (opacity: progress(1, 0, 100)) {
+  .editorial-range-slider {
+    --slider-progress: calc(
+      (var(--control-value, 50) - var(--attr-min, 0)) /
+      (var(--attr-max, 100) - var(--attr-min, 0))
+    );
+  }
+}
+
+.editorial-range-slider:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 4px;
+  border-radius: 9999px;
+}
+
+.editorial-range-slider::-webkit-slider-runnable-track {
+  box-sizing: border-box;
+  border-radius: 9999px;
+  block-size: var(--slider-track-size);
+  background: linear-gradient(
+    to right,
+    var(--color-terracotta) 0 calc(var(--slider-progress) * 100%),
+    #D8CEBE 0
+  );
+}
+
+.editorial-range-slider::-moz-range-track {
+  box-sizing: border-box;
+  border-radius: 9999px;
+  block-size: var(--slider-track-size);
+  background: linear-gradient(
+    to right,
+    var(--color-terracotta) 0 calc(var(--slider-progress) * 100%),
+    #D8CEBE 0
+  );
+}
+
+.editorial-range-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  block-size: var(--slider-thumb-size);
+  inline-size: var(--slider-thumb-size);
+  border-radius: 9999px;
+  background: var(--color-sage);
+  border: 2.5px solid var(--color-sand);
+  box-shadow: 0 2px 6px rgba(30, 32, 29, 0.25);
+  margin-block-start: calc((var(--slider-track-size) - var(--slider-thumb-size)) / 2);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.editorial-range-slider::-webkit-slider-thumb:hover {
+  background: var(--color-terracotta);
+  transform: scale(1.08);
+}
+
+.editorial-range-slider::-moz-range-thumb {
+  box-sizing: border-box;
+  block-size: var(--slider-thumb-size);
+  inline-size: var(--slider-thumb-size);
+  border-radius: 9999px;
+  background: var(--color-sage);
+  border: 2.5px solid var(--color-sand);
+  box-shadow: 0 2px 6px rgba(30, 32, 29, 0.25);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.editorial-range-slider::-moz-range-thumb:hover {
+  background: var(--color-terracotta);
+  transform: scale(1.08);
 }
 
 progress {
@@ -102,109 +206,6 @@ progress::-webkit-progress-value {
 progress::-moz-progress-bar {
   background-color: var(--brand-color, #4A5D4E);
   border-radius: 9999px;
-}
-
-@supports not (accent-color: var(--brand-color)) {
-  input[type="checkbox"].visually-hidden-fallback {
-    position: absolute !important;
-    clip-path: inset(50%) !important;
-    overflow: hidden !important;
-    width: 1px !important;
-    height: 1px !important;
-    margin: -1px !important;
-    padding: 0 !important;
-    border: 0 !important;
-    white-space: nowrap !important;
-  }
-
-  input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-  }
-
-  input[type="range"]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 8px;
-    background: linear-gradient(to right, var(--brand-color, #4A5D4E) var(--progress, 50%), #D5CBB8 var(--progress, 50%));
-    border-radius: 4px;
-  }
-
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: var(--brand-color, #4A5D4E);
-    cursor: pointer;
-    margin-top: -6px;
-  }
-
-  input[type="range"]::-moz-range-track {
-    width: 100%;
-    height: 8px;
-    background: #D5CBB8;
-    border-radius: 4px;
-  }
-
-  input[type="range"]::-moz-range-thumb {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: var(--brand-color, #4A5D4E);
-    cursor: pointer;
-  }
-
-  input[type="range"]::-moz-range-progress {
-    background-color: var(--brand-color, #4A5D4E);
-    height: 8px;
-    border-radius: 4px;
-  }
-
-  progress {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: none;
-    background: #D5CBB8;
-    height: 8px;
-    border-radius: 4px;
-  }
-
-  progress::-webkit-progress-bar {
-    background-color: #D5CBB8;
-    border-radius: 4px;
-  }
-
-  progress::-webkit-progress-value {
-    background-color: var(--brand-color, #4A5D4E);
-    border-radius: 4px;
-  }
-
-  progress::-moz-progress-bar {
-    background-color: var(--brand-color, #4A5D4E);
-    border-radius: 4px;
-  }
-}
-
-/* Motion & Reduced Motion Handling (Modern Web Guidance: motion) */
-@keyframes soundWave {
-  0%, 100% {
-    transform: scaleY(0.25);
-  }
-  50% {
-    transform: scaleY(1);
-  }
-}
-
-.sound-bar-active {
-  transform-origin: bottom;
-  animation: soundWave 0.9s ease-in-out infinite;
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-    transform: scaleY(0.65);
-  }
 }
 
 @keyframes pulseHalo {
