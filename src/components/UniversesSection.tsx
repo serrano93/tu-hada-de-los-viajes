@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Compass,
   Calendar,
@@ -8,6 +8,8 @@ import {
   ArrowRight,
   Globe,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Check,
   Info,
 } from 'lucide-react';
@@ -35,11 +37,25 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
 }) => {
   const [selectedRegion, setSelectedRegion] = useState<RegionFilter>('Todos');
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
 
   const filteredDestinations =
     selectedRegion === 'Todos'
       ? TRAVEL_DESTINATIONS
       : TRAVEL_DESTINATIONS.filter((d) => d.regionTag === selectedRegion);
+
+  const handleSelectRegion = (region: RegionFilter) => {
+    setSelectedRegion(region);
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollCarousel = (direction: 'left' | 'right') => {
+    if (!carouselRef.current) return;
+    const offset = direction === 'left' ? -330 : 330;
+    carouselRef.current.scrollBy({ left: offset, behavior: 'smooth' });
+  };
 
   const handleToggleDestination = (dest: TravelDestination) => {
     const isOpening = expandedId !== dest.id;
@@ -101,7 +117,7 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
 
       {/* Region Filter Pills (Thumb-friendly horizontal scroll on mobile) */}
       <div
-        className="flex items-center gap-2 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-3 mb-8 -mx-4 px-4 sm:mx-0 sm:px-0"
+        className="flex items-center gap-2 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-3 mb-4 md:mb-8 -mx-4 px-4 sm:mx-0 sm:px-0 overscroll-x-contain"
         role="tablist"
         aria-label="Filtrar destinos por región"
       >
@@ -113,7 +129,7 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
               type="button"
               role="tab"
               aria-selected={active}
-              onClick={() => setSelectedRegion(rf.id)}
+              onClick={() => handleSelectRegion(rf.id)}
               className={`snap-start shrink-0 min-h-[46px] px-4 py-2 rounded-full font-sans text-xs sm:text-sm font-medium transition-all flex items-center gap-2 border ${
                 active
                   ? 'bg-sage text-sand border-sage shadow-sm'
@@ -133,15 +149,46 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
         })}
       </div>
 
-      {/* 13 Destinations Progressive Disclosure Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-flow-row-dense gap-6 items-start">
+      {/* Mobile Horizontal Swipe Helper & Controls (Visible only on Mobile < md) */}
+      <div className="flex items-center justify-between gap-2 mb-3.5 md:hidden">
+        <span className="font-mono text-[11px] uppercase tracking-wider text-sage font-medium flex items-center gap-1.5">
+          <span>Desliza en horizontal</span>
+          <ArrowRight className="w-3.5 h-3.5 text-terracotta" strokeWidth={1.5} />
+          <span className="text-ink/60">({filteredDestinations.length} destinos)</span>
+        </span>
+
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => handleScrollCarousel('left')}
+            aria-label="Deslizar al destino anterior"
+            className="w-9 h-9 rounded-full bg-limestone/90 border border-sage-mist/50 flex items-center justify-center text-ink active:scale-95 transition-transform"
+          >
+            <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
+          </button>
+          <button
+            type="button"
+            onClick={() => handleScrollCarousel('right')}
+            aria-label="Deslizar al siguiente destino"
+            className="w-9 h-9 rounded-full bg-limestone/90 border border-sage-mist/50 flex items-center justify-center text-ink active:scale-95 transition-transform"
+          >
+            <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+          </button>
+        </div>
+      </div>
+
+      {/* 13 Destinations: Horizontal Scroll-Snap Carousel on Mobile (< md) + 3-Col Dense Grid on Desktop (md+) */}
+      <div
+        ref={carouselRef}
+        className="flex md:grid md:grid-cols-2 lg:grid-cols-3 md:grid-flow-row-dense gap-4 md:gap-6 items-start overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar pb-4 md:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 overscroll-x-contain"
+      >
         {filteredDestinations.map((dest) => {
           const isExpanded = expandedId === dest.id;
 
           return (
             <article
               key={dest.id}
-              className={`rounded-3xl bg-limestone/90 backdrop-blur-md border transition-all overflow-hidden shadow-editorial flex flex-col ${
+              className={`w-[85vw] max-w-[340px] shrink-0 snap-center md:w-auto md:max-w-none md:shrink rounded-3xl bg-limestone/90 backdrop-blur-md border transition-all overflow-hidden shadow-editorial flex flex-col ${
                 isExpanded
                   ? 'border-terracotta ring-1 ring-terracotta/30 md:col-span-2 lg:col-span-3 shadow-editorial-lg'
                   : 'border-sage-mist/45 hover:border-gold/60'
@@ -157,8 +204,8 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                 <div
                   className={`relative overflow-hidden bg-sage-dark ${
                     isExpanded
-                      ? 'lg:col-span-5 min-h-[250px] sm:min-h-[300px]'
-                      : 'h-56 sm:h-60'
+                      ? 'lg:col-span-5 min-h-[220px] sm:min-h-[300px]'
+                      : 'h-52 sm:h-60'
                   }`}
                 >
                   <img
