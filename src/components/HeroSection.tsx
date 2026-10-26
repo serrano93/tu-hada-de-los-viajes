@@ -27,9 +27,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </span>
         </div>
 
-        {/* Main Editorial Display Headline */}
+        {/* Main Editorial Display Headline (Single H1 on page with SEO keywords) */}
         <h1 className="font-serif font-semibold text-ink hero-display-title tracking-tight mb-6">
-          Viajes diseñados a medida con la mirada y el mimo de una{' '}
+          Viajes a medida y rutas personalizadas con la mirada de una{' '}
           <em className="italic font-normal text-sage underline decoration-gold/50 decoration-1 underline-offset-8">
             guía profesional.
           </em>

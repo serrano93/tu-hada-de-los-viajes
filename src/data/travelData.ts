@@ -87,7 +87,7 @@ export const TRAVEL_DESTINATIONS: TravelDestination[] = [
     bestSeason: 'Todo el año (Primavera y Otoño especialmente agradables)',
     avgTemp: '16°C — 29°C',
     imageUrl:
-      'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=800&q=75',
     imageAlt: 'Arquitectura tradicional marroquí con mosaicos, arcos y tonos cálidos',
     atmosphereTags: ['Marrakech', 'Desierto bajo Estrellas', 'Pueblos Pesqueros', 'Riads con Encanto'],
     summary:
@@ -193,7 +193,7 @@ export const TRAVEL_DESTINATIONS: TravelDestination[] = [
     bestSeason: 'Primavera (Marzo-Mayo) y Otoño (Septiembre-Noviembre)',
     avgTemp: '14°C — 26°C',
     imageUrl:
-      'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=800&q=75',
     imageAlt: 'La Gran Muralla China recorriendo las cumbres montañosas',
     atmosphereTags: ['China Milenaria', 'Gran Muralla', 'Paisajes de ensueño', 'Metrópolis Futuristas'],
     summary:
@@ -239,7 +239,7 @@ export const TRAVEL_DESTINATIONS: TravelDestination[] = [
     bestSeason: 'Todo el año adaptando las zonas de norte, centro y sur',
     avgTemp: '22°C — 31°C',
     imageUrl:
-      'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=75',
     imageAlt: 'Embarcación tradicional entre las formaciones kársticas de la Bahía de Ha Long en Vietnam',
     atmosphereTags: ['Bahía de Ha Long', 'Para Todo Viajero', 'Arrozales & Templos', 'Hoi An & Gastronomía'],
     summary:

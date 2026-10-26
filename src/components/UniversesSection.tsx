@@ -101,7 +101,7 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
           <Info className="w-4 h-4" strokeWidth={1.5} />
         </div>
         <div className="text-xs sm:text-sm md:text-base text-ink leading-relaxed">
-          <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-terracotta font-semibold block mb-0.5">
+          <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-sage font-semibold block mb-0.5">
             NOTA DE FLEXIBILIDAD ARTESANAL · 100% PERSONALIZABLE
           </span>
           <p>
@@ -153,8 +153,8 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
       <div className="flex items-center justify-between gap-2 mb-3.5 md:hidden">
         <span className="font-mono text-[11px] uppercase tracking-wider text-sage font-medium flex items-center gap-1.5">
           <span>Desliza en horizontal</span>
-          <ArrowRight className="w-3.5 h-3.5 text-terracotta" strokeWidth={1.5} />
-          <span className="text-ink/60">({filteredDestinations.length} destinos)</span>
+          <ArrowRight className="w-3.5 h-3.5 text-sage" strokeWidth={1.5} />
+          <span className="text-ink/70">({filteredDestinations.length} destinos)</span>
         </span>
 
         <div className="flex items-center gap-1.5">
@@ -182,8 +182,9 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
         ref={carouselRef}
         className="flex md:grid md:grid-cols-2 lg:grid-cols-3 md:grid-flow-row-dense gap-4 md:gap-6 items-start overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar pb-4 md:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 overscroll-x-contain"
       >
-        {filteredDestinations.map((dest) => {
+        {filteredDestinations.map((dest, idx) => {
           const isExpanded = expandedId === dest.id;
+          const isFirstCard = idx === 0;
 
           return (
             <article
@@ -200,19 +201,27 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                   isExpanded ? 'lg:grid-cols-12' : ''
                 }`}
               >
-                {/* Photographic Frame */}
+                {/* Photographic Frame with explicit aspect-ratio and dimensions for CLS = 0.00 */}
                 <div
-                  className={`relative overflow-hidden bg-sage-dark ${
+                  className={`relative overflow-hidden bg-sage-dark aspect-[16/10] ${
                     isExpanded
-                      ? 'lg:col-span-5 min-h-[220px] sm:min-h-[300px]'
-                      : 'h-52 sm:h-60'
+                      ? 'lg:col-span-5 lg:aspect-auto lg:min-h-[300px]'
+                      : 'w-full'
                   }`}
                 >
                   <img
                     src={dest.imageUrl}
                     alt={dest.imageAlt}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                    width={800}
+                    height={500}
+                    loading={isFirstCard ? 'eager' : 'lazy'}
+                    decoding="async"
+                    {...(isFirstCard
+                      ? ({ fetchpriority: 'high' } as Record<string, string>)
+                      : idx > 2
+                      ? ({ fetchpriority: 'low' } as Record<string, string>)
+                      : {})}
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 block"
                   />
                   <div
                     className="absolute inset-0"
@@ -254,8 +263,8 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                 >
                   <div>
                     {/* Orientative Duration Pill */}
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-limestone border border-gold/40 font-mono text-[11px] text-terracotta font-medium mb-3">
-                      <Clock className="w-3.5 h-3.5 shrink-0" strokeWidth={1.5} />
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-limestone border border-gold/40 font-mono text-[11px] text-sage font-medium mb-3">
+                      <Clock className="w-3.5 h-3.5 text-terracotta shrink-0" strokeWidth={1.5} />
                       <span>{dest.durationBadge}</span>
                     </div>
 
@@ -288,7 +297,7 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                       </span>
                       <ChevronDown
                         className={`w-4 h-4 shrink-0 transition-transform duration-300 ${
-                          isExpanded ? 'rotate-180 text-gold-light' : 'text-terracotta'
+                          isExpanded ? 'rotate-180 text-gold-light' : 'text-sage'
                         }`}
                         strokeWidth={1.5}
                       />
@@ -297,13 +306,18 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                 </div>
               </div>
 
-              {/* Expandable Drawer Content (Progressive Disclosure via CSS interpolate-size) */}
+              {/* SEO-Friendly Expandable Drawer: Always present in DOM for Googlebot, animated via CSS grid-template-rows (0fr -> 1fr) */}
               <div
                 id={`drawer-${dest.id}`}
-                data-open={isExpanded ? 'true' : 'false'}
-                className="expandable-drawer bg-sand border-t border-sage-mist/35"
+                aria-hidden={!isExpanded}
+                {...(!isExpanded ? ({ inert: '' } as Record<string, string>) : {})}
+                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out bg-sand ${
+                  isExpanded
+                    ? 'grid-rows-[1fr] opacity-100 border-t border-sage-mist/35'
+                    : 'grid-rows-[0fr] opacity-0 pointer-events-none'
+                }`}
               >
-                {isExpanded && (
+                <div className="overflow-hidden">
                   <div className="p-5 sm:p-8 space-y-6">
                     {/* Expanded Editorial Description & Metadata */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -323,7 +337,7 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                             strokeWidth={1.5}
                           />
                           <div>
-                            <span className="font-mono text-[10px] uppercase text-ink/60 block">
+                            <span className="font-mono text-[10px] uppercase text-ink/70 block">
                               ÉPOCA RECOMENDADA
                             </span>
                             <span className="font-mono text-xs font-medium text-ink">
@@ -333,11 +347,11 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                         </div>
                         <div className="flex items-start gap-2.5">
                           <Sparkles
-                            className="w-4 h-4 text-terracotta shrink-0 mt-0.5"
+                            className="w-4 h-4 text-gold shrink-0 mt-0.5"
                             strokeWidth={1.5}
                           />
                           <div>
-                            <span className="font-mono text-[10px] uppercase text-ink/60 block">
+                            <span className="font-mono text-[10px] uppercase text-ink/70 block">
                               TEMPERATURA MEDIA
                             </span>
                             <span className="font-mono text-xs font-medium text-ink">
@@ -351,7 +365,7 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                     {/* Optional Dual Modalities (Specifically for Marruecos: Escapada 3 días vs Ruta Completa 7+ días) */}
                     {dest.modalities && dest.modalities.length > 0 && (
                       <div className="space-y-3">
-                        <span className="font-mono text-[11px] uppercase tracking-widest text-terracotta font-semibold block">
+                        <span className="font-mono text-[11px] uppercase tracking-widest text-sage font-semibold block">
                           DOS MODALIDADES DE EJEMPLO (100% PERSONALIZABLES):
                         </span>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -364,7 +378,7 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                                 <span className="font-serif font-semibold text-xl text-ink">
                                   {mod.title}
                                 </span>
-                                <span className="px-2.5 py-1 rounded-full bg-terracotta text-sand font-mono text-[11px] font-medium">
+                                <span className="px-2.5 py-1 rounded-full bg-sage text-sand font-mono text-[11px] font-medium">
                                   {mod.duration}
                                 </span>
                               </div>
@@ -386,9 +400,9 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                           QUÉ INCLUYE EL DISEÑO DE TU VIAJE
                         </span>
                         <ul className="space-y-2.5">
-                          {dest.whatWeInclude.map((item, idx) => (
+                          {dest.whatWeInclude.map((item, idx2) => (
                             <li
-                              key={idx}
+                              key={idx2}
                               className="flex items-start gap-2.5 text-xs sm:text-sm text-ink/90"
                             >
                               <Check
@@ -404,7 +418,7 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                       {/* Right: Orientative Route Example */}
                       <div className="lg:col-span-7 p-5 rounded-2xl bg-limestone/65 border border-sage-mist/40 space-y-3.5">
                         <div className="flex flex-wrap items-center justify-between gap-2">
-                          <span className="font-mono text-[11px] uppercase tracking-wider text-terracotta font-semibold">
+                          <span className="font-mono text-[11px] uppercase tracking-wider text-sage font-semibold">
                             EJEMPLO ORIENTATIVO DE ESTRUCTURA DE RUTA
                           </span>
                           <span className="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-sand text-sage border border-sage-mist/35">
@@ -418,7 +432,7 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                               key={sIdx}
                               className="p-3.5 rounded-xl bg-sand border border-sage-mist/30 flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3.5"
                             >
-                              <span className="font-mono text-[11px] font-semibold text-terracotta shrink-0 sm:w-44">
+                              <span className="font-mono text-[11px] font-semibold text-sage shrink-0 sm:w-44">
                                 {step.stageLabel}
                               </span>
                               <div className="flex-1">
@@ -451,7 +465,7 @@ export const UniversesSection: React.FC<UniversesSectionProps> = ({
                       </button>
                     </div>
                   </div>
-                )}
+                </div>
               </div>
             </article>
           );

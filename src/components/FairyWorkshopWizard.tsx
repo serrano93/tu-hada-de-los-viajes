@@ -468,6 +468,7 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                     min={10}
                     max={90}
                     value={paceValue}
+                    aria-label="Ritmo diario del viaje"
                     aria-valuetext={paceLabel}
                     onChange={(e) => setPaceValue(Number(e.target.value))}
                     style={
@@ -548,6 +549,7 @@ export const FairyWorkshopWizard: React.FC<FairyWorkshopWizardProps> = ({
                           max={21}
                           step={1}
                           value={durationDays}
+                          aria-label="Duración del viaje en días"
                           aria-valuetext={formattedDuration}
                           onChange={(e) => setDurationDays(Number(e.target.value))}
                           style={
