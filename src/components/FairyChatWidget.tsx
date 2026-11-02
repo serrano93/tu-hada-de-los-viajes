@@ -20,7 +20,7 @@ interface ChatMessage {
 
 const WELCOME: ChatMessage = {
   role: 'assistant',
-  text: '¡Holiii, viajerito! ✨ Soy Andrea, el hada virtual de Tu Hada de los Viajes 🧚‍♀️\n\nEsta demo va en tiempo real: me estás hablando de verdad.\n\n¿Te ayudo con dudas de destino, cuándo viajar, cuánto puede costar o cómo trabaja la guía Andrea? Estoy ilusion-hada de ayudarte ✨',
+  text: '¡Holiii, viajero! ✨ Soy Andrea, el hada virtual de Tu Hada de los Viajes 🧚‍♀️\n\n¿Te ayudo con dudas de destino, cuándo viajar, cuánto puede costar o cómo trabaja la guía Andrea? Estoy ilusion-hada de ayudarte ✨',
 };
 
 const QUICK_PROMPTS = ['¿Qué destinos diseñáis?', '¿Cuándo es mejor viajar?', '¿Cómo funciona el servicio?'];
@@ -120,7 +120,7 @@ export const FairyChatWidget: React.FC = () => {
 
   const resetChat = () => {
     setSessionId(newSessionId());
-    setMessages([{ role: 'assistant', text: '¡Otra vez por aquí! Estoy encant-hada de verte ✨ ¿Qué otro viajecito soñamos juntos?' }]);
+    setMessages([{ role: 'assistant', text: '¡Otra vez por aquí! Estoy encant-hada de verte ✨ ¿Qué otro viaje soñamos juntos?' }]);
   };
 
   const retry = async () => {
@@ -129,7 +129,7 @@ export const FairyChatWidget: React.FC = () => {
     const res = await checkStatus();
     setChecking(false);
     if (res !== false) {
-      setMessages((m) => [...m, { role: 'assistant', text: '✨ ¡Mi varita ya tiene energía otra vez, qué alivio! ¿Por dónde íbamos?' }]);
+      setMessages((m) => [...m, { role: 'assistant', text: '✨ ¡Ya estoy de vuelta, qué alivio! ¿Por dónde íbamos?' }]);
     }
   };
 
@@ -196,7 +196,6 @@ export const FairyChatWidget: React.FC = () => {
                   {offline ? 'Dormida' : 'Online'}
                 </span>
               </div>
-              <div className="text-xs opacity-85">Hada virtual · Tu Hada de los Viajes</div>
             </div>
             <button type="button" onClick={resetChat} title="Reiniciar conversación" aria-label="Reiniciar conversación"
               className="w-9 h-9 rounded-full grid place-items-center bg-sand/15 hover:bg-sand/30 transition-colors flex-none">
@@ -206,9 +205,6 @@ export const FairyChatWidget: React.FC = () => {
               className="w-9 h-9 rounded-full grid place-items-center bg-sand/15 hover:bg-sand/30 transition-colors flex-none">
               <X className="w-4 h-4" strokeWidth={2} />
             </button>
-          </div>
-          <div className="px-4 py-1.5 text-xs text-ink-muted bg-limestone/60 border-b border-limestone">
-            Demo en vivo · no compartas datos personales sensibles
           </div>
 
           <div ref={boxRef} aria-live="polite" className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 bg-sand">
@@ -232,14 +228,14 @@ export const FairyChatWidget: React.FC = () => {
 
             {loading && (
               <div className="self-start max-w-[88%] px-3.5 py-2.5 rounded-2xl rounded-bl-md bg-white text-sm shadow-sm">
-                Andrea está agitando su varita… ✨ <span className="font-extrabold tracking-[3px]">···</span>
+                Andrea está pensando tu ruta… ✨ <span className="font-extrabold tracking-[3px]">···</span>
               </div>
             )}
 
             {offline && (
               <div role="status" className="grid gap-2.5 rounded-2xl bg-gold-light/40 text-ink p-4 text-sm">
                 <strong>🌙 Andrea se ha quedado dormida</strong>
-                <p className="m-0">Mi varita (el servidor) está desconectada ahora mismo, pero tu viaje no tiene por qué esperar:</p>
+                <p className="m-0">Mi magia (el servidor) está desconectada ahora mismo, pero tu viaje no tiene por qué esperar:</p>
                 <button type="button" onClick={goToWorkshop}
                   className="min-h-[44px] rounded-full bg-terracotta hover:bg-terracotta-hover text-sand font-semibold text-[15px] flex items-center justify-center gap-2">
                   Diseñar mi ruta con la guía <ArrowRight className="w-4 h-4" />
@@ -291,7 +287,7 @@ export const FairyChatWidget: React.FC = () => {
         <div role="status" className="fairy-bubble bubble-in absolute bottom-full right-1 mb-2 w-[230px] sm:w-[250px] origin-bottom-right">
           <button type="button" onClick={toggleChat} className="block w-full text-left cursor-pointer" aria-label="Abrir el chat con Andrea">
             <span className="block font-serif font-bold text-lg leading-snug">¡Holiii! Soy Andrea ✨</span>
-            <span className="block text-[13px] leading-snug mt-0.5 font-semibold">¿Dudas de tu próximo viajecito? ¡Pregúntame!</span>
+            <span className="block text-[13px] leading-snug mt-0.5 font-semibold">¿Dudas de tu próximo viaje? ¡Pregúntame!</span>
           </button>
           <button type="button" onClick={closeBubble} aria-label="Cerrar mensaje"
             className="absolute top-1.5 right-2 w-[22px] h-[22px] rounded-full text-[11px] font-extrabold leading-none text-ink-muted bg-limestone hover:bg-sage-mist/50">
