@@ -20,7 +20,7 @@ interface ChatMessage {
 
 const WELCOME: ChatMessage = {
   role: 'assistant',
-  text: '¡Holiii, viajerito! ✨ Soy Lumi, el hada más cuqui de Tu Hada de los Viajes 🧚‍♀️\n\nEsta demo va en tiempo real: me estás hablando de verdad, ¿a que mola?\n\n¿Te ayudo con dudas de destino, cuándo viajar, cuánto puede costar o cómo trabaja Andrea? 💕',
+  text: '¡Holiii, viajerito! ✨ Soy Lumi, el hada de Tu Hada de los Viajes 🧚‍♀️\n\nEsta demo va en tiempo real: me estás hablando de verdad.\n\n¿Te ayudo con dudas de destino, cuándo viajar, cuánto puede costar o cómo trabaja Andrea? Estoy ilusion-hada de ayudarte ✨',
 };
 
 const QUICK_PROMPTS = ['¿Qué destinos diseñáis?', '¿Cuándo es mejor viajar?', '¿Cómo funciona el servicio?'];
@@ -120,7 +120,7 @@ export const FairyChatWidget: React.FC = () => {
 
   const resetChat = () => {
     setSessionId(newSessionId());
-    setMessages([{ role: 'assistant', text: '¡Otra vez por aquí, qué ilu! ✨ Soy Lumi. ¿Qué otro viajecito soñamos juntos? 💕' }]);
+    setMessages([{ role: 'assistant', text: '¡Otra vez por aquí! Estoy encant-hada de verte ✨ ¿Qué otro viajecito soñamos juntos?' }]);
   };
 
   const retry = async () => {
@@ -129,7 +129,7 @@ export const FairyChatWidget: React.FC = () => {
     const res = await checkStatus();
     setChecking(false);
     if (res !== false) {
-      setMessages((m) => [...m, { role: 'assistant', text: '✨ ¡Mi varita ya tiene energía otra vez! ¿Por dónde íbamos?' }]);
+      setMessages((m) => [...m, { role: 'assistant', text: '✨ ¡Mi varita ya tiene energía otra vez, qué alivio! ¿Por dónde íbamos?' }]);
     }
   };
 
@@ -291,7 +291,7 @@ export const FairyChatWidget: React.FC = () => {
         <div role="status" className="fairy-bubble bubble-in absolute bottom-full right-1 mb-2 w-[230px] sm:w-[250px] origin-bottom-right">
           <button type="button" onClick={toggleChat} className="block w-full text-left cursor-pointer" aria-label="Abrir el chat con Lumi">
             <span className="block font-serif font-bold text-lg leading-snug">¡Holiii! Soy Lumi ✨</span>
-            <span className="block text-[13px] leading-snug mt-0.5 font-semibold">¿Dudas de tu próximo viajecito? ¡Pregúntame! 💕</span>
+            <span className="block text-[13px] leading-snug mt-0.5 font-semibold">¿Dudas de tu próximo viajecito? ¡Pregúntame!</span>
           </button>
           <button type="button" onClick={closeBubble} aria-label="Cerrar mensaje"
             className="absolute top-1.5 right-2 w-[22px] h-[22px] rounded-full text-[11px] font-extrabold leading-none text-ink-muted bg-limestone hover:bg-sage-mist/50">
