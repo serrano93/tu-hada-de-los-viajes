@@ -2,7 +2,7 @@
 // Mismo comprobador que usa Carlos en automatizes: pregunta desde el servidor si el n8n del chat responde.
 // Así el navegador no se topa con CORS y distinguimos "n8n arriba" de una página de error del túnel (530/1033).
 // Cuando haya dominio fijo basta con definir N8N_BASE_URL en Vercel (o cambiar el valor por defecto).
-const DEFAULT_BASE = 'https://opinion-image-plymouth-chris.trycloudflare.com';
+const DEFAULT_BASE = 'https://criteria-scsi-breathing-gauge.trycloudflare.com';
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 's-maxage=20, stale-while-revalidate=40');

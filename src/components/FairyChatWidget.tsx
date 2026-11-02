@@ -8,7 +8,7 @@ import { FairyMascot } from './FairyMascot';
  * misma cabecera X-Instance-Id, mismo comprobador /api/chat-status y mismo modo "sin batería".
  * Solo cambia el webhook (workflow propio del hada) y el prompt (docs/HADA_PROMPT.md).
  */
-const N8N_BASE = 'https://opinion-image-plymouth-chris.trycloudflare.com';
+const N8N_BASE = 'https://criteria-scsi-breathing-gauge.trycloudflare.com';
 const WEBHOOK_URL = `${N8N_BASE}/webhook/tuhada-chat-demo/chat`;
 const N8N_INSTANCE_ID = '2cb719940687119f8b2d591e8fb676940ae47c555d747bfa1016a777e55ed17e';
 const WHATSAPP_URL = 'https://wa.me/34675452831';
