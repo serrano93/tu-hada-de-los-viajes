@@ -52,18 +52,20 @@ export const FairyMascot: React.FC<FairyMascotProps> = ({
         <path d="M64 80 C80 84 94 100 86 108 C76 114 66 98 62 86 Z" fill={`url(#fw-${uid})`} stroke="#C5A059" strokeWidth="2.5" strokeLinejoin="round" />
       </g>
 
+      {/* melena rubia larga (detrás) */}
+      <path d="M31 46 C14 66 16 102 28 116 C40 112 45 96 45 80 L75 80 C75 96 80 112 92 116 C104 102 106 66 89 46 Z" fill="#F4D77E" stroke="#1E201D" strokeWidth="3.5" strokeLinejoin="round" />
+      <path d="M24 84 Q27 98 32 108 M96 84 Q93 98 88 108" stroke="#D9B04F" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+
       {/* vestido */}
       <path d="M46 86 L74 86 L86 124 Q60 134 34 124 Z" fill={`url(#fd-${uid})`} stroke="#1E201D" strokeWidth="3.5" strokeLinejoin="round" />
       <path d="M44 112 Q60 120 76 112" stroke="#DFC58E" strokeWidth="3" strokeLinecap="round" fill="none" />
 
-      {/* pelo (moño con corona dorada) */}
-      <circle cx="60" cy="22" r="11" fill="#C86D51" stroke="#1E201D" strokeWidth="3.5" />
-      <path d="M52 14 L56 8 L60 13 L64 8 L68 14 Z" fill="#C5A059" stroke="#1E201D" strokeWidth="2.5" strokeLinejoin="round" />
-      <circle className="f-star" cx="60" cy="6" r="3.2" fill="#DFC58E" stroke="#1E201D" strokeWidth="2" />
-
       {/* cabeza */}
       <circle cx="60" cy="52" r="29" fill="#F5E4D0" stroke="#1E201D" strokeWidth="4" />
-      <path d="M32 50 C34 30 86 30 88 50 C78 40 44 40 32 50 Z" fill="#C86D51" stroke="#1E201D" strokeWidth="3" strokeLinejoin="round" />
+      <path d="M31 52 C28 22 92 22 89 52 C84 40 70 34 62 30 C56 38 40 44 31 52 Z" fill="#F4D77E" stroke="#1E201D" strokeWidth="3" strokeLinejoin="round" />
+      {/* corona dorada */}
+      <path d="M49 28 L52 15 L60 24 L68 15 L71 28 Z" fill="#C5A059" stroke="#1E201D" strokeWidth="2.5" strokeLinejoin="round" />
+      <circle className="f-star" cx="60" cy="11" r="3.4" fill="#DFC58E" stroke="#1E201D" strokeWidth="2" />
       {/* orejitas de hada */}
       <path d="M31 54 L22 48 L33 62 Z" fill="#F5E4D0" stroke="#1E201D" strokeWidth="3" strokeLinejoin="round" />
       <path d="M89 54 L98 48 L87 62 Z" fill="#F5E4D0" stroke="#1E201D" strokeWidth="3" strokeLinejoin="round" />

@@ -20,7 +20,7 @@ interface ChatMessage {
 
 const WELCOME: ChatMessage = {
   role: 'assistant',
-  text: '¡Hola, viajero! ✨ Soy Lumi, el hada de Tu Hada de los Viajes.\n\nEsta demo corre en tiempo real: me estás hablando de verdad.\n\n¿Te ayudo con dudas de destino, cuándo viajar, cuánto puede costar o cómo trabaja Andrea?',
+  text: '¡Holiii, viajerito! ✨ Soy Lumi, el hada más cuqui de Tu Hada de los Viajes 🧚‍♀️\n\nEsta demo va en tiempo real: me estás hablando de verdad, ¿a que mola?\n\n¿Te ayudo con dudas de destino, cuándo viajar, cuánto puede costar o cómo trabaja Andrea? 💕',
 };
 
 const QUICK_PROMPTS = ['¿Qué destinos diseñáis?', '¿Cuándo es mejor viajar?', '¿Cómo funciona el servicio?'];
@@ -120,7 +120,7 @@ export const FairyChatWidget: React.FC = () => {
 
   const resetChat = () => {
     setSessionId(newSessionId());
-    setMessages([{ role: 'assistant', text: '¡Otra vez por aquí! ✨ Soy Lumi. ¿Qué otro viaje quieres que soñemos juntos?' }]);
+    setMessages([{ role: 'assistant', text: '¡Otra vez por aquí, qué ilu! ✨ Soy Lumi. ¿Qué otro viajecito soñamos juntos? 💕' }]);
   };
 
   const retry = async () => {
@@ -232,7 +232,7 @@ export const FairyChatWidget: React.FC = () => {
 
             {loading && (
               <div className="self-start max-w-[88%] px-3.5 py-2.5 rounded-2xl rounded-bl-md bg-white text-sm shadow-sm">
-                Lumi está agitando la varita… ✨ <span className="font-extrabold tracking-[3px]">···</span>
+                Lumi está agitando su varita… ✨ <span className="font-extrabold tracking-[3px]">···</span>
               </div>
             )}
 
@@ -290,8 +290,8 @@ export const FairyChatWidget: React.FC = () => {
       {bubble && !open && (
         <div role="status" className="fairy-bubble bubble-in absolute bottom-full right-1 mb-2 w-[230px] sm:w-[250px] origin-bottom-right">
           <button type="button" onClick={toggleChat} className="block w-full text-left cursor-pointer" aria-label="Abrir el chat con Lumi">
-            <span className="block font-serif font-bold text-lg leading-snug">¡Hola! Soy Lumi ✨</span>
-            <span className="block text-[13px] leading-snug mt-0.5 font-semibold">¿Dudas de tu próximo viaje? ¡Pregúntame!</span>
+            <span className="block font-serif font-bold text-lg leading-snug">¡Holiii! Soy Lumi ✨</span>
+            <span className="block text-[13px] leading-snug mt-0.5 font-semibold">¿Dudas de tu próximo viajecito? ¡Pregúntame! 💕</span>
           </button>
           <button type="button" onClick={closeBubble} aria-label="Cerrar mensaje"
             className="absolute top-1.5 right-2 w-[22px] h-[22px] rounded-full text-[11px] font-extrabold leading-none text-ink-muted bg-limestone hover:bg-sage-mist/50">
