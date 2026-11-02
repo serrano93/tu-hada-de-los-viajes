@@ -10,6 +10,7 @@ import { GuideSealSection } from './components/GuideSealSection';
 import { ProfilesAndServicesSection } from './components/ProfilesAndServicesSection';
 import { FairyWorkshopWizard } from './components/FairyWorkshopWizard';
 import { FaqAndFooterSection } from './components/FaqAndFooterSection';
+import { FairyChatWidget } from './components/FairyChatWidget';
 
 export function App() {
   const [globeTargetOverride, setGlobeTargetOverride] =
@@ -80,6 +81,9 @@ export function App() {
         {/* 8. Preguntas Frecuentes (FAQ) + Editorial Footer */}
         <FaqAndFooterSection onNavigate={handleNavigate} />
       </main>
+
+      {/* Lumi: chat del hada (réplica de Carlos en automatizes) */}
+      <FairyChatWidget />
     </div>
   );
 }

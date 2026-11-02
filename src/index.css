@@ -243,3 +243,56 @@ details > summary {
 details > summary::-webkit-details-marker {
   display: none;
 }
+
+/* ---------- Lumi, el hada del chat (equivalente a Carlos en automatizes) ---------- */
+.fairy { display: block; overflow: visible; }
+.f-eye, .f-spark, .f-star { transform-box: fill-box; transform-origin: center; }
+.f-wings { transform-box: fill-box; transform-origin: 50% 80%; }
+.fairy-anim .f-body { animation: f-float 3.4s ease-in-out infinite; }
+.fairy-anim .f-shadow { transform-box: fill-box; transform-origin: center; animation: f-shadow 3.4s ease-in-out infinite; }
+.fairy-anim .f-eye { animation: f-blink 5s infinite; }
+.fairy-anim .f-wings { animation: f-flap 1.6s ease-in-out infinite; }
+.fairy-anim .f-spark { animation: f-twinkle 1.8s ease-in-out infinite; }
+.fairy-anim .f-star { animation: f-twinkle 2.4s ease-in-out infinite; }
+.f-zzz { opacity: 0; }
+.fairy-sleepy .f-eye { transform: scaleY(.12); animation: none; }
+.fairy-sleepy .f-shine, .fairy-sleepy .f-spark { opacity: 0; animation: none; }
+.fairy-sleepy .f-wings { animation: none; }
+.fairy-sleepy .f-zzz { opacity: 1; animation: f-zzz 2.4s ease-in-out infinite; }
+
+@keyframes f-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes f-shadow { 0%, 100% { transform: scale(1); opacity: .28; } 50% { transform: scale(.82); opacity: .18; } }
+@keyframes f-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.08); } }
+@keyframes f-flap { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(.88); } }
+@keyframes f-twinkle { 0%, 100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.22) rotate(12deg); } }
+@keyframes f-zzz { 0%, 100% { transform: translateY(0); opacity: .5; } 50% { transform: translateY(-4px); opacity: 1; } }
+@keyframes bubblePop {
+  from { opacity: 0; transform: scale(.4) rotate(-4deg); }
+  to { opacity: 1; transform: none; }
+}
+.bubble-in { animation: bubblePop .45s cubic-bezier(.34, 1.56, .64, 1) both; }
+.fairy-bubble {
+  background: #fff;
+  color: #1E201D;
+  border: 2px solid #1E201D;
+  border-radius: 22px;
+  padding: 12px 30px 12px 16px;
+  box-shadow: 4px 4px 0 rgba(74, 93, 78, .55);
+}
+.fairy-bubble::before {
+  content: '';
+  position: absolute;
+  right: 34px;
+  bottom: -12px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-right: 2px solid #1E201D;
+  border-bottom: 2px solid #1E201D;
+  transform: skewX(-20deg) rotate(45deg);
+  border-bottom-right-radius: 6px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fairy-anim .f-body, .fairy-anim .f-shadow, .fairy-anim .f-eye, .fairy-anim .f-wings,
+  .fairy-anim .f-spark, .fairy-anim .f-star, .fairy-sleepy .f-zzz, .bubble-in { animation: none; }
+}
