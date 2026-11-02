@@ -3,7 +3,7 @@ import { MessageCircle, RotateCcw, X, ArrowRight } from 'lucide-react';
 import { FairyMascot } from './FairyMascot';
 
 /**
- * Chat de Lumi, el hada de Tu Hada de los Viajes.
+ * Chat de Andrea, el hada de Tu Hada de los Viajes.
  * Réplica del widget de Carlos (automatizes): mismo n8n autoalojado detrás del túnel de Cloudflare,
  * misma cabecera X-Instance-Id, mismo comprobador /api/chat-status y mismo modo "sin batería".
  * Solo cambia el webhook (workflow propio del hada) y el prompt (docs/HADA_PROMPT.md).
@@ -20,7 +20,7 @@ interface ChatMessage {
 
 const WELCOME: ChatMessage = {
   role: 'assistant',
-  text: '¡Holiii, viajerito! ✨ Soy Lumi, el hada de Tu Hada de los Viajes 🧚‍♀️\n\nEsta demo va en tiempo real: me estás hablando de verdad.\n\n¿Te ayudo con dudas de destino, cuándo viajar, cuánto puede costar o cómo trabaja Andrea? Estoy ilusion-hada de ayudarte ✨',
+  text: '¡Holiii, viajerito! ✨ Soy Andrea, el hada virtual de Tu Hada de los Viajes 🧚‍♀️\n\nEsta demo va en tiempo real: me estás hablando de verdad.\n\n¿Te ayudo con dudas de destino, cuándo viajar, cuánto puede costar o cómo trabaja la guía Andrea? Estoy ilusion-hada de ayudarte ✨',
 };
 
 const QUICK_PROMPTS = ['¿Qué destinos diseñáis?', '¿Cuándo es mejor viajar?', '¿Cómo funciona el servicio?'];
@@ -182,7 +182,7 @@ export const FairyChatWidget: React.FC = () => {
       {open && (
         <div
           role="dialog"
-          aria-label="Chat con Lumi, el hada de Tu Hada de los Viajes"
+          aria-label="Chat con Andrea, el hada de Tu Hada de los Viajes"
           className="fixed bottom-48 sm:bottom-36 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[400px] h-[600px] max-h-[calc(100dvh-12rem)] flex flex-col overflow-hidden z-50 rounded-3xl bg-white text-ink shadow-editorial-lg ring-1 ring-ink/10 font-sans"
         >
           <div className="flex items-center gap-2.5 pl-4 pr-3 py-3.5 bg-gradient-to-br from-sage to-sage-dark text-sand">
@@ -191,12 +191,12 @@ export const FairyChatWidget: React.FC = () => {
             </div>
             <div className="flex-1 min-w-0">
               <div className="font-serif font-semibold text-xl leading-tight flex items-center gap-2">
-                Lumi
+                Andrea
                 <span className={`font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full ${offline ? 'bg-sand/20 text-sand/80' : 'bg-gold/30 text-gold-light'}`}>
                   {offline ? 'Dormida' : 'Online'}
                 </span>
               </div>
-              <div className="text-xs opacity-85">Tu hada de viajes · By Andrea</div>
+              <div className="text-xs opacity-85">Hada virtual · Tu Hada de los Viajes</div>
             </div>
             <button type="button" onClick={resetChat} title="Reiniciar conversación" aria-label="Reiniciar conversación"
               className="w-9 h-9 rounded-full grid place-items-center bg-sand/15 hover:bg-sand/30 transition-colors flex-none">
@@ -226,27 +226,27 @@ export const FairyChatWidget: React.FC = () => {
                     dangerouslySetInnerHTML={{ __html: formatMessage(msg.text) }}
                   />
                 </div>
-                <span className="text-[11px] text-ink-muted/80 mx-1.5 mt-0.5">{msg.role === 'user' ? 'Tú' : 'Lumi'}</span>
+                <span className="text-[11px] text-ink-muted/80 mx-1.5 mt-0.5">{msg.role === 'user' ? 'Tú' : 'Andrea'}</span>
               </div>
             ))}
 
             {loading && (
               <div className="self-start max-w-[88%] px-3.5 py-2.5 rounded-2xl rounded-bl-md bg-white text-sm shadow-sm">
-                Lumi está agitando su varita… ✨ <span className="font-extrabold tracking-[3px]">···</span>
+                Andrea está agitando su varita… ✨ <span className="font-extrabold tracking-[3px]">···</span>
               </div>
             )}
 
             {offline && (
               <div role="status" className="grid gap-2.5 rounded-2xl bg-gold-light/40 text-ink p-4 text-sm">
-                <strong>🌙 Lumi se ha quedado dormida</strong>
+                <strong>🌙 Andrea se ha quedado dormida</strong>
                 <p className="m-0">Mi varita (el servidor) está desconectada ahora mismo, pero tu viaje no tiene por qué esperar:</p>
                 <button type="button" onClick={goToWorkshop}
                   className="min-h-[44px] rounded-full bg-terracotta hover:bg-terracotta-hover text-sand font-semibold text-[15px] flex items-center justify-center gap-2">
-                  Diseñar mi ruta con Andrea <ArrowRight className="w-4 h-4" />
+                  Diseñar mi ruta con la guía <ArrowRight className="w-4 h-4" />
                 </button>
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
                   className="min-h-[44px] rounded-full border border-sage text-sage-dark font-semibold text-[15px] flex items-center justify-center gap-2">
-                  <MessageCircle className="w-4 h-4" /> Escribir a Andrea por WhatsApp
+                  <MessageCircle className="w-4 h-4" /> Escribir a Andrea (la guía) por WhatsApp
                 </a>
                 <button type="button" onClick={retry} disabled={checking} className="font-mono text-[13px] font-bold text-sage-dark">
                   {checking ? 'Comprobando…' : '↻ Reintentar'}
@@ -275,7 +275,7 @@ export const FairyChatWidget: React.FC = () => {
               disabled={loading || offline}
               maxLength={500}
               aria-label="Tu mensaje"
-              placeholder={offline ? 'Lumi está recargando magia…' : 'Pregunta a Lumi por tu viaje…'}
+              placeholder={offline ? 'Andrea está recargando magia…' : 'Pregunta a Andrea por tu viaje…'}
               className="flex-1 min-w-0 rounded-full border border-sage-mist/60 bg-sand px-4 py-2.5 text-[15px] outline-none focus:border-sage focus:ring-2 focus:ring-sage/30 disabled:opacity-60"
             />
             <button type="submit" disabled={loading || offline || !input.trim()} aria-label="Enviar mensaje"
@@ -289,8 +289,8 @@ export const FairyChatWidget: React.FC = () => {
       {/* Bocadillo */}
       {bubble && !open && (
         <div role="status" className="fairy-bubble bubble-in absolute bottom-full right-1 mb-2 w-[230px] sm:w-[250px] origin-bottom-right">
-          <button type="button" onClick={toggleChat} className="block w-full text-left cursor-pointer" aria-label="Abrir el chat con Lumi">
-            <span className="block font-serif font-bold text-lg leading-snug">¡Holiii! Soy Lumi ✨</span>
+          <button type="button" onClick={toggleChat} className="block w-full text-left cursor-pointer" aria-label="Abrir el chat con Andrea">
+            <span className="block font-serif font-bold text-lg leading-snug">¡Holiii! Soy Andrea ✨</span>
             <span className="block text-[13px] leading-snug mt-0.5 font-semibold">¿Dudas de tu próximo viajecito? ¡Pregúntame!</span>
           </button>
           <button type="button" onClick={closeBubble} aria-label="Cerrar mensaje"
@@ -306,8 +306,8 @@ export const FairyChatWidget: React.FC = () => {
         onClick={toggleChat}
         aria-haspopup="dialog"
         aria-expanded={open}
-        aria-label="Abrir el chat con Lumi, el hada de viajes"
-        title={offline ? 'Lumi está dormida ahora mismo' : 'Habla con Lumi'}
+        aria-label="Abrir el chat con Andrea, el hada de viajes"
+        title={offline ? 'Andrea está dormida ahora mismo' : 'Habla con Andrea'}
         className="group relative block rounded-full cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-sage/60"
       >
         {!open && (

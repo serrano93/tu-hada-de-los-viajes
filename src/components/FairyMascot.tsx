@@ -9,7 +9,7 @@ interface FairyMascotProps {
 }
 
 /**
- * Lumi, el hada mascota de Tu Hada de los Viajes. SVG inline, sin imágenes externas.
+ * Andrea, el hada mascota de Tu Hada de los Viajes. SVG inline, sin imágenes externas.
  * `uid` evita colisiones de ids de degradados cuando hay varias instancias en la página.
  * Equivalente a CarlosMascot de automatizes (mismo API: size / uid / animate).
  */

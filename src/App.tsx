@@ -82,7 +82,7 @@ export function App() {
         <FaqAndFooterSection onNavigate={handleNavigate} />
       </main>
 
-      {/* Lumi: chat del hada (réplica de Carlos en automatizes) */}
+      {/* Andrea: chat del hada (réplica de Carlos en automatizes) */}
       <FairyChatWidget />
     </div>
   );

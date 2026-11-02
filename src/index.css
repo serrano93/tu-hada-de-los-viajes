@@ -244,7 +244,7 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 
-/* ---------- Lumi, el hada del chat (equivalente a Carlos en automatizes) ---------- */
+/* ---------- Andrea, el hada del chat (equivalente a Carlos en automatizes) ---------- */
 .fairy { display: block; overflow: visible; }
 .f-eye, .f-spark, .f-star { transform-box: fill-box; transform-origin: center; }
 .f-wings { transform-box: fill-box; transform-origin: 50% 80%; }
