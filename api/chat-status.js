@@ -1,8 +1,8 @@
 // api/chat-status.js (ESM para Node.js en Vercel Serverless)
 // Mismo comprobador que usa Carlos en automatizes: pregunta desde el servidor si el n8n del chat responde.
 // Así el navegador no se topa con CORS y distinguimos "n8n arriba" de una página de error del túnel (530/1033).
-// Cuando haya dominio fijo basta con definir N8N_BASE_URL en Vercel (o cambiar el valor por defecto).
-const DEFAULT_BASE = 'https://criteria-scsi-breathing-gauge.trycloudflare.com';
+// Túnel fijo de Cloudflare (nas-ugreen) en n8n.equipoextra.es; N8N_BASE_URL en Vercel lo puede sobrescribir.
+const DEFAULT_BASE = 'https://n8n.equipoextra.es';
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 's-maxage=20, stale-while-revalidate=40');
